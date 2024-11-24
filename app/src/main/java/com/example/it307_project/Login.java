@@ -1,7 +1,7 @@
 package com.example.it307_project;
 
-import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Looper;
 import android.view.View;
@@ -23,7 +23,7 @@ public class Login extends AppCompatActivity {
     TextInputLayout loginUser, loginPass;
     TextInputEditText ETuser, ETpass;
     Button BTNconfirm;
-    TextView TVinvalid;
+    TextView TVinvalid, TVforgotpass,TVsignup;
     Context c = this; String[][] userPass = {{ "Jeff", "12345" },{ "Joan", "567890" }, { "Dani", "ASDFGH" }};
 
     @Override
@@ -31,7 +31,7 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_login);
-        initialiaze();
+        initialize();
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -39,13 +39,13 @@ public class Login extends AppCompatActivity {
         });
     }
 
-    private void initialiaze(){
+    private void initialize(){
         ETuser = findViewById(R.id.ETuser);
         ETpass = findViewById(R.id.ETpass);
         BTNconfirm = findViewById(R.id.BTNconfirm);
         TVinvalid = findViewById(R.id.TVinvalid);
-
-
+        TVforgotpass = findViewById(R.id.TVforgotpass);
+        TVsignup = findViewById(R.id.TVsignup);
 
 
         BTNconfirm.setOnClickListener(new View.OnClickListener() {
@@ -82,6 +82,22 @@ public class Login extends AppCompatActivity {
                                 TVinvalid.setVisibility(View.GONE);
                             }
                         }, 5000);
+            }
+        });
+
+        TVforgotpass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(c, ForgotPassword.class);
+                startActivity(i);
+            }
+        });
+
+        TVsignup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(c, Register.class);
+                startActivity(i);
             }
         });
     }

@@ -10,23 +10,35 @@
 android:layout_marginHorizontal="30dp">
 
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="5"
-        android:gravity="center"
-        android:fontFamily="@font/poppinsbold"
-        android:text="Log in"
-        android:textAllCaps="true"
-        android:textColor="@color/colorSecondary"
-        android:textSize="40sp" />
+        android:layout_marginTop="100dp"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppinsbold"
+            android:text="Log in"
+            android:textAllCaps="true"
+            android:textColor="@color/colorSecondary"
+            android:textSize="40sp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Log in to your account to continue"
+            android:textSize="15sp"
+            android:fontFamily="@font/poppinsmedium"
+            android:textColor="@color/textDescColor"/>
+    </LinearLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="5"
         android:orientation="vertical"
-
         >
 
         <com.google.android.material.textfield.TextInputLayout
@@ -39,7 +51,7 @@ android:layout_marginHorizontal="30dp">
             app:endIconMode="clear_text"
             app:endIconTint="@color/black"
             app:hintTextColor="@color/black"
-            app:startIconDrawable="@drawable/loginusericon"
+            app:startIconDrawable="@drawable/email"
             app:startIconTint="@color/black"
             android:layout_marginBottom="10dp">
 
@@ -93,7 +105,7 @@ android:layout_marginHorizontal="30dp">
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="15dp">
+            android:layout_marginTop="5dp">
 
             <CheckBox
                 android:id="@+id/rememberMe"
@@ -107,6 +119,7 @@ android:layout_marginHorizontal="30dp">
                 android:textColorHighlight="@color/colorPrimary" />
             
             <TextView
+                android:id="@+id/TVforgotpass"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -121,10 +134,36 @@ android:layout_marginHorizontal="30dp">
             android:id="@+id/BTNconfirm"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:background="@color/colorSecondary"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="@color/colorSecondary"
+            android:fontFamily="@font/poppinsbold"
             android:text="Log in"
             android:textColor="@color/white" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+            android:gravity="center">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Don't have an account?"
+                android:fontFamily="@font/poppinsregular"
+                android:textColor="@color/textDescColor"/>
+            <TextView
+                android:id="@+id/TVsignup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Register"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold"
+                android:layout_marginLeft="5dp"
+                android:fontFamily="@font/poppinsregular"/>
+        </LinearLayout>
+
     </LinearLayout>
 
 </LinearLayout>
