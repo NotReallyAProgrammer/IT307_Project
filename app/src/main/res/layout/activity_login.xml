@@ -57,7 +57,7 @@ android:layout_marginHorizontal="30dp">
 
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/ETuser"
+                android:id="@+id/ETemail"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:fontFamily="@font/poppinsregular"
@@ -93,12 +93,13 @@ android:layout_marginHorizontal="30dp">
             android:id="@+id/TVinvalid"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Invalid email or password"
+            android:text="Password or Email did not match."
             android:textAlignment="center"
             android:fontFamily="@font/poppinsregular"
             android:layout_marginTop="5dp"
             android:textColor="@color/errorFontColor"
             android:visibility="gone"
+
             />
 
         <LinearLayout
@@ -138,7 +139,9 @@ android:layout_marginHorizontal="30dp">
             android:backgroundTint="@color/colorSecondary"
             android:fontFamily="@font/poppinsbold"
             android:text="Log in"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            android:padding="10dp"
+            />
 
 
         <LinearLayout

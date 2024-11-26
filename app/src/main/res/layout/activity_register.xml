@@ -33,7 +33,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="New user? Please fill the fields."
+            android:text="New user? Please fill up the fields."
             android:textSize="15sp"
             android:fontFamily="@font/poppinsmedium"
             android:textColor="@color/textDescColor"/>
@@ -96,7 +96,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/loginPass"
+            android:id="@+id/regPass"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
