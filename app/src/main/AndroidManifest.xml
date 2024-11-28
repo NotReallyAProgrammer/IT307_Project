@@ -13,6 +13,9 @@
         android:theme="@style/Theme.IT307_Project"
         tools:targetApi="31">
         <activity
+            android:name=".ChangePassword"
+            android:exported="false" />
+        <activity
             android:name=".ForgotPassword"
             android:exported="false" />
         <activity
