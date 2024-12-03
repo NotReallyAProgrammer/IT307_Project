@@ -56,7 +56,8 @@ public class ForgotPassword extends AppCompatActivity {
             public void onClick(View v) {
                 String user = ETemail.getText().toString();
                 boolean userOK = false;
-                int tempCount = 0;
+                int tempCount = 0, userPos = 0;
+
 
                 if(!validateEmail()){
                     new android.os.Handler(Looper.getMainLooper()).postDelayed(
@@ -72,13 +73,16 @@ public class ForgotPassword extends AppCompatActivity {
                 for (String[] up : Users){
                     if (user.equals(up[0]) ){
                         userOK = true;
+                        userPos++;
 
                     }else {
                         tempCount++;
                     }
 
                     if(userOK){
-                        Toast.makeText(c, "Logged in Successfully", Toast.LENGTH_SHORT).show();
+                        Intent i = new Intent(c, ChangePassword.class);
+                        i.putExtra("User",userPos);
+                        startActivity(i);
                         break;
                     }else if(tempCount == Users.length){
                         forgotEmail.setError("Email does not exist");
