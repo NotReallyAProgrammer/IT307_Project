@@ -3,11 +3,11 @@ package com.example.it307_project;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Looper;
 import android.view.View;
 
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -23,10 +23,12 @@ import androidx.core.view.WindowInsetsCompat;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.util.Arrays;
+
 public class Register extends AppCompatActivity {
 
-    TextInputLayout regName, regEmail, regPass, regCfrmPass;
-    TextInputEditText ETname, ETemail, ETpass, ETcfrmpass;
+    TextInputLayout regName, regEmail, regPass, regCfrmPass,regAnswer,menu;
+    TextInputEditText ETname, ETemail, ETpass, ETcfrmpass, ETanswer;
     Button BTNconfirm;
     AutoCompleteTextView question;
     String[] arraySpinner = new String[]{
@@ -59,27 +61,45 @@ public class Register extends AppCompatActivity {
         regEmail = findViewById(R.id.regEmail);
         regPass = findViewById(R.id.regPass);
         regCfrmPass = findViewById(R.id.regCnfrmPass);
+        regAnswer = findViewById(R.id.regAnswer);
         ETname = findViewById(R.id.ETName);
         ETemail = findViewById(R.id.ETemail);
         ETpass = findViewById(R.id.ETpass);
         ETcfrmpass = findViewById(R.id.ETcnfrmpass);
-        BTNconfirm = findViewById(R.id.BTNconfirm);
+        ETanswer = findViewById(R.id.ETanswer);
         question = findViewById(R.id.questions);
+        menu = findViewById(R.id.menu);
+
+        BTNconfirm = findViewById(R.id.BTNconfirm);
+
 
         //Setting selection in spinner;
         ArrayAdapter<String> adapter = new ArrayAdapter<>(c, R.layout.dropdown_menu_popup_item, arraySpinner);
         question.setAdapter(adapter);
 
-
-
-
+        Intent intent = getIntent();
+        String[][] Users = (String[][]) intent.getSerializableExtra("Users");
         BTNconfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String selectedQuestion;
                 String name = ETname.getText().toString();
 
-                if(!validateFullName() | !validateEmail() | !validatePassword() | !validateReEnter() )
+                String selectedQuestion = question.getText().toString();
+                int selection = 0;
+
+                if (selectedQuestion.equals("What is your mother's maiden name?")){
+                    selection = 1;
+                }else if(selectedQuestion.equals("What was the name of your first pet?")){
+                    selection = 2;
+                }else if(selectedQuestion.equals("What was the name of your elementary school?")){
+                    selection = 3;
+                }else if(selectedQuestion.equals("In what city were you born?")){
+                    selection = 4;
+                }else if(selectedQuestion.equals("What is your favorite color?")){
+                    selection = 5;
+                }
+
+                if(!validateFullName() | !validateEmail() | !validatePassword() | !validateReEnter() | !validateQuestion() | !validateAnswer() )
                 {
                     new android.os.Handler(Looper.getMainLooper()).postDelayed(
                             new Runnable() {
@@ -96,13 +116,18 @@ public class Register extends AppCompatActivity {
 
                                     regCfrmPass.setError(null);
                                     regCfrmPass.setErrorEnabled( false );
+
+                                    menu.setError(null);
+
+
+                                    regAnswer.setError(null);
+                                    regAnswer.setErrorEnabled( false );
                                 }
                             }, 10000);
                     return;
                 }
 
-                selectedQuestion = question.getText().toString();
-                Toast.makeText(c, selectedQuestion, Toast.LENGTH_SHORT).show();
+
             }
         });
     }
@@ -139,7 +164,7 @@ public class Register extends AppCompatActivity {
     }
 
     private boolean validatePassword() {
-        String val = ETpass.getText().toString().trim();
+        String val = ETpass.getText().toString();
         final String checkPassword = "^(?=.*[0-9])(?=.*[A-Z])(?=\\S+$).{6,}$";
 
 
@@ -193,6 +218,32 @@ public class Register extends AppCompatActivity {
         } else {
             regCfrmPass.setError(null);
             regCfrmPass.setErrorEnabled( false );
+            return true;
+        }
+    }
+
+    private boolean validateQuestion(){
+        String val = question.getText().toString();
+        if (val.isEmpty()) {
+            menu.setError( "Please select a question" );
+            return false;
+        } else {
+            menu.setError(null);
+            return true;
+        }
+    }
+
+    private boolean validateAnswer() {
+        String val = ETanswer.getText().toString();
+
+        if (val.isEmpty()) {
+            regAnswer.setError( "Field can not be empty" );
+            return false;
+        }
+
+        else {
+            regAnswer.setError(null);
+            regAnswer.setErrorEnabled( false );
             return true;
         }
     }

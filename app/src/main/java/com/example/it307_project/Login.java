@@ -29,7 +29,7 @@ public class Login extends AppCompatActivity {
     Button BTNconfirm;
     TextView TVinvalid, TVforgotpass,TVsignup;
     Context c = this;
-    String[][] userPass = {{ "Jeff@email.com","1","sample", "12345" },{ "Joan@email.com","1","sample", "567890" }, { "Dani@email.com","1","sample", "ASDFGH" }};
+    String[][] userPass = {{ "Jeff@email.com","Jeff","1","sample", "12345" },{ "Joan@email.com","Joan","1","sample", "567890" }, { "Dani@email.com","Dani","1","sample", "ASDFGH" }};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +54,8 @@ public class Login extends AppCompatActivity {
         TVforgotpass = findViewById(R.id.TVforgotpass);
         TVsignup = findViewById(R.id.TVsignup);
 
+        Intent intent = getIntent();
+        String[][] Users = (String[][]) intent.getSerializableExtra("Users");
 
         BTNconfirm.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,23 +77,44 @@ public class Login extends AppCompatActivity {
                 }
 
 
-                for (String[] up : userPass){
-                    if (user.equals(up[0]) && pass.equals(up[3])){
-                        userOK = true;
+                if(Users != null){
+                    for (String[] up : Users){
+                        if (user.equals(up[0]) && pass.equals(up[4])){
+                            userOK = true;
 
-                    }else {
-                        tempCount++;
+                        }else {
+                            tempCount++;
+                        }
+
+                        if(userOK){
+                            Toast.makeText(c, "Logged in Successfully", Toast.LENGTH_SHORT).show();
+                            break;
+                        }else if(tempCount == userPass.length){
+                            TVinvalid.setVisibility(View.VISIBLE);
+                            break;
+                        }
                     }
 
-                    if(userOK){
-                        Toast.makeText(c, "Logged in Successfully", Toast.LENGTH_SHORT).show();
-                        break;
-                    }else if(tempCount == userPass.length){
-                        TVinvalid.setVisibility(View.VISIBLE);
+                }else{
+                    for (String[] up : userPass){
+                        if (user.equals(up[0]) && pass.equals(up[4])){
+                            userOK = true;
 
-                        break;
+                        }else {
+                            tempCount++;
+                        }
+
+                        if(userOK){
+                            Toast.makeText(c, "Logged in Successfully", Toast.LENGTH_SHORT).show();
+                            break;
+                        }else if(tempCount == userPass.length){
+                            TVinvalid.setVisibility(View.VISIBLE);
+                            break;
+                        }
                     }
                 }
+
+
 
                 new android.os.Handler(Looper.getMainLooper()).postDelayed(
                         new Runnable() {
@@ -107,11 +130,14 @@ public class Login extends AppCompatActivity {
         TVforgotpass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                 Intent i = new Intent(c, ForgotPassword.class);
-                i.putExtra("Users", userPass);
-                startActivity(i);
+                if(Users != null){
+                    i.putExtra("Users", Users);
+                    startActivity(i);
+                }else{
+                    i.putExtra("Users", userPass);
+                    startActivity(i);
+                }
 
             }
         });
@@ -119,8 +145,14 @@ public class Login extends AppCompatActivity {
         TVsignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(c, Register.class);
-                startActivity(i);
+                Intent intent = new Intent(c, Register.class);
+                if(Users != null ){
+                    intent.putExtra("Users", Users);
+                    startActivity(intent);
+                }else{
+                    intent.putExtra("Users", userPass);
+                    startActivity(intent);
+                }
             }
         });
     }
