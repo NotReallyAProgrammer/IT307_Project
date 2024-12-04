@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Looper;
 import android.os.Parcelable;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -29,7 +30,7 @@ public class Login extends AppCompatActivity {
     Button BTNconfirm;
     TextView TVinvalid, TVforgotpass,TVsignup;
     Context c = this;
-    String[][] userPass = {{ "Jeff@email.com","Jeff","1","sample", "12345" },{ "Joan@email.com","Joan","1","sample", "567890" }, { "Dani@email.com","Dani","1","sample", "ASDFGH" }};
+        String[][] userPass = {{ "Jeff@email.com","Jeff","1","sample", "12345" },{ "Joan@email.com","Joan","1","sample", "567890" }, { "Dani@email.com","Dani","1","sample", "ASDFGH" }};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,25 +78,8 @@ public class Login extends AppCompatActivity {
                 }
 
 
-                if(Users != null){
-                    for (String[] up : Users){
-                        if (user.equals(up[0]) && pass.equals(up[4])){
-                            userOK = true;
+                if(Users == null){
 
-                        }else {
-                            tempCount++;
-                        }
-
-                        if(userOK){
-                            Toast.makeText(c, "Logged in Successfully", Toast.LENGTH_SHORT).show();
-                            break;
-                        }else if(tempCount == userPass.length){
-                            TVinvalid.setVisibility(View.VISIBLE);
-                            break;
-                        }
-                    }
-
-                }else{
                     for (String[] up : userPass){
                         if (user.equals(up[0]) && pass.equals(up[4])){
                             userOK = true;
@@ -112,8 +96,26 @@ public class Login extends AppCompatActivity {
                             break;
                         }
                     }
-                }
 
+                }else {
+
+                    for (String[] up : Users){
+                        if (user.equals(up[0]) && pass.equals(up[4])){
+                            userOK = true;
+
+                        }else {
+                            tempCount++;
+                        }
+
+                        if(userOK){
+                            Toast.makeText(c, "Logged in Successfully", Toast.LENGTH_SHORT).show();
+                            break;
+                        }else if(tempCount == Users.length){
+                            TVinvalid.setVisibility(View.VISIBLE);
+                            break;
+                        }
+                    }
+                }
 
 
                 new android.os.Handler(Looper.getMainLooper()).postDelayed(

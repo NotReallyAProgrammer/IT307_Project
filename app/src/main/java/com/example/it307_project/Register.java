@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Looper;
+import android.util.Log;
 import android.view.View;
 
 import android.widget.ArrayAdapter;
@@ -83,6 +84,9 @@ public class Register extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String name = ETname.getText().toString();
+                String email = ETemail.getText().toString();
+                String pass = ETpass.getText().toString();
+                String ans = ETanswer.getText().toString();
 
                 String selectedQuestion = question.getText().toString();
                 int selection = 0;
@@ -127,6 +131,17 @@ public class Register extends AppCompatActivity {
                     return;
                 }
 
+
+                String[] newUser = {email,name,String.valueOf(selection),ans,pass};
+                String[][] newUserPass = Arrays.copyOf(Users, Users.length + 1);
+                newUserPass[Users.length] = newUser;
+
+
+                Intent i = new Intent(c,Login.class);
+                i.putExtra("Users",newUserPass);
+                //Log.d("User",Arrays.deepToString(newUserPass));
+                startActivity(i);
+                Toast.makeText(c, "Register successfully", Toast.LENGTH_SHORT).show();
 
             }
         });
