@@ -6,12 +6,13 @@
 
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="gray">#E7E7E7</color>
     <color name="colorPrimary">#ffad33</color>
     <color name="colorPrimaryDark">#ffa31a</color>
     <color name="colorSecondary">#3281e5</color>
     <color name="textDescColor">#b3b3b3</color>
     <color name="heartBtn">#858585</color>
-    <color name="errorBgColor">#ff453869</color>
+    <color name="errorBgColor">#ff4538</color>
     <color name="errorFontColor">#b30021</color>
 
     <color name="start">#FFEB3B</color>

@@ -90,6 +90,8 @@ public class Login extends AppCompatActivity {
 
                         if(userOK){
                             Toast.makeText(c, "Logged in Successfully", Toast.LENGTH_SHORT).show();
+                            Intent i = new Intent(c, Home.class);
+                            startActivity(i);
                             break;
                         }else if(tempCount == userPass.length){
                             TVinvalid.setVisibility(View.VISIBLE);
@@ -109,7 +111,9 @@ public class Login extends AppCompatActivity {
 
                         if(userOK){
                             Toast.makeText(c, "Logged in Successfully", Toast.LENGTH_SHORT).show();
-                            break;
+                            Intent i = new Intent(c, Home.class);
+                            startActivity(i);
+
                         }else if(tempCount == Users.length){
                             TVinvalid.setVisibility(View.VISIBLE);
                             break;
