@@ -38,6 +38,7 @@ public class NavAdapter extends RecyclerView.Adapter<NavAdapter.ViewHolder>{
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.TVnavtitle.setText(navModel.get(position).getTitle());
         holder.TVnavdisc.setText(navModel.get(position).getDisc());
+        holder.BTNnavview.setText(navModel.get(position).getButtonName());
     }
 
     @Override
@@ -47,13 +48,14 @@ public class NavAdapter extends RecyclerView.Adapter<NavAdapter.ViewHolder>{
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
-        private TextView TVnavtitle, TVnavdisc;
+        private TextView TVnavtitle, TVnavdisc, BTNnavview;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             TVnavtitle = itemView.findViewById(R.id.TVnavtitle);
             TVnavdisc = itemView.findViewById(R.id.TVnavdisc);
+            BTNnavview = itemView.findViewById(R.id.BTNnavview);
         }
     }
 

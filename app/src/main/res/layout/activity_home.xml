@@ -76,6 +76,28 @@
             tools:listitem="@android:layout/simple_list_item_checked"
 
             />
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Recently Added Items"
+            android:fontFamily="@font/poppinsmedium"
+            android:textSize="15sp"
+            android:textColor="@color/colorPrimaryDark"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/RVitem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_marginBottom="20dp"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:layout_centerVertical="true"
+            tools:listitem="@android:layout/simple_list_item_checked"/>
 
 
     </LinearLayout>
