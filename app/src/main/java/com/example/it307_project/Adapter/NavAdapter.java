@@ -1,18 +1,26 @@
 package com.example.it307_project.Adapter;
 
 
+import static android.content.ContentValues.TAG;
+
+import static androidx.core.content.ContextCompat.startActivity;
+
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.it307_project.Model.NavModel;
 import com.example.it307_project.R;
+import com.example.it307_project.Sales;
 
+import java.lang.ref.WeakReference;
 import java.util.List;
 
 
@@ -20,10 +28,14 @@ public class NavAdapter extends RecyclerView.Adapter<NavAdapter.ViewHolder>{
 
     Context context;
     List<NavModel> navModel;
+    private final ClickListener listener;
 
-    public NavAdapter(Context c, List<NavModel> navModels){
+
+
+    public NavAdapter(Context c, List<NavModel> navModels, ClickListener listener){
         this.context = c;
         this.navModel = navModels;
+        this.listener = listener;
     }
 
     @NonNull
@@ -46,16 +58,29 @@ public class NavAdapter extends RecyclerView.Adapter<NavAdapter.ViewHolder>{
         return navModel.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public interface ClickListener {
+        void onPositionClicked(int position);
+
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private TextView TVnavtitle, TVnavdisc, BTNnavview;
+        private WeakReference<ClickListener> listenerRef;
+
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-
+            listenerRef = new WeakReference<>(listener);
             TVnavtitle = itemView.findViewById(R.id.TVnavtitle);
             TVnavdisc = itemView.findViewById(R.id.TVnavdisc);
             BTNnavview = itemView.findViewById(R.id.BTNnavview);
+
+           BTNnavview.setOnClickListener(this);
+        }
+
+        public void onClick(View v){
+            listenerRef.get().onPositionClicked(getAdapterPosition());
         }
     }
 

@@ -1,6 +1,7 @@
 package com.example.it307_project;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
@@ -56,12 +57,32 @@ public class Home extends AppCompatActivity {
         navModels.add(new NavModel("All Items", "This is a simple discription.","View Items"));
         navModels.add(new NavModel("Credits", "This is a simple discription.","View Credits"));
 
-        navAdapter = new NavAdapter(c,navModels);
-        RVname.setAdapter(navAdapter);
+        navAdapter = new NavAdapter(c,navModels, new NavAdapter.ClickListener() {
+            @Override
+            public void onPositionClicked(int position) {
+                if(position == 0){
+                    Intent i = new Intent(c,Sales.class);
+                    startActivity(i);
+               }else if(position == 1){
+//                    Intent i = new Intent(c, Items.class);
+//                    startActivity(i);
+                }else if (position == 2) {
+                    Intent i = new Intent(c, Credits.class);
+                    startActivity(i);
+                }
+            }
 
+
+
+        });
+
+        RVname.setAdapter(navAdapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(c, LinearLayoutManager.HORIZONTAL, false);
         RVname.setLayoutManager(layoutManager);
+
     }
+
+
 
     private void setItemAdapter(){
         itemModels.add(new ItemModel("₱100","20","Sample","Sample Item Name"));
