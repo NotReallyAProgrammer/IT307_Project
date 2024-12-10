@@ -1,7 +1,11 @@
 package com.example.it307_project;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,6 +23,8 @@ import java.util.List;
 
 public class Inventory extends AppCompatActivity {
     RecyclerView RVitem;
+    Button BTNviewall;
+    ImageView IVback;
     List<ItemModel> itemModels = new ArrayList<>();
     ItemAdapter itemadapter;
     Context c = this;
@@ -37,9 +43,25 @@ public class Inventory extends AppCompatActivity {
     }
 
     private void initialize() {
-
         RVitem = findViewById(R.id.RVitem);
+        BTNviewall = findViewById(R.id.BTNviewall);
+        IVback = findViewById(R.id.backbtn);
 
+        IVback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+
+        BTNviewall.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(c, Items.class);
+                startActivity(i);
+            }
+        });
     }
 
     private void setItemAdapter(){

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="10dp"
+    app:cardCornerRadius="10dp"
+    android:elevation="10dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+
+        <ImageView
+            android:id="@+id/IVallitemimg"
+            android:layout_width="70dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/scornerradius"
+            android:clipToOutline="true"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:src="@mipmap/no_image" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+
+            android:layout_marginLeft="10dp"
+            app:layout_constraintLeft_toRightOf="@id/IVallitemimg"
+            app:layout_constraintRight_toLeftOf="@id/IBedit"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/TVallitemname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sample name"
+                android:fontFamily="@font/poppinsbold"
+                android:textSize="15sp"
+                android:textColor="@color/colorSecondary"/>
+
+            <TextView
+                android:id="@+id/TVallitemqty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Quantity: 10"
+                android:fontFamily="@font/poppinsmedium"
+                android:textSize="10sp"
+                android:textColor="@color/darkgray"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp">
+                <TextView
+                    android:id="@+id/TVallitemsrp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="Srp: 90"
+                    android:fontFamily="@font/poppinsbold"
+                    android:textSize="10sp"/>
+
+                <TextView
+                    android:id="@+id/TVallitemprice"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="Price: 100"
+                    android:fontFamily="@font/poppinsbold"
+                    android:textSize="10sp"/>
+
+                <TextView
+                    android:id="@+id/TVallitemprofit"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="Profit: 10"
+                    android:fontFamily="@font/poppinsbold"
+                    android:textSize="10sp"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/IBedit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/roundedcorner"
+            android:src="@drawable/edit"
+            app:tint="@color/gray"
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:padding="8dp"
+            android:elevation="5dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>
