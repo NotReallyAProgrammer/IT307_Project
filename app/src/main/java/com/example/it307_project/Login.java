@@ -64,7 +64,7 @@ public class Login extends AppCompatActivity {
                 String user = ETemail.getText().toString();
                 String pass = ETpass.getText().toString();
                 boolean userOK = false;
-                int tempCount = 0;
+                int tempCount = 0, userPos = -1;
 
                 if( !validateEmail()){
                     new android.os.Handler(Looper.getMainLooper()).postDelayed(
@@ -83,6 +83,7 @@ public class Login extends AppCompatActivity {
                     for (String[] up : userPass){
                         if (user.equals(up[0]) && pass.equals(up[4])){
                             userOK = true;
+                            userPos = tempCount;
 
                         }else {
                             tempCount++;
@@ -91,8 +92,9 @@ public class Login extends AppCompatActivity {
                         if(userOK){
                             Toast.makeText(c, "Logged in Successfully", Toast.LENGTH_SHORT).show();
                             Intent i = new Intent(c, Home.class);
+                            i.putExtra("Name",userPass[userPos][1]);
                             startActivity(i);
-                            break;
+
                         }else if(tempCount == userPass.length){
                             TVinvalid.setVisibility(View.VISIBLE);
                             break;
@@ -104,6 +106,7 @@ public class Login extends AppCompatActivity {
                     for (String[] up : Users){
                         if (user.equals(up[0]) && pass.equals(up[4])){
                             userOK = true;
+                            userPos = tempCount;
 
                         }else {
                             tempCount++;
@@ -112,6 +115,7 @@ public class Login extends AppCompatActivity {
                         if(userOK){
                             Toast.makeText(c, "Logged in Successfully", Toast.LENGTH_SHORT).show();
                             Intent i = new Intent(c, Home.class);
+                            i.putExtra("Name",Users[userPos][1]);
                             startActivity(i);
 
                         }else if(tempCount == Users.length){

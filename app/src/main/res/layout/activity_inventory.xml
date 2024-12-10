@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Inventory"
+    android:layout_margin="20dp">
+
+    <ImageView
+        android:id="@+id/backbtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/backarrow"
+        android:layout_marginBottom="20dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Inventory"
+        android:fontFamily="@font/poppinsbold"
+        android:textSize="30sp"
+        android:textColor="@color/colorSecondary"
+        android:layout_marginBottom="10dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:orientation="vertical">
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal"
+            >
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/cornerradius"
+                android:padding="20dp"
+                android:backgroundTint="@color/gray"
+                android:elevation="5dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Total Value"
+                    android:fontFamily="@font/poppinsmedium"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="10sp"/>
+
+                <TextView
+                    android:id="@+id/TVtotalval"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="₱ 10,023"
+                    android:textColor="@color/darkgray"
+                    android:fontFamily="@font/poppinsbold"
+                    android:textSize="25sp"/>
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="10dp"
+                android:layout_height="match_parent" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/cornerradius"
+                android:padding="20dp"
+                android:backgroundTint="@color/gray"
+                android:elevation="5dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Total Profit"
+                    android:fontFamily="@font/poppinsmedium"
+                    android:textColor="@color/colorSecondary"
+                    android:textSize="10sp"/>
+
+                <TextView
+                    android:id="@+id/TVtotalprofit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="₱ 10,023"
+                    android:textColor="@color/darkgray"
+                    android:fontFamily="@font/poppinsbold"
+                    android:textSize="25sp"/>
+
+            </LinearLayout>
+
+            
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/cornerradius"
+                android:padding="20dp"
+                android:backgroundTint="@color/gray"
+                android:elevation="5dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Total Items"
+                    android:fontFamily="@font/poppinsmedium"
+                    android:textColor="@color/colorSecondary"
+                    android:textSize="10sp"/>
+
+                <TextView
+                    android:id="@+id/TVtotalitems"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="128"
+                    android:textColor="@color/darkgray"
+                    android:fontFamily="@font/poppinsbold"
+                    android:textSize="25sp"/>
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="10dp"
+                android:layout_height="match_parent" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/cornerradius"
+                android:padding="20dp"
+                android:backgroundTint="@color/gray"
+                android:elevation="5dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Total Category"
+                    android:fontFamily="@font/poppinsmedium"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="10sp"/>
+
+                <TextView
+                    android:id="@+id/TVtotalcat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="12"
+                    android:textColor="@color/darkgray"
+                    android:fontFamily="@font/poppinsbold"
+                    android:textSize="25sp"/>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="5"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Recently Added Items"
+            android:fontFamily="@font/poppinsmedium"
+            android:textSize="10sp"
+            android:textColor="@color/colorSecondary"
+            android:layout_marginBottom="20dp"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/RVitem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_marginBottom="20dp"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:layout_centerVertical="true"
+            tools:listitem="@android:layout/simple_list_item_checked"/>
+
+    </LinearLayout>
+    <Button
+        android:id="@+id/BTNviewall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="View All Items"
+        android:fontFamily="@font/poppinsmedium"
+        android:textSize="15sp"
+        android:backgroundTint="@color/colorSecondary"
+        android:elevation="10dp"/>
+
+</LinearLayout>
