@@ -6,7 +6,7 @@
     app:cardBackgroundColor="@color/home_background"
     app:cardCornerRadius="10dp"
     app:cardElevation="10dp"
-    android:padding="20dp"
+    android:padding="10dp"
     app:cardUseCompatPadding="true">
 
     <LinearLayout
@@ -18,7 +18,7 @@
         <ImageView
             android:id="@+id/IVitemimg"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="120dp"
             android:scaleType="centerCrop"
             android:src="@mipmap/no_image"
             android:background="@drawable/cornerradius"/>

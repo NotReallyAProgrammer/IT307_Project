@@ -12,8 +12,8 @@
     <ImageView
         android:id="@+id/backbtn"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
+       android:layout_marginBottom="10dp"
         android:src="@drawable/backarrow"
         />
     <LinearLayout
@@ -22,6 +22,7 @@
         android:layout_height="0dp"
         android:layout_weight="2"
         android:orientation="vertical"
+        android:visibility="gone"
         >
         <TextView
             android:layout_width="wrap_content"
@@ -44,9 +45,69 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="5"
+        android:layout_weight="6"
         android:orientation="vertical"
-        android:visibility="gone">
+        android:backgroundTint="@color/gray"
+        android:background="@drawable/cornerradius"
+        android:elevation="10dp"
+        android:padding="10dp"
+      >
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/RVsalescart"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="5"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:layout_centerVertical="true"
+            tools:listitem="@android:layout/simple_list_item_checked"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:orientation="vertical">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/colorPrimaryDark"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginHorizontal="20dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="SubTotal"
+                    android:fontFamily="@font/poppinsbold"
+                    android:textSize="15sp"
+                    android:layout_alignParentLeft="true"/>
+
+                <TextView
+                    android:id="@+id/TVsubtotal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="P1200"
+                    android:fontFamily="@font/poppinsbold"
+                    android:textSize="15sp"
+                    android:layout_alignParentRight="true"/>
+
+
+            </RelativeLayout>
+            <Button
+                android:id="@+id/BTNcart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:backgroundTint="@color/colorPrimaryDark"
+                android:text="Confirm"
+                android:fontFamily="@font/poppinsbold"
+                android:textSize="10sp"
+                android:layout_marginTop="10dp"/>
+        </LinearLayout>
 
     </LinearLayout>
 
@@ -58,17 +119,13 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/salesSearch"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Search Items Here"
             app:boxStrokeColor="@color/colorSecondary"
-            app:endIconMode="clear_text"
-            app:endIconTint="@color/black"
             app:hintTextColor="@color/black"
-            app:endIconDrawable="@drawable/searchname"
-            app:startIconTint="@color/black"
-            android:layout_marginBottom="10dp"
+            android:layout_marginVertical="10dp"
             >
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/ETsearch"
@@ -81,6 +138,27 @@
 
 
         </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Categories"
+            android:textSize="15sp"
+            android:fontFamily="@font/poppinsbold"
+            android:textColor="@color/darkgray"
+            android:layout_marginVertical="10dp"
+            />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/RVsalescategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:layout_centerVertical="true"
+            tools:listitem="@android:layout/simple_list_item_checked"/>
 
         <TextView
             android:id="@+id/TVheader"

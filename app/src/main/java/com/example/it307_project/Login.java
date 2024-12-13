@@ -94,6 +94,7 @@ public class Login extends AppCompatActivity {
                             Intent i = new Intent(c, Home.class);
                             i.putExtra("Name",userPass[userPos][1]);
                             startActivity(i);
+                            break;
 
                         }else if(tempCount == userPass.length){
                             TVinvalid.setVisibility(View.VISIBLE);
@@ -117,6 +118,7 @@ public class Login extends AppCompatActivity {
                             Intent i = new Intent(c, Home.class);
                             i.putExtra("Name",Users[userPos][1]);
                             startActivity(i);
+                            break;
 
                         }else if(tempCount == Users.length){
                             TVinvalid.setVisibility(View.VISIBLE);
