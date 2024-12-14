@@ -1,8 +1,10 @@
 package com.example.it307_project;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import androidx.activity.EdgeToEdge;
@@ -27,6 +29,7 @@ import java.util.List;
 public class Sales extends AppCompatActivity {
     RecyclerView RVsalesitem, RVsalescategory,RVsalescart;
     ImageView backbtn;
+    Button BTNcart;
     List<SalesItemModel> salesItemModels = new ArrayList();
     List<CategoryModel> categoryModels = new ArrayList<>();
     List<CartModel> cartModels = new ArrayList<>();
@@ -52,15 +55,12 @@ public class Sales extends AppCompatActivity {
             return insets;
         });
     }
-
-
-
-
     private void initialize() {
         RVsalesitem = findViewById(R.id.RVsalesitem);
         RVsalescategory = findViewById(R.id.RVsalescategory);
         RVsalescart = findViewById(R.id.RVsalescart);
         backbtn = findViewById(R.id.backbtn);
+        BTNcart = findViewById(R.id.BTNcart);
 
 
         backbtn.setOnClickListener(new View.OnClickListener() {
@@ -69,6 +69,16 @@ public class Sales extends AppCompatActivity {
                 finish();
             }
         });
+
+        BTNcart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(c, Reciept.class);
+                startActivity(i);
+            }
+        });
+
+
     }
 
     private void setSalesItemAdapter() {

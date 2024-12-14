@@ -58,6 +58,13 @@ public class Login extends AppCompatActivity {
         Intent intent = getIntent();
         String[][] Users = (String[][]) intent.getSerializableExtra("Users");
 
+        if(Users != null){
+            userPass = Users;
+        }else{
+            userPass = userPass;
+        }
+
+
         BTNconfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,56 +83,56 @@ public class Login extends AppCompatActivity {
                             }, 5000);
                     return;
                 }
+                for (String[] up : userPass){
+                    if (user.equals(up[0]) && pass.equals(up[4])){
+                        userOK = true;
+                        userPos = tempCount;
 
-
-                if(Users == null){
-
-                    for (String[] up : userPass){
-                        if (user.equals(up[0]) && pass.equals(up[4])){
-                            userOK = true;
-                            userPos = tempCount;
-
-                        }else {
-                            tempCount++;
-                        }
-
-                        if(userOK){
-                            Toast.makeText(c, "Logged in Successfully", Toast.LENGTH_SHORT).show();
-                            Intent i = new Intent(c, Home.class);
-                            i.putExtra("Name",userPass[userPos][1]);
-                            startActivity(i);
-                            break;
-
-                        }else if(tempCount == userPass.length){
-                            TVinvalid.setVisibility(View.VISIBLE);
-                            break;
-                        }
+                    }else {
+                        tempCount++;
                     }
 
-                }else {
+                    if(userOK){
+                        Toast.makeText(c, "Logged in Successfully", Toast.LENGTH_SHORT).show();
+                        Intent i = new Intent(c, Home.class);
+                        i.putExtra("Name",userPass[userPos][1]);
+                        startActivity(i);
+                        break;
 
-                    for (String[] up : Users){
-                        if (user.equals(up[0]) && pass.equals(up[4])){
-                            userOK = true;
-                            userPos = tempCount;
-
-                        }else {
-                            tempCount++;
-                        }
-
-                        if(userOK){
-                            Toast.makeText(c, "Logged in Successfully", Toast.LENGTH_SHORT).show();
-                            Intent i = new Intent(c, Home.class);
-                            i.putExtra("Name",Users[userPos][1]);
-                            startActivity(i);
-                            break;
-
-                        }else if(tempCount == Users.length){
-                            TVinvalid.setVisibility(View.VISIBLE);
-                            break;
-                        }
+                    }else if(tempCount == userPass.length){
+                        TVinvalid.setVisibility(View.VISIBLE);
+                        break;
                     }
                 }
+
+//                if(Users == null){
+//
+//
+//
+//                }else {
+//
+//                    for (String[] up : Users){
+//                        if (user.equals(up[0]) && pass.equals(up[4])){
+//                            userOK = true;
+//                            userPos = tempCount;
+//
+//                        }else {
+//                            tempCount++;
+//                        }
+//
+//                        if(userOK){
+//                            Toast.makeText(c, "Logged in Successfully", Toast.LENGTH_SHORT).show();
+//                            Intent i = new Intent(c, Home.class);
+//                            i.putExtra("Name",Users[userPos][1]);
+//                            startActivity(i);
+//                            break;
+//
+//                        }else if(tempCount == Users.length){
+//                            TVinvalid.setVisibility(View.VISIBLE);
+//                            break;
+//                        }
+//                    }
+//                }
 
 
                 new android.os.Handler(Looper.getMainLooper()).postDelayed(
