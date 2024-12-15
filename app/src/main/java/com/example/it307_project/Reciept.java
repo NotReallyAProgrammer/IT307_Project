@@ -1,10 +1,13 @@
 package com.example.it307_project;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -15,7 +18,10 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.Success;
+import com.example.it307_project.Adapter.CreditAdapter;
 import com.example.it307_project.Adapter.ReceiptAdapter;
+import com.example.it307_project.Model.CreditModel;
 import com.example.it307_project.Model.ReceiptModel;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -33,13 +39,15 @@ public class Reciept extends AppCompatActivity {
     
     TextView TVreceiptno, TVreceiptdate, TVreceipttime,TVreceiptchange;
     ImageView backbtn;
-
-    RecyclerView RVrecieptitem;
+    Button BTNcredit, BTNpaid;
+    RecyclerView RVrecieptitem,RVcreditname;
+    LinearLayout LLrecieptcredit;
     TextInputLayout TLreceipt;
     TextInputEditText ETpayment;
-
     List<ReceiptModel> receiptModels = new ArrayList<>();
+    List<CreditModel> creditModels = new ArrayList<>();
     ReceiptAdapter receiptAdapter;
+    CreditAdapter creditAdapter;
     Context c = this;
 
     @Override
@@ -50,12 +58,14 @@ public class Reciept extends AppCompatActivity {
         initialize();
         setTextView();
         setReceiptAdapter();
+        setCreditAdapter();
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
     }
+
     private void initialize() {
         TVreceiptno = findViewById(R.id.TVreceiptno);
         TVreceiptdate = findViewById(R.id.TVreceiptdate);
@@ -64,7 +74,18 @@ public class Reciept extends AppCompatActivity {
         TLreceipt = findViewById(R.id.TLreciept);
         ETpayment = findViewById(R.id.ETpayment);
         RVrecieptitem = findViewById(R.id.RVrecieptitem);
+        RVcreditname = findViewById(R.id.RVcreditname);
         backbtn = findViewById(R.id.backbtn);
+        BTNpaid = findViewById(R.id.BTNpaid);
+        BTNcredit = findViewById(R.id.BTNcredit);
+        LLrecieptcredit = findViewById(R.id.LLrecieptcredit);
+
+        backbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         ETpayment.setOnFocusChangeListener((v, hasFocus) -> {
             if (!hasFocus) {
@@ -74,10 +95,25 @@ public class Reciept extends AppCompatActivity {
             }
         });
 
-        backbtn.setOnClickListener(new View.OnClickListener() {
+        BTNpaid.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                Intent i = new Intent(c, Success.class);
+                startActivity(i);
+            }
+        });
+
+        BTNcredit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (LLrecieptcredit.getVisibility() == View.VISIBLE) {
+                    BTNcredit.setText("Credit");
+                    LLrecieptcredit.setVisibility(View.GONE);
+                }else{
+                    LLrecieptcredit.setVisibility(View.VISIBLE);
+                    BTNcredit.setText("Close");
+                }
             }
         });
     }
@@ -111,6 +147,16 @@ public class Reciept extends AppCompatActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(c, LinearLayoutManager.VERTICAL, false);
         RVrecieptitem.setLayoutManager(layoutManager);
 
+    }
+    private void setCreditAdapter() {
+        creditModels.add(new CreditModel("Sample Name",100));
+        creditModels.add(new CreditModel("Sample Name",100));
+
+        creditAdapter = new CreditAdapter(c,creditModels);
+        RVcreditname.setAdapter(creditAdapter);
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(c, LinearLayoutManager.VERTICAL, false);
+        RVcreditname.setLayoutManager(layoutManager);
     }
 
 }

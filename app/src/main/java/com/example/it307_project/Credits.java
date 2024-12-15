@@ -41,10 +41,10 @@ public class Credits extends AppCompatActivity {
     private void initialize(){
         RVcredit = findViewById(R.id.RVcredit);
 
-        creditModels.add(new CreditModel("Sample Felix","15,000"));
-        creditModels.add(new CreditModel("This Felix","2,000"));
-        creditModels.add(new CreditModel("Sample Name","5,500"));
-        creditModels.add(new CreditModel("Snaa","232323"));
+        creditModels.add(new CreditModel("Sample Felix",500));
+        creditModels.add(new CreditModel("This Felix",500));
+        creditModels.add(new CreditModel("Sample Name",500));
+        creditModels.add(new CreditModel("Snaa",500));
 
 
 

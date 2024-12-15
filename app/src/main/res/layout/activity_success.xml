@@ -1,10 +1,159 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.Success">
+    android:orientation="vertical"
+    tools:context="com.example.Success"
+    android:layout_margin="20dp"
+    android:gravity="center">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+   <LinearLayout
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:orientation="horizontal">
+       <TextView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="Redirecting to home in"
+           android:fontFamily="@font/poppinsbold"
+           android:textSize="15sp"
+           android:textColor="@color/darkgray"
+           android:layout_marginRight="5dp"/>
+       <TextView
+           android:id="@+id/TVsuccessctr"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="4"
+           android:fontFamily="@font/poppinsbold"
+           android:textSize="15sp"
+           android:textColor="@color/darkgray"/>
+   </LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="if your not redirected pls click the button bellow"
+        android:fontFamily="@font/poppinsmedium"
+        android:textColor="@color/darkgray"
+        android:textSize="15sp"
+        android:layout_marginVertical="10dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:backgroundTint="@color/white"
+        android:background="@drawable/cornerradius"
+        android:elevation="5dp"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@mipmap/verified"
+            android:layout_marginBottom="20dp"/>
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Payment Success!"
+            android:fontFamily="@font/poppinsbold"
+            android:textSize="30sp"
+            android:textColor="@color/darkgray"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Payment successfully done."
+            android:fontFamily="@font/poppinsbold"
+            android:textSize="20sp"
+            android:textColor="@color/textDescColor"
+            android:layout_marginBottom="30dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total amount"
+            android:fontFamily="@font/poppinsbold"
+            android:textSize="15sp"
+            android:textColor="@color/textDescColor"
+          />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="P120"
+            android:fontFamily="@font/poppinsbold"
+            android:textSize="25sp"
+            android:textColor="@color/darkgray"
+            android:layout_marginBottom="30dp"/>
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginHorizontal="20dp">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Payment Method"
+                android:fontFamily="@font/poppinsbold"
+                android:textSize="15sp"
+                android:textColor="@color/textDescColor"/>
+
+            <TextView
+                android:id="@+id/TVpaymentmethod"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Credit"
+                android:fontFamily="@font/poppinsbold"
+                android:textSize="15sp"
+                android:textColor="@color/darkgray"
+                android:textAlignment="textEnd"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginVertical="10dp">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Payment Time"
+                android:fontFamily="@font/poppinsbold"
+                android:textSize="15sp"
+                android:textColor="@color/textDescColor"/>
+
+            <TextView
+                android:id="@+id/TVpaymenttime"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="25, Feb 2024,4:00PM"
+                android:fontFamily="@font/poppinsbold"
+                android:textSize="15sp"
+                android:textColor="@color/darkgray"
+                android:textAlignment="textEnd"/>
+        </LinearLayout>
+
+
+        
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/BTNbacktohome"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Back to home"
+        android:textSize="15sp"
+        android:fontFamily="@font/poppinsbold"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:layout_marginTop="15dp"/>
+
+</LinearLayout>

@@ -2,9 +2,9 @@ package com.example.it307_project.Model;
 
 public class CreditModel {
     private String name;
-    private String totalCredit;
+    private float totalCredit;
 
-    public CreditModel(String name, String totalCredit) {
+    public CreditModel(String name, float totalCredit) {
         this.name = name;
         this.totalCredit = totalCredit;
     }
@@ -13,7 +13,7 @@ public class CreditModel {
         return name;
     }
 
-    public String getTotalCredit() {
+    public float getTotalCredit() {
         return totalCredit;
     }
 }

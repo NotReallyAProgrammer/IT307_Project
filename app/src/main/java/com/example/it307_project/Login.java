@@ -30,7 +30,7 @@ public class Login extends AppCompatActivity {
     Button BTNconfirm;
     TextView TVinvalid, TVforgotpass,TVsignup;
     Context c = this;
-        String[][] userPass = {{ "Jeff@email.com","Jeff","1","sample", "12345" },{ "Joan@email.com","Joan","1","sample", "567890" }, { "Dani@email.com","Dani","1","sample", "ASDFGH" }};
+    String[][] userPass = {{ "Jeff@email.com","Jeff","1","sample", "12345" },{ "Joan@email.com","Joan","1","sample", "567890" }, { "Dani@email.com","Dani","1","sample", "ASDFGH" }};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

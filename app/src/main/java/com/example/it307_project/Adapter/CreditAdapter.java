@@ -36,7 +36,7 @@ public class CreditAdapter extends RecyclerView.Adapter<CreditAdapter.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull CreditAdapter.ViewHolder holder, int position) {
         holder.TVname.setText(creditModel.get(position).getName());
-        holder.TVindividualcredit.setText(creditModel.get(position).getTotalCredit());
+        holder.TVindividualcredit.setText("₱"+String.valueOf(creditModel.get(position).getTotalCredit()));
 
     }
 
