@@ -105,36 +105,6 @@ public class Login extends AppCompatActivity {
                     }
                 }
 
-//                if(Users == null){
-//
-//
-//
-//                }else {
-//
-//                    for (String[] up : Users){
-//                        if (user.equals(up[0]) && pass.equals(up[4])){
-//                            userOK = true;
-//                            userPos = tempCount;
-//
-//                        }else {
-//                            tempCount++;
-//                        }
-//
-//                        if(userOK){
-//                            Toast.makeText(c, "Logged in Successfully", Toast.LENGTH_SHORT).show();
-//                            Intent i = new Intent(c, Home.class);
-//                            i.putExtra("Name",Users[userPos][1]);
-//                            startActivity(i);
-//                            break;
-//
-//                        }else if(tempCount == Users.length){
-//                            TVinvalid.setVisibility(View.VISIBLE);
-//                            break;
-//                        }
-//                    }
-//                }
-
-
                 new android.os.Handler(Looper.getMainLooper()).postDelayed(
                         new Runnable() {
                             public void run() {

@@ -1,4 +1,4 @@
-package com.example;
+package com.example.it307_project;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,9 +11,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-
-import com.example.it307_project.Home;
-import com.example.it307_project.R;
 
 public class Success extends AppCompatActivity {
     TextView TVsuccessctr;
@@ -32,8 +29,6 @@ public class Success extends AppCompatActivity {
             return insets;
         });
     }
-
-
 
     private void initialize() {
         TVsuccessctr = findViewById(R.id.TVsuccessctr);
