@@ -160,16 +160,36 @@
             android:layout_centerVertical="true"
             tools:listitem="@android:layout/simple_list_item_checked"/>
 
-        <TextView
-            android:id="@+id/TVheader"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="All Items"
-            android:textSize="15sp"
-            android:fontFamily="@font/poppinsbold"
-            android:textColor="@color/darkgray"
-            android:layout_marginVertical="10dp"
-            />
+            android:orientation="horizontal"
+            android:layout_marginVertical="10dp">
+            <TextView
+                android:id="@+id/TVheader"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="All Items"
+                android:textSize="15sp"
+                android:fontFamily="@font/poppinsbold"
+                android:textColor="@color/darkgray"
+
+                />
+
+            <TextView
+                android:id="@+id/TVclear"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="View All"
+                android:textSize="10sp"
+                android:fontFamily="@font/poppinsregular"
+                android:textColor="@color/colorPrimaryDark"
+                android:textAlignment="textEnd"
+                android:visibility="gone"
+                />
+        </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/RVsalesitem"

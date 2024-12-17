@@ -1,17 +1,22 @@
 package com.example.it307_project.Adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.it307_project.Model.AllItemModel;
 import com.example.it307_project.Model.SalesItemModel;
 import com.example.it307_project.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SalesItemAdapter extends RecyclerView.Adapter<SalesItemAdapter.ViewHolder> {
@@ -20,6 +25,12 @@ public class SalesItemAdapter extends RecyclerView.Adapter<SalesItemAdapter.View
     public SalesItemAdapter(Context c, List<SalesItemModel> salesItemModels){
         this.context = c;
         this.salesItemModels = salesItemModels;
+
+    }
+    public void setFilterList(List<SalesItemModel> filteredList) {
+
+        this.salesItemModels = filteredList;
+        notifyDataSetChanged();
     }
 
 
@@ -35,6 +46,7 @@ public class SalesItemAdapter extends RecyclerView.Adapter<SalesItemAdapter.View
     public void onBindViewHolder(@NonNull SalesItemAdapter.ViewHolder holder, int position) {
         holder.TVsalesname.setText(salesItemModels.get(position).getName());
         holder.TVsalesprice.setText("₱ " + String.valueOf(salesItemModels.get(position).getPrice()));
+        holder.IVsaleimg.setImageResource(salesItemModels.get(position).getImg());
     }
 
     @Override
@@ -45,11 +57,13 @@ public class SalesItemAdapter extends RecyclerView.Adapter<SalesItemAdapter.View
     public class ViewHolder extends RecyclerView.ViewHolder{
 
         TextView TVsalesname ,TVsalesprice;
+        ImageView IVsaleimg;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             TVsalesname = itemView.findViewById(R.id.TVsalesname);
             TVsalesprice = itemView.findViewById(R.id.TVsalesprice);
+            IVsaleimg = itemView.findViewById(R.id.IVsalesimg);
         }
     }
 }

@@ -1,25 +1,18 @@
 package com.example.it307_project.Adapter;
 
 
-import static android.content.ContentValues.TAG;
-
-import static androidx.core.content.ContextCompat.startActivity;
-
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.it307_project.Model.NavModel;
 import com.example.it307_project.R;
-import com.example.it307_project.Sales;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -61,7 +54,7 @@ public class NavAdapter extends RecyclerView.Adapter<NavAdapter.ViewHolder>{
     }
 
     public interface ClickListener {
-        void onPositionClicked(int position);
+        int onPositionClicked(int position);
 
     }
 
@@ -70,7 +63,6 @@ public class NavAdapter extends RecyclerView.Adapter<NavAdapter.ViewHolder>{
          TextView TVnavtitle, TVnavdisc, BTNnavview;
          ImageView IVimg;
          WeakReference<ClickListener> listenerRef;
-
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

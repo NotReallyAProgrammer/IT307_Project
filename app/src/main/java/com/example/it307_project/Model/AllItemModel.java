@@ -1,16 +1,19 @@
 package com.example.it307_project.Model;
 
 public class AllItemModel {
-    private String itemName;
-    private int itemQuantity;
+    private String itemName,itemCategory;
+    private int itemQuantity,itemImg;
     private float itemSrp,itemPrice,itemProfit;
 
-    public AllItemModel(String itemName, int itemQuantity, float itemSrp, float itemPrice, float itemProfit) {
+
+    public AllItemModel(String itemName, String itemCategory, int itemQuantity, float itemSrp, float itemPrice, float itemProfit, int itemImg) {
         this.itemName = itemName;
+        this.itemCategory = itemCategory;
         this.itemQuantity = itemQuantity;
         this.itemSrp = itemSrp;
         this.itemPrice = itemPrice;
         this.itemProfit = itemProfit;
+        this.itemImg = itemImg;
     }
 
     public String getItemName() {
@@ -31,5 +34,13 @@ public class AllItemModel {
 
     public float getItemProfit() {
         return itemProfit;
+    }
+
+    public int getItemImg() {
+        return itemImg;
+    }
+
+    public String getItemCategory() {
+        return itemCategory;
     }
 }

@@ -8,10 +8,10 @@
     android:background="#00000000">
 
     <LinearLayout
+        android:id="@+id/LLcategory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="@drawable/categoryborder"
         android:gravity="center"
         android:layout_gravity="center"
         android:paddingHorizontal="10dp"

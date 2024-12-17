@@ -41,6 +41,10 @@ public class Home extends AppCompatActivity {
                             {"00003","Argentina Corned Beef 150g","Canned","15","36.40","38.00","R.mipmap.argentina"},
                             {"00004","Piattos Cheese 40g","Snacks","20","17.05","20.00","R.mipmap.piatos"}};
 
+    String[] categoryArray = {"Beverage", "Canned", "Noodle","Snacks"};
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,17 +80,22 @@ public class Home extends AppCompatActivity {
 
         navAdapter = new NavAdapter(c,navModels, new NavAdapter.ClickListener() {
             @Override
-            public void onPositionClicked(int position) {
+            public int onPositionClicked(int position) {
                 if(position == 0){
                     Intent i = new Intent(c,Sales.class);
+                    i.putExtra("Items", itemsArray);
+                    i.putExtra("Category", categoryArray);
                     startActivity(i);
                }else if(position == 1){
                     Intent i = new Intent(c, Inventory.class);
+                    i.putExtra("Items", itemsArray);
+                    i.putExtra("Category", categoryArray);
                     startActivity(i);
                 }else if (position == 2) {
                     Intent i = new Intent(c, Credits.class);
                     startActivity(i);
                 }
+                return position;
             }
         });
 
