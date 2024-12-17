@@ -1,16 +1,17 @@
 package com.example.it307_project.Model;
 
 public class ItemModel {
-    private String itemName;
-    private String itemCategory;
-    private String itemQty;
-    private String itemPrice;
+    private String itemName,itemCategory;
+    private int itemQty;
+    private int itemImg;
+    private float itemPrice;
 
-    public ItemModel(String itemPrice, String itemQty, String itemCategory, String itemName) {
+    public ItemModel(float itemPrice, int itemQty, String itemCategory, String itemName, int itemImg) {
         this.itemPrice = itemPrice;
         this.itemQty = itemQty;
         this.itemCategory = itemCategory;
         this.itemName = itemName;
+        this.itemImg = itemImg;
     }
 
     public String getItemName() {
@@ -21,11 +22,15 @@ public class ItemModel {
         return itemCategory;
     }
 
-    public String getItemQty() {
+    public int getItemQty() {
         return itemQty;
     }
 
-    public String getItemPrice() {
+    public float getItemPrice() {
         return itemPrice;
+    }
+
+    public int getItemImg() {
+        return itemImg;
     }
 }

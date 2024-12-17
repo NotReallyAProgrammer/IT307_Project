@@ -65,10 +65,10 @@ public class Inventory extends AppCompatActivity {
     }
 
     private void setItemAdapter(){
-        itemModels.add(new ItemModel("₱100","20","Sample","Sample Item Name"));
-        itemModels.add(new ItemModel("₱100","20","Sample","Sample Item Name2"));
-        itemModels.add(new ItemModel("₱100","20","Sample","Sample Item Name3"));
-        itemModels.add(new ItemModel("₱100","20","Sample","Sample Item Name4"));
+//        itemModels.add(new ItemModel(10,20,"Sample",));
+//        itemModels.add(new ItemModel(20,20,"Sample","Sample Item Name2"));
+//        itemModels.add(new ItemModel(100,20,"Sample","Sample Item Name3"));
+//        itemModels.add(new ItemModel(100,20,"Sample","Sample Item Name4"));
 
         itemadapter = new ItemAdapter(c,itemModels);
         RVitem.setAdapter(itemadapter);

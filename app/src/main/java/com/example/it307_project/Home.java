@@ -1,8 +1,11 @@
 package com.example.it307_project;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -32,6 +35,12 @@ public class Home extends AppCompatActivity {
     NavAdapter navAdapter;
     Context c = this;
 
+    //Items Array
+    String[][] itemsArray = {{"00001", "Kopiko Black Twin","Beverage","10","12.75","16.00","R.mipmap.kopiko"},
+                            {"00002","Lucky Me Chicken 55g","Noodle","20","9.30","12.00","R.mipmap.luckyme"},
+                            {"00003","Argentina Corned Beef 150g","Canned","15","36.40","38.00","R.mipmap.argentina"},
+                            {"00004","Piattos Cheese 40g","Snacks","20","17.05","20.00","R.mipmap.piatos"}};
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,16 +65,14 @@ public class Home extends AppCompatActivity {
         Intent intent = getIntent();
 
         String user = intent.getStringExtra("Name");
-
         TVname.setText("Welcome " + user);
-
 
     }
 
     private void setNavAdapter(){
-        navModels.add(new NavModel("Sales", "This is a simple discription.", "View Sales"));
-        navModels.add(new NavModel("All Items", "This is a simple discription.","View Inventory"));
-        navModels.add(new NavModel("Credits", "This is a simple discription.","View Credits"));
+        navModels.add(new NavModel("Sales", "For sales and credit.", "View Sales",R.mipmap.sales_nav));
+        navModels.add(new NavModel("All Items", "Managing items and category.","View Inventory",R.mipmap.item_nav));
+        navModels.add(new NavModel("Credits", "Adding names paying tabs.","View Credits",R.mipmap.credit_nav));
 
         navAdapter = new NavAdapter(c,navModels, new NavAdapter.ClickListener() {
             @Override
@@ -81,9 +88,6 @@ public class Home extends AppCompatActivity {
                     startActivity(i);
                 }
             }
-
-
-
         });
 
         RVname.setAdapter(navAdapter);
@@ -92,13 +96,15 @@ public class Home extends AppCompatActivity {
 
     }
 
-
-
     private void setItemAdapter(){
-        itemModels.add(new ItemModel("₱100","20","Sample","Sample Item Name"));
-        itemModels.add(new ItemModel("₱100","20","Sample","Sample Item Name2"));
-        itemModels.add(new ItemModel("₱100","20","Sample","Sample Item Name3"));
-        itemModels.add(new ItemModel("₱100","20","Sample","Sample Item Name4"));
+
+        for (String item[] : itemsArray){
+
+            int resId = getResources().getIdentifier(item[6].split("\\.")[2], "mipmap",getPackageName());
+            Log.i(TAG,item[6].split("\\.")[1] );
+            itemModels.add(new ItemModel(Float.parseFloat(item[5]), Integer.parseInt(item[3]),item[2],item[1],resId));
+        }
+
 
         itemadapter = new ItemAdapter(c,itemModels);
         RVitem.setAdapter(itemadapter);

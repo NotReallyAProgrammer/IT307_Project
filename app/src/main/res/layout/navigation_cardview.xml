@@ -39,7 +39,8 @@
                 android:text="This is sample description"
                 android:textSize="10dp"
                 android:fontFamily="@font/poppinsmedium"
-                android:textColor="@color/black"/>
+                android:textColor="@color/darkgray"
+                android:layout_marginVertical="10dp"/>
 
             <Button
                 android:id="@+id/BTNnavview"

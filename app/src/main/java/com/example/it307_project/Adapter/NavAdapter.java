@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,6 +52,7 @@ public class NavAdapter extends RecyclerView.Adapter<NavAdapter.ViewHolder>{
         holder.TVnavtitle.setText(navModel.get(position).getTitle());
         holder.TVnavdisc.setText(navModel.get(position).getDisc());
         holder.BTNnavview.setText(navModel.get(position).getButtonName());
+        holder.IVimg.setImageResource(navModel.get(position).getImage());
     }
 
     @Override
@@ -65,8 +67,9 @@ public class NavAdapter extends RecyclerView.Adapter<NavAdapter.ViewHolder>{
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        private TextView TVnavtitle, TVnavdisc, BTNnavview;
-        private WeakReference<ClickListener> listenerRef;
+         TextView TVnavtitle, TVnavdisc, BTNnavview;
+         ImageView IVimg;
+         WeakReference<ClickListener> listenerRef;
 
 
         public ViewHolder(@NonNull View itemView) {
@@ -75,6 +78,7 @@ public class NavAdapter extends RecyclerView.Adapter<NavAdapter.ViewHolder>{
             TVnavtitle = itemView.findViewById(R.id.TVnavtitle);
             TVnavdisc = itemView.findViewById(R.id.TVnavdisc);
             BTNnavview = itemView.findViewById(R.id.BTNnavview);
+            IVimg = itemView.findViewById(R.id.IVimg);
 
            BTNnavview.setOnClickListener(this);
         }
