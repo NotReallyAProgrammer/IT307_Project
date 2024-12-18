@@ -1,6 +1,8 @@
 package com.example.it307_project.Model;
 
-public class CartModel {
+import java.io.Serializable;
+
+public class CartModel implements Serializable {
 
     private String name;
     private float price;

@@ -4,6 +4,7 @@ import static android.content.ContentValues.TAG;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
@@ -42,7 +43,7 @@ public class Home extends AppCompatActivity {
                             {"00004","Piattos Cheese 40g","Snacks","20","17.05","20.00","R.mipmap.piatos"}};
 
     String[] categoryArray = {"Beverage", "Canned", "Noodle","Snacks"};
-
+    String[][] creditInfoArray = {{"Miguel","200"},{"Felix","500"},{"Mia","230"},{"Janeth","550"}};
 
 
     @Override
@@ -66,11 +67,11 @@ public class Home extends AppCompatActivity {
         RVitem = findViewById(R.id.RVitem);
         TVname = findViewById(R.id.TVname);
 
-        Intent intent = getIntent();
 
-        String user = intent.getStringExtra("Name");
-        TVname.setText("Welcome " + user);
+        SharedPreferences sharedPref = getSharedPreferences("user_session", MODE_PRIVATE);
+        String userName = sharedPref.getString("userName", "defaultName");
 
+        TVname.setText("Welcome " + userName);
     }
 
     private void setNavAdapter(){

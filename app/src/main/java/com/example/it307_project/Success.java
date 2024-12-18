@@ -12,8 +12,12 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.it307_project.Model.ReceiptModel;
+
+import java.util.List;
+
 public class Success extends AppCompatActivity {
-    TextView TVsuccessctr;
+    TextView TVsuccessctr,TVsuccesstotal,TVpaymentmethod,TVpaymenttime,TVpaymentchange,TVpaymentcash;
     Context c= this;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +36,27 @@ public class Success extends AppCompatActivity {
 
     private void initialize() {
         TVsuccessctr = findViewById(R.id.TVsuccessctr);
+        TVsuccesstotal = findViewById(R.id.TVsuccesstotal);
+        TVpaymentmethod = findViewById(R.id.TVpaymentmethod);
+        TVpaymenttime = findViewById(R.id.TVpaymenttime);
+        TVpaymentchange = findViewById(R.id.TVpaymentchange);
+        TVpaymentcash = findViewById(R.id.TVpaymentcash);
+
+
+        Bundle extras = getIntent().getExtras();
+        List<ReceiptModel> receiptModels = (List<ReceiptModel>) extras.getSerializable("Receipt");
+        String date = extras.getString("Date");
+        float total = extras.getFloat("Total");
+        float cash = extras.getFloat("Cash");
+        float change = extras.getFloat("Change");
+        String method = extras.getString("Method");
+
+
+        TVsuccesstotal.setText("₱"+String.valueOf(total));
+        TVpaymentmethod.setText(method);
+        TVpaymentcash.setText("₱"+String.valueOf(cash));
+        TVpaymentchange.setText("₱"+String.valueOf(change));
+        TVpaymenttime.setText(date);
     }
 
     private void timerTexview() {
@@ -43,7 +68,10 @@ public class Success extends AppCompatActivity {
             @Override
             public void onFinish() {
                 Intent i = new Intent(c, Home.class);
+
                 startActivity(i);
+                finish();
+
             }
         }.start();
     }

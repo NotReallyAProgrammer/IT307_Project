@@ -1,6 +1,8 @@
 package com.example.it307_project.Model;
 
-public class ReceiptModel {
+import java.io.Serializable;
+
+public class ReceiptModel implements Serializable {
 
     private String name;
     private int qty;

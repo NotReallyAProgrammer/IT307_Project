@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -33,6 +34,7 @@ import com.example.it307_project.Model.ItemModel;
 import com.example.it307_project.Model.SalesItemModel;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -168,8 +170,13 @@ public class Sales extends AppCompatActivity {
         BTNcart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(c, Reciept.class);
-                startActivity(i);
+                if (!cartModels.isEmpty()){
+                    Intent i = new Intent(c, Reciept.class);
+                    i.putExtra("Items", (Serializable) cartModels);
+                    Log.d("SendingActivity", "CartList: " + cartModels.get(0).getName());
+                    startActivity(i);
+
+                }
             }
         });
 
@@ -195,9 +202,6 @@ public class Sales extends AppCompatActivity {
             float total = price * quantity;
             cartModels.add(new CartModel(name, price, total, quantity, resId));
         }
-
-
-
         cartAdapter.notifyDataSetChanged();
     }
 

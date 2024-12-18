@@ -2,12 +2,14 @@ package com.example.it307_project;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Looper;
-import android.os.Parcelable;
+
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,8 +22,6 @@ import androidx.core.view.WindowInsetsCompat;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Login extends AppCompatActivity {
 
@@ -29,6 +29,7 @@ public class Login extends AppCompatActivity {
     TextInputEditText ETemail, ETpass;
     Button BTNconfirm;
     TextView TVinvalid, TVforgotpass,TVsignup;
+    CheckBox rememberMe;
     Context c = this;
     String[][] userPass = {{ "Jeff@email.com","Jeff","1","sample", "12345" },{ "Joan@email.com","Joan","1","sample", "567890" }, { "Dani@email.com","Dani","1","sample", "ASDFGH" }};
 
@@ -54,17 +55,26 @@ public class Login extends AppCompatActivity {
         TVinvalid = findViewById(R.id.TVinvalid);
         TVforgotpass = findViewById(R.id.TVforgotpass);
         TVsignup = findViewById(R.id.TVsignup);
+        rememberMe = findViewById(R.id.rememberMe);
+
 
         Intent intent = getIntent();
         String[][] Users = (String[][]) intent.getSerializableExtra("Users");
-
-        if(Users != null){
+        if (Users != null) {
             userPass = Users;
-        }else{
-            userPass = userPass;
         }
 
+        SharedPreferences sharedPref = getSharedPreferences("user_session", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        boolean isLoggedIn = sharedPref.getBoolean("isLoggedIn", false);
 
+        if (isLoggedIn) {
+            String email = sharedPref.getString("email", "");
+            String pass = sharedPref.getString("pass", "");
+            rememberMe.setChecked(isLoggedIn);
+            ETemail.setText(email);
+            ETpass.setText(pass);
+        }
         BTNconfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -93,9 +103,19 @@ public class Login extends AppCompatActivity {
                     }
 
                     if(userOK){
+                        if (rememberMe.isChecked()) {
+                            editor.putBoolean("isLoggedIn", true);
+                            editor.putString("email", ETemail.getText().toString());
+                            editor.putString("pass", ETpass.getText().toString());
+                        } else {
+                            editor.putBoolean("isLoggedIn", false);
+                        }
+
                         Toast.makeText(c, "Logged in Successfully", Toast.LENGTH_SHORT).show();
+                        editor.putString("userName", userPass[userPos][1]);
+                        editor.apply();
+
                         Intent i = new Intent(c, Home.class);
-                        i.putExtra("Name",userPass[userPos][1]);
                         startActivity(i);
                         break;
 

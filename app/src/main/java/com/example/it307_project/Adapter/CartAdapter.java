@@ -42,14 +42,13 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull CartAdapter.ViewHolder holder, int position) {
 
+        holder.TVcartname.setText(TextUtils.ellipsize(cartModels.get(holder.getAdapterPosition()).getName(), new TextPaint(), 130, TextUtils.TruncateAt.END).toString());
+        holder.TVcartprice.setText("PHP: ₱" +String.valueOf(cartModels.get(holder.getAdapterPosition()).getPrice()));
+        holder.TVcarttotal.setText("Total: ₱" +String.valueOf(cartModels.get(holder.getAdapterPosition()).getTotal()));
+        holder.TVcartqty.setText(String.valueOf(cartModels.get(holder.getAdapterPosition()).getQty()));
+        holder.IVcart.setImageResource(cartModels.get(holder.getAdapterPosition()).getImage());
 
-        holder.TVcartname.setText(TextUtils.ellipsize(cartModels.get(position).getName(), new TextPaint(), 130, TextUtils.TruncateAt.END).toString());
-        holder.TVcartprice.setText("PHP: ₱" +String.valueOf(cartModels.get(position).getPrice()));
-        holder.TVcarttotal.setText("Total: ₱" +String.valueOf(cartModels.get(position).getTotal()));
-        holder.TVcartqty.setText(String.valueOf(cartModels.get(position).getQty()));
-        holder.IVcart.setImageResource(cartModels.get(position).getImage());
-
-        CartModel cartItem = cartModels.get(position);
+        CartModel cartItem = cartModels.get(holder.getAdapterPosition());
 
         holder.IBadd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,7 +56,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                 int quantity = cartItem.getQty() + 1;  // Increase quantity
                 cartItem.setQty(quantity);  // Update the quantity
                 cartItem.setTotal(cartItem.getPrice() * quantity);  // Update the total
-                notifyItemChanged(position);  // Notify the adapter that data has changed for this position
+                notifyItemChanged(holder.getAdapterPosition());  // Notify the adapter that data has changed for this position
                 salesActivity.refreshCart();
             }
         });
@@ -69,12 +68,12 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                 if (quantity > 0) {
                     cartItem.setQty(quantity);
                     cartItem.setTotal(cartItem.getPrice() * quantity);
-                    notifyItemChanged(position);
+                    notifyItemChanged(holder.getAdapterPosition());
 
                 } else {
 
-                    cartModels.remove(position);
-                    notifyItemRemoved(position);
+                    cartModels.remove(holder.getAdapterPosition());
+                    notifyItemRemoved(holder.getAdapterPosition());
                 }
                 salesActivity.refreshCart();
             }

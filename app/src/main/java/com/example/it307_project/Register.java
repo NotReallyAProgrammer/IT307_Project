@@ -139,7 +139,6 @@ public class Register extends AppCompatActivity {
 
                 Intent i = new Intent(c,Login.class);
                 i.putExtra("Users",newUserPass);
-                //Log.d("User",Arrays.deepToString(newUserPass));
                 startActivity(i);
                 Toast.makeText(c, "Register successfully", Toast.LENGTH_SHORT).show();
 
