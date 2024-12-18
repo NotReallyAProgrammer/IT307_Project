@@ -1,18 +1,22 @@
 package com.example.it307_project;
 
-import static android.content.ContentValues.TAG;
+
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.text.Editable;
+import android.text.TextWatcher;
+
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -27,24 +31,29 @@ import com.example.it307_project.Model.CartModel;
 import com.example.it307_project.Model.CategoryModel;
 import com.example.it307_project.Model.ItemModel;
 import com.example.it307_project.Model.SalesItemModel;
+import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class Sales extends AppCompatActivity {
-    RecyclerView RVsalesitem, RVsalescategory,RVsalescart;
+    RecyclerView RVsalesitem, RVsalescategory, RVsalescart;
     ImageView backbtn;
-    TextView TVheader,TVclear;
+    TextView TVheader, TVclear, TVsubtotal;
+    TextInputEditText ETsearch;
     Button BTNcart;
-    List<SalesItemModel> salesItemModels = new ArrayList();
+
+    LinearLayout LLnoitem, LLcart;
+
+    List<SalesItemModel> salesItemModels = new ArrayList<>();
     List<CategoryModel> categoryModels = new ArrayList<>();
     List<CartModel> cartModels = new ArrayList<>();
     SalesItemAdapter salesItemAdapter;
     CategoryAdapter categoryAdapter;
     CartAdapter cartAdapter;
 
-    Context c= this;
+    Context c = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,20 +61,24 @@ public class Sales extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_sales);
         initialize();
-
-        setCartAdapter();
+        calculateSubtotal();
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
     }
+
     private void initialize() {
+        LLcart = findViewById(R.id.LLcart);
+        LLnoitem = findViewById(R.id.Llnoitem);
         RVsalesitem = findViewById(R.id.RVsalesitem);
         RVsalescategory = findViewById(R.id.RVsalescategory);
         RVsalescart = findViewById(R.id.RVsalescart);
         TVheader = findViewById(R.id.TVheader);
         TVclear = findViewById(R.id.TVclear);
+        TVsubtotal = findViewById(R.id.TVsubtotal);
+        ETsearch = findViewById(R.id.ETsearch);
         backbtn = findViewById(R.id.backbtn);
         BTNcart = findViewById(R.id.BTNcart);
 
@@ -73,24 +86,33 @@ public class Sales extends AppCompatActivity {
         String[] categoryArray = intent.getStringArrayExtra("Category");
         String[][] itemsArray = (String[][]) intent.getSerializableExtra("Items");
 
-        //Setting Adapters
-
-
-        // |Items
-        for (String item[] : itemsArray){
-            int resId = getResources().getIdentifier(item[6].split("\\.")[2], "mipmap",getPackageName());
-            salesItemModels.add(new SalesItemModel(item[1],item[2],Float.parseFloat(item[5]),resId));
+        // Setting Adapters
+        // Items
+        for (String[] item : itemsArray) {
+            int resId = getResources().getIdentifier(item[6].split("\\.")[2], "mipmap", getPackageName());
+            salesItemModels.add(new SalesItemModel(item[1], item[2], Float.parseFloat(item[5]), resId));
         }
 
-        salesItemAdapter = new SalesItemAdapter(c,salesItemModels);
+        salesItemAdapter = new SalesItemAdapter(c, salesItemModels, new SalesItemAdapter.ClickListener() {
+            @Override
+            public void onPositionClicked(int position) {
+                setCartAdapter(position);
+                calculateSubtotal();
+                updateCart();
+            }
+        });
         RVsalesitem.setAdapter(salesItemAdapter);
-
         GridLayoutManager mGridLayoutManager = new GridLayoutManager(c, 3);
         RVsalesitem.setLayoutManager(mGridLayoutManager);
 
+        // Cart
+        cartAdapter = new CartAdapter(c, cartModels, this);
+        RVsalescart.setAdapter(cartAdapter);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(c, LinearLayoutManager.VERTICAL, false);
+        RVsalescart.setLayoutManager(layoutManager);
 
-        // |Category
-        for (String category : categoryArray){
+        // Category
+        for (String category : categoryArray) {
             categoryModels.add(new CategoryModel(category));
         }
         categoryAdapter = new CategoryAdapter(c, categoryModels, new CategoryAdapter.ClickListener() {
@@ -103,11 +125,30 @@ public class Sales extends AppCompatActivity {
             }
         });
         RVsalescategory.setAdapter(categoryAdapter);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(c, LinearLayoutManager.HORIZONTAL, false);
-        RVsalescategory.setLayoutManager(layoutManager);
+        LinearLayoutManager cartlayoutManager = new LinearLayoutManager(c, LinearLayoutManager.HORIZONTAL, false);
+        RVsalescategory.setLayoutManager(cartlayoutManager);
+
+        // Search
+        ETsearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String query = s.toString();
+                searchFilter(query);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
 
-        //Click Listeners
+        // Click Listeners
         backbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -121,7 +162,6 @@ public class Sales extends AppCompatActivity {
                 clearFilter();
                 TVheader.setText("All Items");
                 TVclear.setVisibility(View.GONE);
-
             }
         });
 
@@ -132,32 +172,87 @@ public class Sales extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
     }
 
+    private void setCartAdapter(int position) {
+        String name = salesItemModels.get(position).getName();
+        float price = salesItemModels.get(position).getPrice();
+        int resId = salesItemModels.get(position).getImg();
+        int quantity = 1;
+
+        boolean itemExists = false;
+        for (CartModel cartItem : cartModels) {
+            if (cartItem.getName().equals(name)) {
+                cartItem.setQty(cartItem.getQty() + 1);
+                cartItem.setTotal(cartItem.getQty() * price);
+                itemExists = true;
+                break;
+            }
+        }
+
+        if (!itemExists) {
+            float total = price * quantity;
+            cartModels.add(new CartModel(name, price, total, quantity, resId));
+        }
+
+
+
+        cartAdapter.notifyDataSetChanged();
+    }
+
+    private float calculateSubtotal() {
+        float subtotal = 0.0f;
+        for (CartModel cartItem : cartModels) {
+            subtotal += cartItem.getTotal();
+        }
+
+        return subtotal;
+    }
+
+    private void updateCart() {
+        float subtotal = calculateSubtotal();
+        if (cartModels.isEmpty() || subtotal <= 0) {
+
+            LLnoitem.setVisibility(View.VISIBLE);
+            LLcart.setVisibility(View.GONE);
+        } else {
+
+            LLcart.setVisibility(View.VISIBLE);
+            LLnoitem.setVisibility(View.GONE);
+        }
+
+
+        TVsubtotal.setText("₱" + String.format("%.2f", subtotal));
+    }
+
+    public void refreshCart() {
+        calculateSubtotal();
+        updateCart();
+    }
+
+    private void searchFilter(String result) {
+        List<SalesItemModel> filterList = new ArrayList<>();
+        for (SalesItemModel item : salesItemModels) {
+            if (item.getName().toLowerCase().contains(result.toLowerCase())) {
+                filterList.add(item);
+            }
+        }
+        salesItemAdapter.setFilterList(filterList);
+    }
+
+    private void clearFilter() {
+        categoryAdapter.resetSelection();
+        salesItemAdapter.setFilterList(salesItemModels);
+    }
 
     private void catFilter(String result) {
         List<SalesItemModel> filterList = new ArrayList<>();
-        for(SalesItemModel item : salesItemModels){
-            if(item.getCategory().toLowerCase().equals(result.toLowerCase())) {
+        for (SalesItemModel item : salesItemModels) {
+            if (item.getCategory().toLowerCase().equals(result.toLowerCase())) {
                 filterList.add(item);
             }
-            salesItemAdapter.setFilterList(filterList);
-
         }
-    }
-    private void setCartAdapter() {
-        cartModels.add(new CartModel("Sample Name",100,200));
-        cartModels.add(new CartModel("Sample Name",100,200));
-        cartModels.add(new CartModel("Sample Name",100,200));
-
-        cartAdapter = new CartAdapter(c, cartModels);
-        RVsalescart.setAdapter(cartAdapter);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(c, LinearLayoutManager.VERTICAL, false);
-        RVsalescart.setLayoutManager(layoutManager);
-    }
-    private void clearFilter(){
-        categoryAdapter.resetSelection();
-        salesItemAdapter.setFilterList(salesItemModels);
-
+        salesItemAdapter.setFilterList(filterList);
     }
 }

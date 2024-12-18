@@ -9,7 +9,8 @@
     android:elevation="5dp">
 
     <LinearLayout
-        android:layout_width="100dp"
+        android:id="@+id/LLitem"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="10dp"
@@ -19,7 +20,7 @@
             android:id="@+id/IVsalesimg"
             android:layout_width="match_parent"
             android:layout_height="70dp"
-            android:scaleType="centerCrop"
+            android:scaleType="fitCenter"
             android:src="@mipmap/no_image"/>
 
         <TextView

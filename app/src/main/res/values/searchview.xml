@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="CustomSearchViewStyle">
+        <!-- Optional, to set hint color -->
+        <item name="android:textColor">@color/black</item> <!-- Optional, to set text color -->
+        <item name="android:fontFamily">@font/poppinsmedium</item>
+        <item name="android:textSize">10sp</item>
+    </style>
+</resources>
