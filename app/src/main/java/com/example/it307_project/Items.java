@@ -65,11 +65,26 @@ public class Items extends AppCompatActivity {
         // |Items
         for (String item[] : itemsArray){
             int resId = 0;
-            if(item[6].contains("R")){
-                 resId = getResources().getIdentifier(item[6].split("\\.")[2], "mipmap",getPackageName());
+            String itemImgByte = "";
+
+            if (item[6].contains("R")) {
+                resId = getResources().getIdentifier(item[6].split("\\.")[2], "mipmap", getPackageName());
+            } else {
+                itemImgByte = item[6];
             }
+
+            Log.i("Img", "initialize: " + itemImgByte);
             String formattedValue = df.format(Float.parseFloat(item[5]) -  Float.parseFloat(item[4]));
-            allItemModels.add(new AllItemModel(item[1],item[3] ,Integer.parseInt(item[3]),Float.parseFloat(item[4]),Float.parseFloat(item[5]),Float.parseFloat(formattedValue),resId,item[6]));
+            allItemModels.add(new AllItemModel(
+                    item[1], // Item Name
+                    item[3], // Quantity
+                    Integer.parseInt(item[3]), // Item Quantity
+                    Float.parseFloat(item[4]), // Item Price
+                    Float.parseFloat(item[5]), // Item SRP
+                    Float.parseFloat(formattedValue), // Profit
+                    resId, // Image Resource ID
+                    itemImgByte // Image Byte String
+            ));
         }
 
         allItemAdapter = new AllItemAdapter(c, allItemModels);

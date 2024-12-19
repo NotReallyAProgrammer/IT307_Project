@@ -1,12 +1,14 @@
 package com.example.it307_project.Model;
 
-public class AllItemModel {
-    private String itemName,itemCategory;
+import java.io.Serializable;
+
+public class AllItemModel implements Serializable {
+    private String itemName,itemCategory,itemImgByte;
     private int itemQuantity,itemImg;
     private float itemSrp,itemPrice,itemProfit;
 
 
-    public AllItemModel(String itemName, String itemCategory, int itemQuantity, float itemSrp, float itemPrice, float itemProfit, int itemImg) {
+    public AllItemModel(String itemName, String itemCategory, int itemQuantity, float itemSrp, float itemPrice, float itemProfit, int itemImg,String itemImgByte) {
         this.itemName = itemName;
         this.itemCategory = itemCategory;
         this.itemQuantity = itemQuantity;
@@ -14,6 +16,7 @@ public class AllItemModel {
         this.itemPrice = itemPrice;
         this.itemProfit = itemProfit;
         this.itemImg = itemImg;
+        this.itemImgByte = itemImgByte;
     }
 
     public String getItemName() {
@@ -38,6 +41,10 @@ public class AllItemModel {
 
     public int getItemImg() {
         return itemImg;
+    }
+
+    public String getItemImgByte() {
+        return itemImgByte;
     }
 
     public String getItemCategory() {
