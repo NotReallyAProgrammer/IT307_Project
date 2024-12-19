@@ -53,10 +53,10 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         holder.IBadd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int quantity = cartItem.getQty() + 1;  // Increase quantity
-                cartItem.setQty(quantity);  // Update the quantity
-                cartItem.setTotal(cartItem.getPrice() * quantity);  // Update the total
-                notifyItemChanged(holder.getAdapterPosition());  // Notify the adapter that data has changed for this position
+                int quantity = cartItem.getQty() + 1;
+                cartItem.setQty(quantity);
+                cartItem.setTotal(cartItem.getPrice() * quantity);
+                notifyItemChanged(holder.getAdapterPosition());
                 salesActivity.refreshCart();
             }
         });

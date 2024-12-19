@@ -3,6 +3,9 @@ package com.example.it307_project;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,6 +21,7 @@ import com.example.it307_project.Model.AllItemModel;
 import com.example.it307_project.Model.CategoryModel;
 import com.example.it307_project.Model.ItemModel;
 
+import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +29,7 @@ import java.util.List;
 public class Items extends AppCompatActivity {
 
     RecyclerView RVcategory, RVallitem;
+    Button BTNconfirm;
     List<CategoryModel> categoryModels = new ArrayList<>();
     List<AllItemModel> allItemModels = new ArrayList<>();
     AllItemAdapter allItemAdapter;
@@ -49,6 +54,7 @@ public class Items extends AppCompatActivity {
     private void initialize() {
         RVcategory = findViewById(R.id.RVcategory);
         RVallitem = findViewById(R.id.RVallitem);
+        BTNconfirm = findViewById(R.id.BTNconfirm);
 
         Intent intent = getIntent();
         String[][] itemsArray = (String[][]) intent.getSerializableExtra("Items");
@@ -58,9 +64,12 @@ public class Items extends AppCompatActivity {
         //Setting Item Adapter
         // |Items
         for (String item[] : itemsArray){
-            int resId = getResources().getIdentifier(item[6].split("\\.")[2], "mipmap",getPackageName());
+            int resId = 0;
+            if(item[6].contains("R")){
+                 resId = getResources().getIdentifier(item[6].split("\\.")[2], "mipmap",getPackageName());
+            }
             String formattedValue = df.format(Float.parseFloat(item[5]) -  Float.parseFloat(item[4]));
-            allItemModels.add(new AllItemModel(item[1],item[3] ,Integer.parseInt(item[3]),Float.parseFloat(item[4]),Float.parseFloat(item[5]),Float.parseFloat(formattedValue),resId));
+            allItemModels.add(new AllItemModel(item[1],item[3] ,Integer.parseInt(item[3]),Float.parseFloat(item[4]),Float.parseFloat(item[5]),Float.parseFloat(formattedValue),resId,item[6]));
         }
 
         allItemAdapter = new AllItemAdapter(c, allItemModels);
@@ -82,8 +91,16 @@ public class Items extends AppCompatActivity {
         RVcategory.setAdapter(categoryAdapter);
         LinearLayoutManager catlayoutManager = new LinearLayoutManager(c, LinearLayoutManager.HORIZONTAL, false);
         RVcategory.setLayoutManager(catlayoutManager);
+
+        BTNconfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(c,AddItem.class);
+                i.putExtra("Category",categoryArray);
+                i.putExtra("Items", itemsArray);
+                startActivity(i);
+            }
+        });
     }
-
-
 
 }

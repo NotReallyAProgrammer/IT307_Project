@@ -70,7 +70,6 @@ public class Register extends AppCompatActivity {
         ETanswer = findViewById(R.id.ETanswer);
         question = findViewById(R.id.questions);
         menu = findViewById(R.id.menu);
-
         BTNconfirm = findViewById(R.id.BTNconfirm);
 
 

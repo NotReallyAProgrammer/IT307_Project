@@ -110,15 +110,19 @@ android:layout_marginHorizontal="30dp">
 
             <CheckBox
                 android:id="@+id/rememberMe"
-                style="@style/Widget.AppCompat.CompoundButton.CheckBox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:buttonTint="@color/colorSecondary"
-                android:fontFamily="@font/poppinsregular"
-                android:text="Remember me"
-                android:textColorHighlight="@color/colorPrimary" />
-            
+                android:buttonTint="@color/colorPrimaryDark"
+                android:buttonTintMode="multiply"
+
+            android:text="Remember me"
+            android:checked="true"
+            android:textColorHighlight="@color/colorPrimary" />
+
+
+
+
             <TextView
                 android:id="@+id/TVforgotpass"
                 android:layout_width="0dp"

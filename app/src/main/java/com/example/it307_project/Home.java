@@ -3,13 +3,17 @@ package com.example.it307_project;
 import static android.content.ContentValues.TAG;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -24,12 +28,14 @@ import com.example.it307_project.Model.ItemModel;
 import com.example.it307_project.Model.NavModel;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Home extends AppCompatActivity {
 
     TextView TVname;
     RecyclerView RVname,RVitem;
+    ImageButton IBlogout;
     List<NavModel> navModels = new ArrayList<>();
     List<ItemModel> itemModels = new ArrayList<>();
     ItemAdapter itemadapter;
@@ -66,12 +72,36 @@ public class Home extends AppCompatActivity {
         RVname = findViewById(R.id.RVname);
         RVitem = findViewById(R.id.RVitem);
         TVname = findViewById(R.id.TVname);
-
+        IBlogout = findViewById(R.id.IBlogout);
 
         SharedPreferences sharedPref = getSharedPreferences("user_session", MODE_PRIVATE);
         String userName = sharedPref.getString("userName", "defaultName");
 
         TVname.setText("Welcome " + userName);
+
+        IBlogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder logout = new AlertDialog.Builder(c);
+                logout.setTitle("Log out!").setMessage("Are you sure you want to log out?").setCancelable(true).setPositiveButton("Logout", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        SharedPreferences.Editor editor = sharedPref.edit();
+                        editor.clear();
+                        editor.apply();
+
+                        Intent intent = new Intent(c, Login.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                });
+
+                AlertDialog alert = logout.create();
+                alert.show();
+
+            }
+        });
+
     }
 
     private void setNavAdapter(){
@@ -109,12 +139,12 @@ public class Home extends AppCompatActivity {
     private void setItemAdapter(){
 
         for (String item[] : itemsArray){
-
             int resId = getResources().getIdentifier(item[6].split("\\.")[2], "mipmap",getPackageName());
             Log.i(TAG,item[6].split("\\.")[1] );
             itemModels.add(new ItemModel(Float.parseFloat(item[5]), Integer.parseInt(item[3]),item[2],item[1],resId));
         }
 
+        Collections.reverse(itemModels);
 
         itemadapter = new ItemAdapter(c,itemModels);
         RVitem.setAdapter(itemadapter);
