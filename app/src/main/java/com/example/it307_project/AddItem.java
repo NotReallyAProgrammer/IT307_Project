@@ -161,6 +161,7 @@ public class AddItem extends AppCompatActivity {
                 i.putExtra("Items",newItem);
                 i.putExtra("Category",categoryArray);
                 startActivity(i);
+                finish();
             }
         });
 

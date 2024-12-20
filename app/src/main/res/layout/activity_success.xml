@@ -120,10 +120,12 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/LLpaidcash"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginVertical="10dp"
+            android:visibility="gone"
             >
             <TextView
                 android:layout_width="0dp"
@@ -147,10 +149,40 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/LLcreditname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginVertical="10dp"
+            >
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Credit Name"
+                android:fontFamily="@font/poppinsbold"
+                android:textSize="15sp"
+                android:textColor="@color/textDescColor"/>
+
+            <TextView
+                android:id="@+id/TVcreditname"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Miguel"
+                android:fontFamily="@font/poppinsbold"
+                android:textSize="15sp"
+                android:textColor="@color/darkgray"
+                android:textAlignment="textEnd"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/LLpaidchange"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginBottom="10dp"
+            android:visibility="gone"
             >
             <TextView
                 android:layout_width="0dp"
@@ -163,6 +195,35 @@
 
             <TextView
                 android:id="@+id/TVpaymentchange"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="P200"
+                android:fontFamily="@font/poppinsbold"
+                android:textSize="15sp"
+                android:textColor="@color/darkgray"
+                android:textAlignment="textEnd"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/LLcredittotal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="10dp"
+            android:visibility="visible"
+            >
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="New Total Credit"
+                android:fontFamily="@font/poppinsbold"
+                android:textSize="15sp"
+                android:textColor="@color/textDescColor"/>
+
+            <TextView
+                android:id="@+id/TVcredittotal"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"

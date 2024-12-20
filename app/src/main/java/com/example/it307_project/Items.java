@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,6 +31,7 @@ public class Items extends AppCompatActivity {
 
     RecyclerView RVcategory, RVallitem;
     Button BTNconfirm;
+    ImageView backbtn;
     List<CategoryModel> categoryModels = new ArrayList<>();
     List<AllItemModel> allItemModels = new ArrayList<>();
     AllItemAdapter allItemAdapter;
@@ -55,12 +57,12 @@ public class Items extends AppCompatActivity {
         RVcategory = findViewById(R.id.RVcategory);
         RVallitem = findViewById(R.id.RVallitem);
         BTNconfirm = findViewById(R.id.BTNconfirm);
+        backbtn = findViewById(R.id.backbtn);
 
         Intent intent = getIntent();
         String[][] itemsArray = (String[][]) intent.getSerializableExtra("Items");
         String[] categoryArray = intent.getStringArrayExtra("Category");
         DecimalFormat df = new DecimalFormat("#.##");
-        // {"00004","Piattos Cheese 40g","Snacks","20","17.05","20.00","R.mipmap.piatos"}
         //Setting Item Adapter
         // |Items
         for (String item[] : itemsArray){
@@ -73,14 +75,15 @@ public class Items extends AppCompatActivity {
                 itemImgByte = item[6];
             }
 
-            Log.i("Img", "initialize: " + itemImgByte);
+
             String formattedValue = df.format(Float.parseFloat(item[5]) -  Float.parseFloat(item[4]));
             allItemModels.add(new AllItemModel(
+                    item[0],//Item ID
                     item[1], // Item Name
-                    item[3], // Quantity
+                    item[2], //Category
                     Integer.parseInt(item[3]), // Item Quantity
-                    Float.parseFloat(item[4]), // Item Price
-                    Float.parseFloat(item[5]), // Item SRP
+                    Float.parseFloat(item[5]), // Item Price
+                    Float.parseFloat(item[4]), // Item SRP
                     Float.parseFloat(formattedValue), // Profit
                     resId, // Image Resource ID
                     itemImgByte // Image Byte String
@@ -114,8 +117,21 @@ public class Items extends AppCompatActivity {
                 i.putExtra("Category",categoryArray);
                 i.putExtra("Items", itemsArray);
                 startActivity(i);
+                finish();
             }
         });
+
+        backbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(c, Inventory.class);
+                i.putExtra("Category",categoryArray);
+                i.putExtra("Items",itemsArray);
+                startActivity(i);
+            }
+        });
+
+
     }
 
 }

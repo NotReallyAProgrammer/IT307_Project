@@ -1,6 +1,11 @@
 package com.example.it307_project.Adapter;
 
+
+import static com.example.it307_project.Adapter.StringToByte.stringToByteArray;
+
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.text.TextPaint;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -23,7 +28,7 @@ import java.util.List;
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     Context context;
     List<CartModel> cartModels;
-    private Sales salesActivity;  // Reference to the activity to call refres
+    private Sales salesActivity;
 
     public CartAdapter(Context c, List<CartModel>cartModels, Sales sales){
         this.context = c;
@@ -46,10 +51,20 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         holder.TVcartprice.setText("PHP: ₱" +String.valueOf(cartModels.get(holder.getAdapterPosition()).getPrice()));
         holder.TVcarttotal.setText("Total: ₱" +String.valueOf(cartModels.get(holder.getAdapterPosition()).getTotal()));
         holder.TVcartqty.setText(String.valueOf(cartModels.get(holder.getAdapterPosition()).getQty()));
-        holder.IVcart.setImageResource(cartModels.get(holder.getAdapterPosition()).getImage());
 
+
+        if (cartModels.get(position).getImageResid() == 0) {
+            byte[] byteArrayConverted = stringToByteArray(cartModels.get(position).getImageByte());
+            if (byteArrayConverted.length > 0) {
+                Bitmap bitmap = BitmapFactory.decodeByteArray(byteArrayConverted, 0, byteArrayConverted.length);
+                holder.IVcart.setImageBitmap(bitmap);
+            }
+        } else {
+            holder.IVcart.setImageResource(cartModels.get(position).getImageResid());
+        }
+
+        //Add and minus quantity
         CartModel cartItem = cartModels.get(holder.getAdapterPosition());
-
         holder.IBadd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -78,7 +93,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                 salesActivity.refreshCart();
             }
         });
-
 
     }
 

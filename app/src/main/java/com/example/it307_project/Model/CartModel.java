@@ -4,17 +4,19 @@ import java.io.Serializable;
 
 public class CartModel implements Serializable {
 
-    private String name;
+    private String name,imageByte,id;
     private float price;
     private float total;
-    private int qty,image;
+    private int qty,imageResid;
 
-    public CartModel(String name, float price, float total, int qty, int image) {
+    public CartModel(String id,String name, float price, float total, int qty, int imageResid, String imageByte) {
+        this.id = id;
         this.name = name;
         this.price = price;
         this.total = total;
         this.qty = qty;
-        this.image = image;
+        this.imageByte = imageByte;
+        this.imageResid = imageResid;
     }
 
     public String getName() {
@@ -45,7 +47,15 @@ public class CartModel implements Serializable {
         this.qty = qty;
     }
 
-    public int getImage() {
-        return image;
+    public int getImageResid() {
+        return imageResid;
+    }
+
+    public String getImageByte() {
+        return imageByte;
+    }
+
+    public String getId() {
+        return id;
     }
 }

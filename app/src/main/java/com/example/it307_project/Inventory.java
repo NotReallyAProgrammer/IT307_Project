@@ -20,9 +20,12 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.it307_project.Adapter.ItemAdapter;
+import com.example.it307_project.Model.AllItemModel;
 import com.example.it307_project.Model.ItemModel;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Inventory extends AppCompatActivity {
@@ -32,6 +35,7 @@ public class Inventory extends AppCompatActivity {
     Button BTNviewall;
     ImageView IVback;
     List<ItemModel> itemModels = new ArrayList<>();
+    List<AllItemModel> allItemModels = new ArrayList<>();
     ItemAdapter itemadapter;
     Context c = this;
 
@@ -57,16 +61,38 @@ public class Inventory extends AppCompatActivity {
         BTNviewall = findViewById(R.id.BTNviewall);
         IVback = findViewById(R.id.backbtn);
         Intent intent = getIntent();
+
         String[][] itemsArray = (String[][]) intent.getSerializableExtra("Items");
         String[] categoryArray = intent.getStringArrayExtra("Category");
 
         float totalVal = 0;
         float profit= 0;
+        DecimalFormat df = new DecimalFormat("#.##");
 
         //Setting Item Adapter
         for (String item[] : itemsArray){
-            int resId = getResources().getIdentifier(item[6].split("\\.")[2], "mipmap",getPackageName());
-            itemModels.add(new ItemModel(Float.parseFloat(item[5]), Integer.parseInt(item[3]),item[2],item[1],resId));
+            int resId = 0;
+            String itemImgByte = "";
+
+            if (item[6].contains("R")) {
+                resId = getResources().getIdentifier(item[6].split("\\.")[2], "mipmap", getPackageName());
+            } else {
+                itemImgByte = item[6];
+            }
+
+            // {"00004","Piattos Cheese 40g","Snacks","20","17.05","20.00","R.mipmap.piatos"}
+            String formattedValue = df.format(Float.parseFloat(item[5]) -  Float.parseFloat(item[4]));
+            allItemModels.add(new AllItemModel(
+                   item[0],//Item ID
+                    item[1], // Item Name
+                    item[2], //Category
+                    Integer.parseInt(item[3]), // Item Quantity
+                    Float.parseFloat(item[5]), // Item Price
+                    Float.parseFloat(item[4]), // Item SRP
+                    Float.parseFloat(formattedValue), // Profit
+                    resId, // Image Resource ID
+                    itemImgByte // Image Byte String
+            ));
 
             //
             int quantity = Integer.parseInt(item[3]);
@@ -80,7 +106,8 @@ public class Inventory extends AppCompatActivity {
             profit += sellingTotal;
         }
 
-        itemadapter = new ItemAdapter(c,itemModels);
+        Collections.reverse(allItemModels);
+        itemadapter = new ItemAdapter(c,allItemModels);
         RVitem.setAdapter(itemadapter);
 
         GridLayoutManager mGridLayoutManager = new GridLayoutManager(c, 2);
@@ -98,6 +125,10 @@ public class Inventory extends AppCompatActivity {
         IVback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent i = new Intent(c, Home.class);
+                i.putExtra("Category",categoryArray);
+                i.putExtra("Items",itemsArray);
+                startActivity(i);
                 finish();
             }
         });

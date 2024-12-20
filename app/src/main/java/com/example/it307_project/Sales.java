@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -28,15 +27,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.it307_project.Adapter.CartAdapter;
 import com.example.it307_project.Adapter.CategoryAdapter;
 import com.example.it307_project.Adapter.SalesItemAdapter;
+import com.example.it307_project.Model.AllItemModel;
 import com.example.it307_project.Model.CartModel;
 import com.example.it307_project.Model.CategoryModel;
-import com.example.it307_project.Model.ItemModel;
-import com.example.it307_project.Model.SalesItemModel;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Sales extends AppCompatActivity {
@@ -48,7 +46,7 @@ public class Sales extends AppCompatActivity {
 
     LinearLayout LLnoitem, LLcart;
 
-    List<SalesItemModel> salesItemModels = new ArrayList<>();
+    List<AllItemModel> allItemModels = new ArrayList<>();
     List<CategoryModel> categoryModels = new ArrayList<>();
     List<CartModel> cartModels = new ArrayList<>();
     SalesItemAdapter salesItemAdapter;
@@ -87,18 +85,41 @@ public class Sales extends AppCompatActivity {
         Intent intent = getIntent();
         String[] categoryArray = intent.getStringArrayExtra("Category");
         String[][] itemsArray = (String[][]) intent.getSerializableExtra("Items");
-
+        String[][] creditArray =  (String[][]) intent.getSerializableExtra("Credit");
+        DecimalFormat df = new DecimalFormat("#.##");
         // Setting Adapters
         // Items
         for (String[] item : itemsArray) {
-            int resId = getResources().getIdentifier(item[6].split("\\.")[2], "mipmap", getPackageName());
-            salesItemModels.add(new SalesItemModel(item[1], item[2], Float.parseFloat(item[5]), resId));
+            int resId = 0;
+
+            String itemImgByte = "";
+
+            if (item[6].contains("R")) {
+                resId = getResources().getIdentifier(item[6].split("\\.")[2], "mipmap", getPackageName());
+            } else {
+                itemImgByte = item[6];
+            }
+
+            //
+            String formattedValue = df.format(Float.parseFloat(item[5]) -  Float.parseFloat(item[4]));
+            allItemModels.add(new AllItemModel(
+                    item[0],//Item ID
+                    item[1], //Item Name
+                    item[2], //Item Category
+                    Integer.parseInt(item[3]), // Item Quantity
+                    Float.parseFloat(item[5]), // Item Price
+                    Float.parseFloat(item[4]), // Item SRP
+                    Float.parseFloat(formattedValue), // Profit
+                    resId, // Image Resource ID
+                    itemImgByte // Image Byte String
+            ));
         }
 
-        salesItemAdapter = new SalesItemAdapter(c, salesItemModels, new SalesItemAdapter.ClickListener() {
+        salesItemAdapter = new SalesItemAdapter(c, allItemModels, new SalesItemAdapter.ClickListener() {
             @Override
-            public void onPositionClicked(int position) {
-                setCartAdapter(position);
+            public void onIdCLick(String id) {
+
+                setCartAdapter(id);
                 calculateSubtotal();
                 updateCart();
             }
@@ -120,9 +141,11 @@ public class Sales extends AppCompatActivity {
         categoryAdapter = new CategoryAdapter(c, categoryModels, new CategoryAdapter.ClickListener() {
             @Override
             public void onPositionClicked(int position) {
+
                 String result = categoryArray[position];
                 catFilter(result);
                 TVclear.setVisibility(View.VISIBLE);
+
                 TVheader.setText(result);
             }
         });
@@ -139,8 +162,17 @@ public class Sales extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                String query = s.toString();
-                searchFilter(query);
+                if (count == 0){
+                    clearFilter();
+                    TVheader.setText("All Items");
+                    TVclear.setVisibility(View.GONE);
+                }else{
+                    String query = s.toString();
+                    searchFilter(query);
+                    TVclear.setVisibility(View.VISIBLE);
+                    categoryAdapter.resetSelection();
+                }
+
             }
 
             @Override
@@ -164,6 +196,8 @@ public class Sales extends AppCompatActivity {
                 clearFilter();
                 TVheader.setText("All Items");
                 TVclear.setVisibility(View.GONE);
+                ETsearch.clearFocus();
+                ETsearch.setText(null);
             }
         });
 
@@ -173,7 +207,7 @@ public class Sales extends AppCompatActivity {
                 if (!cartModels.isEmpty()){
                     Intent i = new Intent(c, Reciept.class);
                     i.putExtra("Items", (Serializable) cartModels);
-                    Log.d("SendingActivity", "CartList: " + cartModels.get(0).getName());
+                    i.putExtra("Credit",creditArray);
                     startActivity(i);
 
                 }
@@ -182,25 +216,44 @@ public class Sales extends AppCompatActivity {
 
     }
 
-    private void setCartAdapter(int position) {
-        String name = salesItemModels.get(position).getName();
-        float price = salesItemModels.get(position).getPrice();
-        int resId = salesItemModels.get(position).getImg();
-        int quantity = 1;
+    private void setCartAdapter(String id) {
+        String cartID = "";
+        String cartName = "";
+        float cartPrice = 0 ;
+        int resId = 0;
+        String itemImgByte = null;
 
+
+        for (AllItemModel item : allItemModels){
+            if(id == item.getItemId()){
+                 cartID = item.getItemId();
+                cartName = item.getItemName();
+                cartPrice = item.getItemPrice();
+                resId = item.getImageResId();
+
+                if (item.getImageResId() != 0) {
+                    resId = item.getImageResId();
+                } else {
+                    itemImgByte = item.getItemImage();
+                }
+            }
+        }
+
+        int quantity = 1;
         boolean itemExists = false;
+
         for (CartModel cartItem : cartModels) {
-            if (cartItem.getName().equals(name)) {
+            if (cartID.equals(cartItem.getId())) {
                 cartItem.setQty(cartItem.getQty() + 1);
-                cartItem.setTotal(cartItem.getQty() * price);
+                cartItem.setTotal(cartItem.getQty() * cartPrice);
                 itemExists = true;
                 break;
             }
         }
 
         if (!itemExists) {
-            float total = price * quantity;
-            cartModels.add(new CartModel(name, price, total, quantity, resId));
+            float total = cartPrice * quantity;
+            cartModels.add(new CartModel(id,cartName, cartPrice, total, quantity, resId,itemImgByte));
         }
         cartAdapter.notifyDataSetChanged();
     }
@@ -229,30 +282,30 @@ public class Sales extends AppCompatActivity {
 
         TVsubtotal.setText("₱" + String.format("%.2f", subtotal));
     }
-
     public void refreshCart() {
         calculateSubtotal();
         updateCart();
     }
-
     private void searchFilter(String result) {
-        List<SalesItemModel> filterList = new ArrayList<>();
-        for (SalesItemModel item : salesItemModels) {
-            if (item.getName().toLowerCase().contains(result.toLowerCase())) {
+        List<AllItemModel> filterList = new ArrayList<>();
+        for (AllItemModel item : allItemModels) {
+            if (item.getItemName().toLowerCase().contains(result.toLowerCase())) {
                 filterList.add(item);
             }
         }
+
+        // Pass the filtered list to the adapter
         salesItemAdapter.setFilterList(filterList);
     }
 
     private void clearFilter() {
         categoryAdapter.resetSelection();
-        salesItemAdapter.setFilterList(salesItemModels);
+        salesItemAdapter.setFilterList(allItemModels);
     }
 
     private void catFilter(String result) {
-        List<SalesItemModel> filterList = new ArrayList<>();
-        for (SalesItemModel item : salesItemModels) {
+        List<AllItemModel> filterList = new ArrayList<>();
+        for (AllItemModel item : allItemModels) {
             if (item.getCategory().toLowerCase().equals(result.toLowerCase())) {
                 filterList.add(item);
             }

@@ -3,51 +3,67 @@ package com.example.it307_project.Model;
 import java.io.Serializable;
 
 public class AllItemModel implements Serializable {
-    private String itemName,itemCategory,itemImgByte;
-    private int itemQuantity,itemImg;
-    private float itemSrp,itemPrice,itemProfit;
+    // Define the attributes of the model class as final
+    private final String itemName;
+    private final String category;
 
+    private final int itemQuantity;
+    private final String itemId;
+    private final float itemPrice;
+    private final float itemSRP;
+    private final float profit;
+    private final int imageResId;
+    private final String itemImage;
 
-    public AllItemModel(String itemName, String itemCategory, int itemQuantity, float itemSrp, float itemPrice, float itemProfit, int itemImg,String itemImgByte) {
+    // Constructor to initialize the attributes
+    public AllItemModel(String itemId,String itemName, String category, int itemQuantity,float itemPrice, float itemSRP, float profit, int imageResId, String itemImage) {
+        this.itemId = itemId;
         this.itemName = itemName;
-        this.itemCategory = itemCategory;
+        this.category = category;
         this.itemQuantity = itemQuantity;
-        this.itemSrp = itemSrp;
         this.itemPrice = itemPrice;
-        this.itemProfit = itemProfit;
-        this.itemImg = itemImg;
-        this.itemImgByte = itemImgByte;
+        this.itemSRP = itemSRP;
+        this.profit = profit;
+        this.imageResId = imageResId;
+        this.itemImage = itemImage;
     }
 
+    // Getter methods to access the attributes
     public String getItemName() {
         return itemName;
     }
 
-    public int getItemQuantity() {
-        return itemQuantity;
+    public String getCategory() {
+        return category;
     }
 
-    public float getItemSrp() {
-        return itemSrp;
+
+
+    public int getItemQuantity() {
+        return itemQuantity;
     }
 
     public float getItemPrice() {
         return itemPrice;
     }
 
-    public float getItemProfit() {
-        return itemProfit;
+    public float getItemSRP() {
+        return itemSRP;
     }
 
-    public int getItemImg() {
-        return itemImg;
+    public float getProfit() {
+        return profit;
     }
 
-    public String getItemImgByte() {
-        return itemImgByte;
+    public int getImageResId() {
+        return imageResId;
     }
 
-    public String getItemCategory() {
-        return itemCategory;
+    public String getItemImage() {
+        return itemImage;
+    }
+
+    public String getItemId() {
+        return itemId;
     }
 }

@@ -228,7 +228,9 @@
             android:layout_weight="8"
             android:orientation="vertical"
             android:layout_marginTop="20dp"
-            android:visibility="gone">
+            android:visibility="gone"
+            android:background="@drawable/categoryborder"
+            android:padding="10dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -236,40 +238,170 @@
                 android:text="Credit Tab"
                 android:fontFamily="@font/poppinsbold"
                 android:textSize="15sp"
-                android:textColor="@color/darkgray"/>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/TLsearch"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:textColor="@color/darkgray"
+                android:layout_marginBottom="10dp"/>
+            <LinearLayout
+                android:id="@+id/LLcredit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Search name here"
-                app:boxStrokeColor="@color/colorSecondary"
-                app:hintTextColor="@color/black"
-                app:startIconTint="@color/black"
+                android:orientation="vertical"
+                android:visibility="visible">
 
-                >
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/ETsearch"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:fontFamily="@font/poppinsregular"
-                    android:inputType="numberDecimal"
-                    android:textSize="10sp"
-                    android:textCursorDrawable="@drawable/textinputblue"  />
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/RVcreditname"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/TLsearch"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_rowWeight="1"
-                    android:layout_columnWeight="1"
-                    android:layout_marginVertical="20dp"
-                    android:orientation="horizontal"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    android:layout_centerVertical="true"
-                    tools:listitem="@android:layout/simple_list_item_checked"/>
+                    android:hint="Search name here"
+                    app:boxStrokeColor="@color/colorSecondary"
+                    app:hintTextColor="@color/black"
+                    app:startIconTint="@color/black"
+                    >
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/ETsearch"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/poppinsregular"
+                        android:inputType="text"
+                        android:textSize="10sp"
+                        android:textCursorDrawable="@drawable/textinputblue"  />
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/RVcreditname"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_rowWeight="1"
+                        android:layout_columnWeight="1"
+                        android:layout_marginVertical="20dp"
+                        android:orientation="horizontal"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        android:layout_centerVertical="true"
+                        tools:listitem="@android:layout/simple_list_item_checked"/>
 
-            </com.google.android.material.textfield.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/LLcreditselected"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="20dp"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="5dp"
+                   >
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:text="Selected Name: "
+                        android:textSize="20sp"
+                        android:fontFamily="@font/poppinsbold"
+                        android:textColor="@color/darkgray"
+                        android:layout_gravity="center_vertical"/>
+                    <TextView
+                        android:id="@+id/TVcreditname"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:text="Miguel"
+                        android:textSize="20sp"
+                        android:fontFamily="@font/poppinsbold"
+                        android:textColor="@color/darkgray"
+                       android:textAlignment="textEnd"/>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="5dp"
+                    >
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:text="Credit Total: "
+                        android:textSize="20sp"
+                        android:fontFamily="@font/poppinsbold"
+                        android:textColor="@color/darkgray"
+                        android:layout_gravity="center_vertical"/>
+                    <TextView
+                        android:id="@+id/TVcredittotal"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:text="P30"
+                        android:textSize="20sp"
+                        android:fontFamily="@font/poppinsbold"
+                        android:textColor="@color/darkgray"
+                        android:textAlignment="textEnd"/>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="5dp"
+                    >
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:text="Items Total: "
+                        android:textSize="20sp"
+                        android:fontFamily="@font/poppinsbold"
+                        android:textColor="@color/darkgray"
+                        android:layout_gravity="center_vertical"/>
+                    <TextView
+                        android:id="@+id/TVcredititems"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:text="P30"
+                        android:textSize="20sp"
+                        android:fontFamily="@font/poppinsbold"
+                        android:textColor="@color/darkgray"
+                        android:textAlignment="textEnd"/>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="5dp"
+                    >
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:text="New Credit Total: "
+                        android:textSize="20sp"
+                        android:fontFamily="@font/poppinsbold"
+                        android:textColor="@color/darkgray"
+                        android:layout_gravity="center_vertical"/>
+                    <TextView
+                        android:id="@+id/TVcreditnew"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:text="P30"
+                        android:textSize="20sp"
+                        android:fontFamily="@font/poppinsbold"
+                        android:textColor="@color/darkgray"
+                        android:textAlignment="textEnd"/>
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
 
         </LinearLayout>
 
@@ -280,22 +412,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:orientation="horizontal"
-        android:gravity="center_vertical">
-        <Button
-            android:id="@+id/BTNpaid"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/colorPrimaryDark"
-            android:fontFamily="@font/poppinsbold"
-            android:text="Paid"
-            android:textColor="@color/white"
-            android:padding="10dp"/>
-
-        <View
-            android:layout_width="0dp"
-            android:layout_weight="0.1"
-            android:layout_height="match_parent"/>
+        android:gravity="center">
         <Button
             android:id="@+id/BTNcredit"
             android:layout_width="0dp"
@@ -306,6 +423,19 @@
             android:text="Credit"
             android:textColor="@color/white"
             android:padding="10dp"/>
+
+
+        <Button
+            android:id="@+id/BTNpaid"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:fontFamily="@font/poppinsbold"
+            android:text="Paid"
+            android:textColor="@color/white"
+            android:padding="10dp"
+            android:layout_marginLeft="10dp"/>
     </LinearLayout>
 
 

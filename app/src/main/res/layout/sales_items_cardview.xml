@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="110dp"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="10dp"
@@ -20,30 +20,34 @@
             android:id="@+id/IVsalesimg"
             android:layout_width="match_parent"
             android:layout_height="70dp"
-            android:scaleType="fitCenter"
+            android:clipToOutline="true"
+            android:scaleType="centerCrop"
             android:src="@mipmap/no_image"/>
 
         <TextView
             android:id="@+id/TVsalesname"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:text="Sample Item name"
             android:textSize="10sp"
             android:fontFamily="@font/poppinsmedium"
             android:textColor="@color/darkgray"
-            android:textAlignment="center"
+            android:gravity="center"
             android:layout_marginTop="5dp"/>
 
         <TextView
             android:id="@+id/TVsalesprice"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:text="P150"
-            android:textSize="10sp"
+            android:textSize="15sp"
             android:fontFamily="@font/poppinsbold"
             android:textColor="@color/darkgray"
             android:textAlignment="center"
-            android:layout_marginTop="5dp"/>
+            android:layout_marginTop="5dp"
+            android:gravity="center"/>
     </LinearLayout>
 
 

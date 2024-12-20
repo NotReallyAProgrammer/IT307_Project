@@ -9,7 +9,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:padding="10dp">
 
         <ImageView
@@ -18,8 +18,10 @@
             android:layout_height="match_parent"
             android:background="@drawable/scornerradius"
             android:clipToOutline="true"
+            android:scaleType="centerCrop"
             app:layout_constraintLeft_toLeftOf="parent"
-            android:src="@mipmap/no_image" />
+            android:src="@mipmap/no_image"
+            />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -58,7 +60,7 @@
                 <TextView
                     android:id="@+id/TVallitemsrp"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
+                    android:layout_weight="0.5"
                     android:layout_height="wrap_content"
                     android:text="Srp: 90"
                     android:fontFamily="@font/poppinsbold"
@@ -67,7 +69,7 @@
                 <TextView
                     android:id="@+id/TVallitemprice"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
+                    android:layout_weight="0.5"
                     android:layout_height="wrap_content"
                     android:text="Price: 100"
                     android:fontFamily="@font/poppinsbold"
@@ -76,7 +78,7 @@
                 <TextView
                     android:id="@+id/TVallitemprofit"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
+                    android:layout_weight="0.7"
                     android:layout_height="wrap_content"
                     android:text="Profit: 10"
                     android:fontFamily="@font/poppinsbold"

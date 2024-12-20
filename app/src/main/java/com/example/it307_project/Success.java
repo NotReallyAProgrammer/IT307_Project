@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -12,12 +14,20 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.it307_project.Model.CartModel;
 import com.example.it307_project.Model.ReceiptModel;
 
+import java.io.Serializable;
+import java.sql.Array;
+import java.util.Arrays;
 import java.util.List;
 
 public class Success extends AppCompatActivity {
-    TextView TVsuccessctr,TVsuccesstotal,TVpaymentmethod,TVpaymenttime,TVpaymentchange,TVpaymentcash;
+    TextView TVsuccessctr,TVsuccesstotal,TVpaymentmethod,
+            TVpaymenttime,TVpaymentchange,TVpaymentcash,
+            TVcreditname,TVcredittotal;
+
+    LinearLayout LLpaidcash,LLcreditname,LLpaidchange,LLcredittotal;
     Context c= this;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,25 +51,55 @@ public class Success extends AppCompatActivity {
         TVpaymenttime = findViewById(R.id.TVpaymenttime);
         TVpaymentchange = findViewById(R.id.TVpaymentchange);
         TVpaymentcash = findViewById(R.id.TVpaymentcash);
-
+        TVcreditname = findViewById(R.id.TVcreditname);
+        TVcredittotal = findViewById(R.id.TVcredittotal);
+        LLpaidcash = findViewById(R.id.LLpaidcash);
+        LLcreditname =findViewById(R.id.LLcreditname);
+        LLpaidchange = findViewById(R.id.LLpaidchange);
+        LLcredittotal = findViewById(R.id.LLcredittotal);
 
         Bundle extras = getIntent().getExtras();
-        List<ReceiptModel> receiptModels = (List<ReceiptModel>) extras.getSerializable("Receipt");
         String date = extras.getString("Date");
         float total = extras.getFloat("Total");
-        float cash = extras.getFloat("Cash");
-        float change = extras.getFloat("Change");
         String method = extras.getString("Method");
+
+
+        if (method.equals("Cash")){
+            LLpaidcash.setVisibility(View.VISIBLE);
+            LLpaidchange.setVisibility(View.VISIBLE);
+            LLcreditname.setVisibility(View.GONE);
+            LLcredittotal.setVisibility(View.GONE);
+            float cash = extras.getFloat("Cash");
+            float change = extras.getFloat("Change");
+            TVpaymentcash.setText("₱"+String.valueOf(cash));
+            TVpaymentchange.setText("₱"+String.valueOf(change));
+        }else{
+
+            String[][] creditArray = (String[][])extras.getSerializable("Credit");
+            if(creditArray!=null){
+                LLpaidcash.setVisibility(View.GONE);
+                LLpaidchange.setVisibility(View.GONE);
+                LLcreditname.setVisibility(View.VISIBLE);
+                LLcredittotal.setVisibility(View.VISIBLE);
+                int userPos = extras.getInt("User");
+                TVcreditname.setText(creditArray[userPos][0]);
+                TVcredittotal.setText(creditArray[userPos][1]);
+            }
+
+        }
 
 
         TVsuccesstotal.setText("₱"+String.valueOf(total));
         TVpaymentmethod.setText(method);
-        TVpaymentcash.setText("₱"+String.valueOf(cash));
-        TVpaymentchange.setText("₱"+String.valueOf(change));
         TVpaymenttime.setText(date);
     }
 
     private void timerTexview() {
+        Bundle extras = getIntent().getExtras();
+        String[][] creditArray = (String[][])extras.getSerializable("Credit");
+
+        List<CartModel> cartModels = (List<CartModel>) extras.getSerializable("Items");
+
         new CountDownTimer(10000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
@@ -69,9 +109,9 @@ public class Success extends AppCompatActivity {
             public void onFinish() {
                 Intent i = new Intent(c, Home.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                i.putExtra("Credit",creditArray);
+                i.putExtra("Receipt", (Serializable) cartModels);
                 startActivity(i);
-
-
             }
         }.start();
     }

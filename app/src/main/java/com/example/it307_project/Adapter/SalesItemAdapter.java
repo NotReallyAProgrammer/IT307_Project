@@ -1,6 +1,10 @@
 package com.example.it307_project.Adapter;
 
+
+import static com.example.it307_project.Adapter.StringToByte.stringToByteArray;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,22 +14,21 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.it307_project.Model.SalesItemModel;
+import com.example.it307_project.Model.AllItemModel;
 import com.example.it307_project.R;
 import java.util.List;
 
 public class SalesItemAdapter extends RecyclerView.Adapter<SalesItemAdapter.ViewHolder> {
     Context context;
-    List<SalesItemModel> salesItemModels;
+    List<AllItemModel> allItemModels;
     private final ClickListener listener;
-    public SalesItemAdapter(Context c, List<SalesItemModel> salesItemModels, ClickListener listener ){
+    public SalesItemAdapter(Context c, List<AllItemModel> allItemModels, ClickListener listener ){
         this.context = c;
-        this.salesItemModels = salesItemModels;
+        this.allItemModels = allItemModels;
         this.listener = listener;
     }
-    public void setFilterList(List<SalesItemModel> filteredList) {
-
-        this.salesItemModels = filteredList;
+    public void setFilterList(List<AllItemModel> filteredList) {
+        this.allItemModels = filteredList;
         notifyDataSetChanged();
     }
 
@@ -40,18 +43,33 @@ public class SalesItemAdapter extends RecyclerView.Adapter<SalesItemAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull SalesItemAdapter.ViewHolder holder, int position) {
-        holder.TVsalesname.setText(salesItemModels.get(position).getName());
-        holder.TVsalesprice.setText("₱ " + String.valueOf(salesItemModels.get(position).getPrice()));
-        holder.IVsaleimg.setImageResource(salesItemModels.get(position).getImg());
+
+        AllItemModel item = allItemModels.get(position);
+        holder.TVsalesname.setText(item.getItemName());
+        holder.TVsalesprice.setText("₱ " + String.valueOf(item.getItemPrice()));
+
+        if (item.getImageResId() == 0) {
+            byte[] byteArrayConverted = stringToByteArray(item.getItemImage());
+            if (byteArrayConverted.length > 0) {
+                Bitmap bitmap = BitmapFactory.decodeByteArray(byteArrayConverted, 0, byteArrayConverted.length);
+                holder.IVsaleimg.setImageBitmap(bitmap);
+            } else {
+
+                holder.IVsaleimg.setImageResource(R.mipmap.no_image);
+            }
+
+        } else {
+            holder.IVsaleimg.setImageResource(item.getImageResId());
+        }
     }
 
     @Override
     public int getItemCount() {
-        return salesItemModels.size();
+        return allItemModels.size();
     }
 
     public interface ClickListener {
-        void onPositionClicked(int position);
+        void onIdCLick(String id);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
@@ -72,7 +90,7 @@ public class SalesItemAdapter extends RecyclerView.Adapter<SalesItemAdapter.View
 
         @Override
         public void onClick(View v) {
-            listener.onPositionClicked(getAdapterPosition());
+            listener.onIdCLick(allItemModels.get(getAdapterPosition()).getItemId());
         }
     }
 }

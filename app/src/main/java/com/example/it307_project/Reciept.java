@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Looper;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -22,6 +23,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.it307_project.Adapter.CreditAdapter;
 import com.example.it307_project.Adapter.ReceiptAdapter;
+import com.example.it307_project.Adapter.SalesItemAdapter;
+import com.example.it307_project.Model.AllItemModel;
 import com.example.it307_project.Model.CartModel;
 import com.example.it307_project.Model.CreditModel;
 import com.example.it307_project.Model.ReceiptModel;
@@ -37,13 +40,13 @@ import java.util.List;
 
 public class Reciept extends AppCompatActivity {
     
-    TextView TVreceiptno, TVreceiptdate, TVreceipttime,TVreceiptchange,TVreceiptsubtotal;
+    TextView TVreceiptno, TVreceiptdate, TVreceipttime,TVreceiptchange,TVreceiptsubtotal,TVcreditname,TVcredittotal,TVcredititems,TVcreditnew;
     ImageView backbtn;
     Button BTNcredit, BTNpaid;
     RecyclerView RVrecieptitem,RVcreditname;
-    LinearLayout LLrecieptcredit;
+    LinearLayout LLrecieptcredit,LLcredit,LLcreditselected;
     TextInputLayout TLreceipt;
-    TextInputEditText ETpayment;
+    TextInputEditText ETpayment,ETsearch;
     List<ReceiptModel> receiptModels = new ArrayList<>();
     List<CartModel> cartModels = new ArrayList<>();
     List<CreditModel> creditModels = new ArrayList<>();
@@ -51,7 +54,8 @@ public class Reciept extends AppCompatActivity {
     CreditAdapter creditAdapter;
     Context c = this;
 
-    float totalChange = 0.0f;
+    float totalChange = 0.0f,newTotal;
+    int tempCount = 0, userPos = -1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,18 +77,27 @@ public class Reciept extends AppCompatActivity {
         TVreceiptchange = findViewById(R.id.TVreceiptchange);
         TLreceipt = findViewById(R.id.TLreciept);
         TVreceiptsubtotal = findViewById(R.id.TVreceiptsubtotal);
+        TVcreditname = findViewById(R.id.TVcreditname);
+        TVcredittotal = findViewById(R.id.TVcredittotal);
+        TVcredititems = findViewById(R.id.TVcredititems);
+        TVcreditnew = findViewById(R.id.TVcreditnew);
         ETpayment = findViewById(R.id.ETpayment);
+        ETsearch = findViewById(R.id.ETsearch);
         RVrecieptitem = findViewById(R.id.RVrecieptitem);
         RVcreditname = findViewById(R.id.RVcreditname);
         backbtn = findViewById(R.id.backbtn);
         BTNpaid = findViewById(R.id.BTNpaid);
         BTNcredit = findViewById(R.id.BTNcredit);
         LLrecieptcredit = findViewById(R.id.LLrecieptcredit);
+        LLcredit = findViewById(R.id.LLcredit);
+        LLcreditselected = findViewById(R.id.LLcreditselected);
 
-        String subtotal;
+        String subtotal="";
+
 
         Bundle extras = getIntent().getExtras();
-         cartModels = (List<CartModel>) extras.getSerializable("Items");
+        cartModels = (List<CartModel>) extras.getSerializable("Items");
+        String[][] creditArray = (String[][]) extras.getSerializable("Credit");
         //Adapters
 
         // |Cart
@@ -92,7 +105,7 @@ public class Reciept extends AppCompatActivity {
              subtotal = String.valueOf(calculateSubtotal());
             TVreceiptsubtotal.setText("₱" + subtotal);
             for (CartModel item : cartModels) {
-                receiptModels.add(new ReceiptModel(item.getName(), item.getQty(), item.getTotal()));
+                receiptModels.add(new ReceiptModel(item.getId(),item.getName(), item.getQty(), item.getTotal()));
             }
         }
 
@@ -104,18 +117,43 @@ public class Reciept extends AppCompatActivity {
 
 
         // |Credit Names
-        creditModels.add(new CreditModel("Sample Name",100));
-        creditModels.add(new CreditModel("Sample Name",100));
+        for (String[] credit:creditArray){
+            creditModels.add(new CreditModel(credit[0],Float.parseFloat(credit[1])));
+        }
 
-        creditAdapter = new CreditAdapter(c,creditModels);
+        String finalSubtotal = subtotal;
+        creditAdapter = new CreditAdapter(c, creditModels, new CreditAdapter.ClickListener() {
+            @Override
+            public void onNameClicked(String name) {
+                for(CreditModel credit:creditModels){
+                    if (credit.getName().equals(name)){
+                        name = credit.getName();
+                         newTotal =  credit.getTotalCredit() + Float.parseFloat(finalSubtotal);
+                        float totalOld = credit.getTotalCredit();
+                        LLcreditselected.setVisibility(View.VISIBLE);
+                        LLcredit.setVisibility(View.GONE);
+
+                        TVcreditname.setText(name);
+                        TVcredittotal.setText("₱"+totalOld);
+                        TVcredititems.setText("₱"+finalSubtotal);
+                        TVcreditnew.setText("₱"+String.valueOf(newTotal));
+                        BTNpaid.setVisibility(View.VISIBLE);
+                        BTNpaid.setText("Proceed");
+                        BTNcredit.setText("Back");
+                        userPos = tempCount;
+                        break;
+                    }else{
+                        tempCount++;
+                    }
+                }
+            }
+        });
         RVcreditname.setAdapter(creditAdapter);
-
         LinearLayoutManager creditLayoutManager = new LinearLayoutManager(c, LinearLayoutManager.VERTICAL, false);
         RVcreditname.setLayoutManager(creditLayoutManager);
 
 
         //Payment Input
-
         ETpayment.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -167,6 +205,24 @@ public class Reciept extends AppCompatActivity {
             }
         });
 
+        //Search Credit Name
+        ETsearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String query = s.toString();
+                searchFilter(query);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
         //Click Listener
         backbtn.setOnClickListener(new View.OnClickListener() {
@@ -179,26 +235,43 @@ public class Reciept extends AppCompatActivity {
         BTNpaid.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String input = ETpayment.getText().toString().trim();
-                float payment = Float.parseFloat(input);
-                if(!validatePayment()){
-                    new android.os.Handler(Looper.getMainLooper()).postDelayed(
-                            new Runnable() {
-                                public void run() {
-                                    TLreceipt.setError(null);
-                                    TLreceipt.setErrorEnabled( false );
-                                }
-                            }, 10000);
-                    return;
-                }
                 Intent i = new Intent(c, Success.class);
-                i.putExtra("Total",calculateSubtotal());
-                i.putExtra("Change",payment - calculateSubtotal());
-                i.putExtra("Cash",payment);
-                i.putExtra("Method","Cash");
-                i.putExtra("Date",setTextView());
-                i.putExtra("Receipt", (Serializable) receiptModels);
-                startActivity(i);
+                if(BTNpaid.getText().equals("Proceed")){
+
+                    creditArray[userPos][1] = String.valueOf(newTotal);
+
+                    i.putExtra("Total",calculateSubtotal());
+                    i.putExtra("User",userPos);
+                    i.putExtra("Method","Credit");
+                    i.putExtra("Date",setTextView());
+                    i.putExtra("Items", (Serializable) cartModels);
+                    i.putExtra("Credit",creditArray);
+                    startActivity(i);
+
+                }else{
+                    if(!validatePayment()){
+                        new android.os.Handler(Looper.getMainLooper()).postDelayed(
+                                new Runnable() {
+                                    public void run() {
+                                        TLreceipt.setError(null);
+                                        TLreceipt.setErrorEnabled( false );
+                                    }
+                                }, 10000);
+                        return;
+                    }
+                    String val = ETpayment.getText().toString();
+                    Log.i("input", "onClick: "+ val);
+                    String input = ETpayment.getText().toString().trim();
+                    float payment = Float.parseFloat(input);
+                    i.putExtra("Total",calculateSubtotal());
+                    i.putExtra("Change",payment - calculateSubtotal());
+                    i.putExtra("Cash",payment);
+                    i.putExtra("Method","Cash");
+                    i.putExtra("Date",setTextView());
+                    i.putExtra("Items", (Serializable) cartModels);
+                    startActivity(i);
+                }
+
             }
         });
 
@@ -206,12 +279,23 @@ public class Reciept extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if (LLrecieptcredit.getVisibility() == View.VISIBLE) {
+                if (BTNcredit.getText().equals("Close")) {
                     BTNcredit.setText("Credit");
+                    BTNpaid.setVisibility(View.VISIBLE);
                     LLrecieptcredit.setVisibility(View.GONE);
+                    ETpayment.setEnabled(true);
+                }else if(BTNcredit.getText().equals("Back")){
+                    LLcreditselected.setVisibility(View.GONE);
+                    LLcredit.setVisibility(View.VISIBLE);
+                    BTNpaid.setVisibility(View.GONE);
+                    BTNcredit.setText("Close");
+                    ETpayment.setEnabled(false);
                 }else{
                     LLrecieptcredit.setVisibility(View.VISIBLE);
+                    BTNpaid.setVisibility(View.GONE);
                     BTNcredit.setText("Close");
+                    ETpayment.setEnabled(false);
+
                 }
             }
         });
@@ -221,24 +305,40 @@ public class Reciept extends AppCompatActivity {
         for (CartModel cartItem : cartModels) {
             subtotal += cartItem.getTotal();
         }
-
-        return subtotal;
+        return Math.round(subtotal * 100.0f) / 100.0f;
     }
 
     private boolean validatePayment() {
         String val = ETpayment.getText().toString();
-        float payment = Float.parseFloat(val);
         if (val.isEmpty()) {
-            TLreceipt.setError( "Field can not be empty" );
+            TLreceipt.setError("Field cannot be empty");
             return false;
-        }else if(payment < calculateSubtotal()){
-            TLreceipt.setError( "Invalid Payment" );
-            return false;
-        }else {
-            TLreceipt.setError(null);
-            TLreceipt.setErrorEnabled( false );
-            return true;
+        } else {
+            try {
+                float payment = Float.parseFloat(val);
+                if (payment < calculateSubtotal()) {
+                    TLreceipt.setError("Invalid Payment");
+                    return false;
+                } else {
+                    TLreceipt.setError(null);
+                    TLreceipt.setErrorEnabled(false);
+                    return true;
+                }
+            } catch (NumberFormatException e) {
+                TLreceipt.setError("Invalid number format");
+                return false;
+            }
         }
+    }
+
+    private void searchFilter(String result) {
+        List<CreditModel> filterList = new ArrayList<>();
+        for (CreditModel credit : creditModels) {
+            if (credit.getName().toLowerCase().contains(result.toLowerCase())) {
+                filterList.add(credit);
+            }
+        }
+        creditAdapter.setFilterList(filterList);
     }
 
     private String setTextView(){
@@ -261,6 +361,5 @@ public class Reciept extends AppCompatActivity {
         return recieptDate;
 
     }
-
 
 }

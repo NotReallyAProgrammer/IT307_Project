@@ -24,9 +24,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.it307_project.Adapter.ItemAdapter;
 import com.example.it307_project.Adapter.NavAdapter;
+import com.example.it307_project.Model.AllItemModel;
+import com.example.it307_project.Model.CartModel;
+import com.example.it307_project.Model.CreditModel;
 import com.example.it307_project.Model.ItemModel;
 import com.example.it307_project.Model.NavModel;
+import com.example.it307_project.Model.ReceiptModel;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -37,7 +42,7 @@ public class Home extends AppCompatActivity {
     RecyclerView RVname,RVitem;
     ImageButton IBlogout;
     List<NavModel> navModels = new ArrayList<>();
-    List<ItemModel> itemModels = new ArrayList<>();
+    List<AllItemModel> allItemModels = new ArrayList<>();
     ItemAdapter itemadapter;
     NavAdapter navAdapter;
     Context c = this;
@@ -74,6 +79,46 @@ public class Home extends AppCompatActivity {
         TVname = findViewById(R.id.TVname);
         IBlogout = findViewById(R.id.IBlogout);
 
+        Bundle intent = getIntent().getExtras();
+
+
+         if (intent != null){
+             String[][] newItemsArray = (String[][]) intent.getSerializable("Items");
+             String[] newCategoryArray = intent.getStringArray("Category");
+             String[][] newCredit = (String[][]) intent.getSerializable("Credit");
+             List<CartModel> cartModels = (List<CartModel>) intent.getSerializable("Receipt");
+
+
+                if (newItemsArray != null){
+                    itemsArray = newItemsArray;
+                 }
+                 if (newCategoryArray != null ){
+                    categoryArray = newCategoryArray;
+                 }
+                 if (newCredit != null ){
+                     creditInfoArray = newCredit;
+                 }
+                 if (cartModels != null) {
+
+                     Log.i("Items Found", "initialize: Found");
+                     for (String[] items : itemsArray) {
+                         for (CartModel cart : cartModels) {
+                             if (items[0].equals(cart.getId())) {
+
+                                     int currentQuantity = Integer.parseInt(items[3]);
+                                     int newQuantity = currentQuantity - cart.getQty();
+
+                                     items[3] = String.valueOf(newQuantity);
+
+                                 break;
+                             }
+                         }
+
+                     }
+              }
+        }
+
+
         SharedPreferences sharedPref = getSharedPreferences("user_session", MODE_PRIVATE);
         String userName = sharedPref.getString("userName", "defaultName");
 
@@ -105,6 +150,7 @@ public class Home extends AppCompatActivity {
     }
 
     private void setNavAdapter(){
+
         navModels.add(new NavModel("Sales", "For sales and credit.", "View Sales",R.mipmap.sales_nav));
         navModels.add(new NavModel("All Items", "Managing items and category.","View Inventory",R.mipmap.item_nav));
         navModels.add(new NavModel("Credits", "Adding names paying tabs.","View Credits",R.mipmap.credit_nav));
@@ -116,14 +162,17 @@ public class Home extends AppCompatActivity {
                     Intent i = new Intent(c,Sales.class);
                     i.putExtra("Items", itemsArray);
                     i.putExtra("Category", categoryArray);
+                    i.putExtra("Credit", creditInfoArray);
                     startActivity(i);
                }else if(position == 1){
                     Intent i = new Intent(c, Inventory.class);
                     i.putExtra("Items", itemsArray);
                     i.putExtra("Category", categoryArray);
+
                     startActivity(i);
                 }else if (position == 2) {
                     Intent i = new Intent(c, Credits.class);
+                    i.putExtra("Credit", creditInfoArray);
                     startActivity(i);
                 }
                 return position;
@@ -138,15 +187,35 @@ public class Home extends AppCompatActivity {
 
     private void setItemAdapter(){
 
+        DecimalFormat df = new DecimalFormat("#.##");
         for (String item[] : itemsArray){
-            int resId = getResources().getIdentifier(item[6].split("\\.")[2], "mipmap",getPackageName());
-            Log.i(TAG,item[6].split("\\.")[1] );
-            itemModels.add(new ItemModel(Float.parseFloat(item[5]), Integer.parseInt(item[3]),item[2],item[1],resId));
+            int resId = 0;
+            String itemImgByte = "";
+
+            if (item[6].contains("R")) {
+                resId = getResources().getIdentifier(item[6].split("\\.")[2], "mipmap", getPackageName());
+            } else {
+                itemImgByte = item[6];
+            }
+
+            //
+            String formattedValue = df.format(Float.parseFloat(item[5]) -  Float.parseFloat(item[4]));
+            allItemModels.add(new AllItemModel(
+                    item[0],//Item ID
+                    item[1], // Item Name
+                    item[2], //Category
+                    Integer.parseInt(item[3]), // Item Quantity
+                    Float.parseFloat(item[5]), // Item Price
+                    Float.parseFloat(item[4]), // Item SRP
+                    Float.parseFloat(formattedValue), // Profit
+                    resId, // Image Resource ID
+                    itemImgByte // Image Byte String
+            ));
         }
 
-        Collections.reverse(itemModels);
+        Collections.reverse(allItemModels);
 
-        itemadapter = new ItemAdapter(c,itemModels);
+        itemadapter = new ItemAdapter(c,allItemModels);
         RVitem.setAdapter(itemadapter);
 
         GridLayoutManager mGridLayoutManager = new GridLayoutManager(c, 2);

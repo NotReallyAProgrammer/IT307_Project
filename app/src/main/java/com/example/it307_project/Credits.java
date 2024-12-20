@@ -48,7 +48,12 @@ public class Credits extends AppCompatActivity {
 
 
 
-        creditAdapter = new CreditAdapter(c,creditModels);
+        creditAdapter = new CreditAdapter(c, creditModels, new CreditAdapter.ClickListener() {
+            @Override
+            public void onNameClicked(String name) {
+
+            }
+        });
         RVcredit.setAdapter(creditAdapter);
       LinearLayoutManager layoutManager = new LinearLayoutManager(c, LinearLayoutManager.VERTICAL, false);
        RVcredit.setLayoutManager(layoutManager);
