@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -113,10 +114,18 @@ public class Sales extends AppCompatActivity {
         salesItemAdapter = new SalesItemAdapter(c, allItemModels, new SalesItemAdapter.ClickListener() {
             @Override
             public void onIdCLick(String id) {
+                for(AllItemModel item : allItemModels){
+                    if(item.getItemQuantity() <= 0){
+                        Toast.makeText(c, "No item left", Toast.LENGTH_SHORT).show();
+                    }else{
+                        setCartAdapter(id);
+                        calculateSubtotal();
+                        updateCart();
 
-                setCartAdapter(id);
-                calculateSubtotal();
-                updateCart();
+                    }
+                    break;
+                }
+
             }
         });
         RVsalesitem.setAdapter(salesItemAdapter);
@@ -224,43 +233,51 @@ public class Sales extends AppCompatActivity {
     private void setCartAdapter(String id) {
         String cartID = "";
         String cartName = "";
-        float cartPrice = 0 ;
+        float cartPrice = 0;
         int resId = 0;
         String itemImgByte = null;
+        int availableQuantity = 0;
 
-
-        for (AllItemModel item : allItemModels){
-            if(id == item.getItemId()){
-                 cartID = item.getItemId();
+        for (AllItemModel item : allItemModels) {
+            if (id.equals(item.getItemId())) {
+                cartID = item.getItemId();
                 cartName = item.getItemName();
                 cartPrice = item.getItemPrice();
                 resId = item.getImageResId();
-
-                if (item.getImageResId() != 0) {
-                    resId = item.getImageResId();
-                } else {
-                    itemImgByte = item.getItemImage();
-                }
+                itemImgByte = item.getItemImage();
+                availableQuantity = item.getItemQuantity();
+                break;
             }
         }
 
         int quantity = 1;
         boolean itemExists = false;
 
+
         for (CartModel cartItem : cartModels) {
             if (cartID.equals(cartItem.getId())) {
-                cartItem.setQty(cartItem.getQty() + 1);
-                cartItem.setTotal(cartItem.getQty() * cartPrice);
-                itemExists = true;
-                break;
+                if (cartItem.getQty() < availableQuantity) {
+                    cartItem.setQty(cartItem.getQty() + 1);
+                    cartItem.setTotal(cartItem.getPrice() * cartItem.getQty());
+                    itemExists = true;
+                    break;
+                } else {
+                    Toast.makeText(c, "Maximum quantity for this item reached", Toast.LENGTH_SHORT).show();
+                    return;
+                }
             }
         }
 
+
+
         if (!itemExists) {
             float total = cartPrice * quantity;
-            cartModels.add(new CartModel(id,cartName, cartPrice, total, quantity, resId,itemImgByte));
+            cartModels.add(new CartModel(cartID, cartName, cartPrice, total, quantity, resId, itemImgByte,availableQuantity));
         }
+
+
         cartAdapter.notifyDataSetChanged();
+        updateCart();
     }
 
     private float calculateSubtotal() {

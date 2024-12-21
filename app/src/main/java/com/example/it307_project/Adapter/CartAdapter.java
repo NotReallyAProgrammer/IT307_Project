@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -65,14 +66,21 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
         //Add and minus quantity
         CartModel cartItem = cartModels.get(holder.getAdapterPosition());
+
+
         holder.IBadd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int quantity = cartItem.getQty() + 1;
-                cartItem.setQty(quantity);
-                cartItem.setTotal(cartItem.getPrice() * quantity);
-                notifyItemChanged(holder.getAdapterPosition());
-                salesActivity.refreshCart();
+                int maxQuantity = cartItem.getAvailableQuantity();
+                if (cartItem.getQty() < maxQuantity) {
+                    int quantity = cartItem.getQty() + 1;
+                    cartItem.setQty(quantity);
+                    cartItem.setTotal(cartItem.getPrice() * quantity);
+                    notifyItemChanged(holder.getAdapterPosition());
+                    salesActivity.refreshCart();
+                } else {
+                    Toast.makeText(context, "Maximum quantity reached.", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
