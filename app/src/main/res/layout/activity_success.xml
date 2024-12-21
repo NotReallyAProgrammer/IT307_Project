@@ -34,7 +34,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="if your not redirected pls click the button bellow"
+        android:text="Please wait for the timer or click the back to home button."
         android:fontFamily="@font/poppinsmedium"
         android:textColor="@color/darkgray"
         android:textSize="15sp"

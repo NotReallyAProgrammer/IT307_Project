@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.Nullable;
@@ -105,7 +106,9 @@ public class AddItem extends AppCompatActivity {
                     ETprice.setText(item[4]);
                     ETselling.setText(item[5]);
 
-                    category.setText(item[2]);
+                    String defaultText = item[2];
+                    category.setText(defaultText, false);
+                    category.setThreshold(1);
 
                     if(item[6].contains("R")){
                         int resId = getResources().getIdentifier(item[6].split("\\.")[2], "mipmap", getPackageName());
@@ -248,9 +251,7 @@ public class AddItem extends AppCompatActivity {
         if (!price.isEmpty()) {
 
             float payment = Float.parseFloat(price);
-
             int quantity = Integer.parseInt(qty);
-
             float total = payment * quantity;
             TVtotalprice.setText("₱" + String.valueOf(df.format(total)));
             if(!sell.isEmpty()){
@@ -269,18 +270,18 @@ public class AddItem extends AppCompatActivity {
         String sell = ETselling.getText().toString();
 
         if (!price.isEmpty()) {
+            if (!qty.isEmpty()){
+                float payment = Float.parseFloat(price);
+                int quantity = Integer.parseInt(qty);
+                float total = payment * quantity;
 
-            float payment = Float.parseFloat(price);
-            int quantity = Integer.parseInt(qty);
-            float total = payment * quantity;
-
-            TVtotalprice.setText("₱" + String.valueOf(df.format(total)));
-            if(!sell.isEmpty()){
-                float selling = Float.parseFloat(sell);
-                float profit = (quantity*selling) - (quantity*payment);
-                TVtotalselling.setText("₱" + String.valueOf(df.format(profit)));
+                TVtotalprice.setText("₱" + String.valueOf(df.format(total)));
+                if(!sell.isEmpty()){
+                    float selling = Float.parseFloat(sell);
+                    float profit = (quantity*selling) - (quantity*payment);
+                    TVtotalselling.setText("₱" + String.valueOf(df.format(profit)));
+                }
             }
-
         } else {
             TVtotalprice.setText("₱0.00");
         }
@@ -331,8 +332,6 @@ public class AddItem extends AppCompatActivity {
                 }else{
                     imgByte = item[6];
                 }
-
-                //{"00004","Piattos Cheese 40g","Snacks","20","17.05","20.00","R.mipmap.piatos"}};
                 item[1] = name;
                 item[2] = selected;
                 item[3] = qty;
@@ -343,7 +342,7 @@ public class AddItem extends AppCompatActivity {
                 Intent i = new Intent(c, Items.class);
                 i.putExtra("Items",itemsArray);
                 i.putExtra("Category",categoryArray);
-                Log.i("Item", Arrays.deepToString(itemsArray));
+                Toast.makeText(c, "Edit Item Success", Toast.LENGTH_SHORT).show();
                 startActivity(i);
                 finish();
                 break;
@@ -397,6 +396,7 @@ public class AddItem extends AppCompatActivity {
         Intent i = new Intent(c, Items.class);
         i.putExtra("Items",newItem);
         i.putExtra("Category",categoryArray);
+        Toast.makeText(c, "Add Item Success", Toast.LENGTH_SHORT).show();
         startActivity(i);
         finish();
     }

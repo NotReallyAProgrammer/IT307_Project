@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -28,6 +29,7 @@ public class Success extends AppCompatActivity {
             TVcreditname,TVcredittotal;
 
     LinearLayout LLpaidcash,LLcreditname,LLpaidchange,LLcredittotal;
+    Button BTNbacktohome;
     Context c= this;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +59,7 @@ public class Success extends AppCompatActivity {
         LLcreditname =findViewById(R.id.LLcreditname);
         LLpaidchange = findViewById(R.id.LLpaidchange);
         LLcredittotal = findViewById(R.id.LLcredittotal);
+        BTNbacktohome = findViewById(R.id.BTNbacktohome);
 
         Bundle extras = getIntent().getExtras();
         String date = extras.getString("Date");
@@ -97,22 +100,34 @@ public class Success extends AppCompatActivity {
     private void timerTexview() {
         Bundle extras = getIntent().getExtras();
         String[][] creditArray = (String[][])extras.getSerializable("Credit");
+        String[][] itemsArray = (String[][]) extras.getSerializable("Items");
+        String[] cartegoryArray = extras.getStringArray("Category");
+        List<CartModel> cartModels = (List<CartModel>) extras.getSerializable("Cart");
+        Intent i = new Intent(c, Home.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        i.putExtra("Credit",creditArray);
+        i.putExtra("Receipt", (Serializable) cartModels);
+        i.putExtra("Items",itemsArray);
+        i.putExtra("Category",cartegoryArray);
 
-        List<CartModel> cartModels = (List<CartModel>) extras.getSerializable("Items");
-
-        new CountDownTimer(10000, 1000) {
+        CountDownTimer time =  new CountDownTimer(10000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 TVsuccessctr.setText(String.valueOf(millisUntilFinished / 1000));
             }
             @Override
             public void onFinish() {
-                Intent i = new Intent(c, Home.class);
-                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                i.putExtra("Credit",creditArray);
-                i.putExtra("Receipt", (Serializable) cartModels);
                 startActivity(i);
             }
         }.start();
+
+        BTNbacktohome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                time.cancel();
+
+                startActivity(i);
+            }
+        });
     }
 }

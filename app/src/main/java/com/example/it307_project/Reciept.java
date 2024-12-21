@@ -97,8 +97,10 @@ public class Reciept extends AppCompatActivity {
 
 
         Bundle extras = getIntent().getExtras();
-        cartModels = (List<CartModel>) extras.getSerializable("Items");
+        cartModels = (List<CartModel>) extras.getSerializable("Cart");
         String[][] creditArray = (String[][]) extras.getSerializable("Credit");
+        String[][] itemArray = (String[][]) extras.getSerializable("Items");
+        String[] categoryArray = extras.getStringArray("Category");
         //Adapters
 
         // |Cart
@@ -245,8 +247,10 @@ public class Reciept extends AppCompatActivity {
                     i.putExtra("User",userPos);
                     i.putExtra("Method","Credit");
                     i.putExtra("Date",setTextView());
-                    i.putExtra("Items", (Serializable) cartModels);
+                    i.putExtra("Cart", (Serializable) cartModels);
                     i.putExtra("Credit",creditArray);
+                    i.putExtra("Items",itemArray);
+                    i.putExtra("Category",categoryArray);
                     startActivity(i);
 
                 }else{
@@ -267,8 +271,10 @@ public class Reciept extends AppCompatActivity {
                     i.putExtra("Change",payment - calculateSubtotal());
                     i.putExtra("Cash",payment);
                     i.putExtra("Method","Cash");
-                    i.putExtra("Date",setTextView());
-                    i.putExtra("Items", (Serializable) cartModels);
+                    i.putExtra("Cart", (Serializable) cartModels);
+                    i.putExtra("Credit",creditArray);
+                    i.putExtra("Items",itemArray);
+                    i.putExtra("Category",categoryArray);
                     startActivity(i);
                 }
 

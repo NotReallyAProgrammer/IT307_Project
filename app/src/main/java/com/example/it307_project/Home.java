@@ -48,14 +48,16 @@ public class Home extends AppCompatActivity {
     NavAdapter navAdapter;
     Context c = this;
 
-    //Items Array
+    //Array
     String[][] itemsArray = {{"00001", "Kopiko Black Twin","Beverage","10","12.75","16.00","R.mipmap.kopiko"},
                             {"00002","Lucky Me Chicken 55g","Noodle","20","9.30","12.00","R.mipmap.luckyme"},
                             {"00003","Argentina Meat Loaf 150g","Canned","15","21.75","25.00","R.mipmap.argentina"},
                             {"00004","Piattos Cheese 40g","Snacks","20","17.05","20.00","R.mipmap.piatos"}};
 
     String[] categoryArray = {"Beverage", "Canned", "Noodle","Snacks"};
-    String[][] creditInfoArray = {{"Miguel","0"},{"Felix","0"},{"Mia","0"},{"Janeth","0"}};
+    String[][] creditInfoArray = {{"Miguel","1"},{"Felix","1"},{"Mia","1"},{"Janeth","1"}};
+
+
 
 
     @Override
@@ -64,8 +66,7 @@ public class Home extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_home);
         initialize();
-        setNavAdapter();
-        setItemAdapter();
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -80,8 +81,10 @@ public class Home extends AppCompatActivity {
         TVname = findViewById(R.id.TVname);
         IBlogout = findViewById(R.id.IBlogout);
 
-        Bundle intent = getIntent().getExtras();
+        SharedPreferences sharedPref = getSharedPreferences("user_session", MODE_PRIVATE);
+        String userName = sharedPref.getString("userName", "defaultName");
 
+        Bundle intent = getIntent().getExtras();
 
          if (intent != null){
              String[][] newItemsArray = (String[][]) intent.getSerializable("Items");
@@ -119,61 +122,35 @@ public class Home extends AppCompatActivity {
         }
 
 
-        SharedPreferences sharedPref = getSharedPreferences("user_session", MODE_PRIVATE);
-        String userName = sharedPref.getString("userName", "defaultName");
-
         TVname.setText("Welcome " + userName);
 
-        IBlogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder logout = new AlertDialog.Builder(c);
-                logout.setTitle("Log out!").setMessage("Are you sure you want to log out?").setCancelable(true).setPositiveButton("Logout", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        SharedPreferences.Editor editor = sharedPref.edit();
-                        editor.clear();
-                        editor.apply();
-
-                        Intent intent = new Intent(c, Login.class);
-                        startActivity(intent);
-                        finish();
-                    }
-                });
-
-                AlertDialog alert = logout.create();
-                alert.show();
-
-            }
-        });
-
-    }
-
-    private void setNavAdapter(){
-
-        navModels.add(new NavModel("Sales", "For sales and credit.", "View Sales",R.mipmap.sales_nav));
-        navModels.add(new NavModel("All Items", "Managing items and category.","View Inventory",R.mipmap.item_nav));
+        //Adapter
+        navModels.add(new NavModel("All Items", "Managing items and category..", "View Inventory",R.mipmap.item_nav));
+        navModels.add(new NavModel("Sales", "For sales and credit.","View Sales",R.mipmap.sales_nav));
         navModels.add(new NavModel("Credits", "Adding names paying tabs.","View Credits",R.mipmap.credit_nav));
 
         navAdapter = new NavAdapter(c,navModels, new NavAdapter.ClickListener() {
             @Override
             public int onPositionClicked(int position) {
                 if(position == 0){
-                    Intent i = new Intent(c,Sales.class);
+                    Intent i = new Intent(c,Inventory.class);
                     i.putExtra("Items", itemsArray);
                     i.putExtra("Category", categoryArray);
                     i.putExtra("Credit", creditInfoArray);
                     startActivity(i);
-               }else if(position == 1){
-                    Intent i = new Intent(c, Inventory.class);
+                    finish();
+                }else if(position == 1){
+                    Intent i = new Intent(c, Sales.class);
                     i.putExtra("Items", itemsArray);
                     i.putExtra("Category", categoryArray);
-                    Log.i("Items",Arrays.deepToString(itemsArray));
+                    i.putExtra("Credit", creditInfoArray);
                     startActivity(i);
+                    finish();
                 }else if (position == 2) {
                     Intent i = new Intent(c, Credits.class);
                     i.putExtra("Credit", creditInfoArray);
                     startActivity(i);
+                    finish();
                 }
                 return position;
             }
@@ -183,10 +160,8 @@ public class Home extends AppCompatActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(c, LinearLayoutManager.HORIZONTAL, false);
         RVname.setLayoutManager(layoutManager);
 
-    }
 
-    private void setItemAdapter(){
-
+        // |Items
         DecimalFormat df = new DecimalFormat("#.##");
         for (String item[] : itemsArray){
             int resId = 0;
@@ -220,5 +195,29 @@ public class Home extends AppCompatActivity {
 
         GridLayoutManager mGridLayoutManager = new GridLayoutManager(c, 2);
         RVitem.setLayoutManager(mGridLayoutManager);
+
+        IBlogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder logout = new AlertDialog.Builder(c);
+                logout.setTitle("Log out!").setMessage("Are you sure you want to log out?").setCancelable(true).setPositiveButton("Logout", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        SharedPreferences.Editor editor = sharedPref.edit();
+                        editor.clear();
+                        editor.apply();
+
+                        Intent intent = new Intent(c, Login.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                });
+
+                AlertDialog alert = logout.create();
+                alert.show();
+
+            }
+        });
+
     }
 }

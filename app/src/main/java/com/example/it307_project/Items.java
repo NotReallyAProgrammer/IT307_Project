@@ -282,6 +282,7 @@ public class Items extends AppCompatActivity {
                 i.putExtra("Category",category);
                 i.putExtra("Items",itemsArray);
                 startActivity(i);
+                finish();
             }
         });
 

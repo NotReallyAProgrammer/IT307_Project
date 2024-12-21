@@ -16,4 +16,8 @@ public class CreditModel {
     public float getTotalCredit() {
         return totalCredit;
     }
+
+    public void setTotalCredit(float totalCredit) {
+        this.totalCredit = totalCredit;
+    }
 }

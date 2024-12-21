@@ -1,7 +1,5 @@
 package com.example.it307_project;
 
-
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -186,6 +184,11 @@ public class Sales extends AppCompatActivity {
         backbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent i = new Intent(c, Home.class);
+                i.putExtra("Credit",creditArray);
+                i.putExtra("Category",categoryArray);
+                i.putExtra("Items",itemsArray);
+                startActivity(i);
                 finish();
             }
         });
@@ -206,8 +209,10 @@ public class Sales extends AppCompatActivity {
             public void onClick(View v) {
                 if (!cartModels.isEmpty()){
                     Intent i = new Intent(c, Reciept.class);
-                    i.putExtra("Items", (Serializable) cartModels);
+                    i.putExtra("Cart", (Serializable) cartModels);
                     i.putExtra("Credit",creditArray);
+                    i.putExtra("Category",categoryArray);
+                    i.putExtra("Items",itemsArray);
                     startActivity(i);
 
                 }

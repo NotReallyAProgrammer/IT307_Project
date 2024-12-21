@@ -8,7 +8,12 @@
     tools:context=".Credits"
     android:orientation="vertical"
     android:layout_margin="20dp">
-
+    <ImageView
+        android:id="@+id/backbtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/backarrow"
+        android:layout_marginBottom="20dp"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -64,7 +69,7 @@
                 android:id="@+id/TVtotalcredit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="₱10,000"
+                android:text="₱0"
                 android:textSize="30dp"
                 android:fontFamily="@font/poppinsbold"
                 android:textColor="@color/gray"
@@ -88,7 +93,6 @@
         android:orientation="vertical">
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/loginUser"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -97,12 +101,11 @@
             app:endIconMode="clear_text"
             app:endIconTint="@color/black"
             app:hintTextColor="@color/black"
-            app:endIconDrawable="@drawable/searchname"
             app:startIconTint="@color/black"
             android:layout_marginBottom="10dp"
            >
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/ETemail"
+                android:id="@+id/ETsearch"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:fontFamily="@font/poppinsregular"
@@ -112,7 +115,6 @@
 
 
         </com.google.android.material.textfield.TextInputLayout>
-
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -129,6 +131,7 @@
                />
 
             <Button
+                android:id="@+id/BTNaddname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Add Name"
@@ -145,7 +148,8 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/RVcredit"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
             android:layout_marginBottom="20dp"
@@ -153,6 +157,79 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:layout_centerVertical="true"
             tools:listitem="@android:layout/simple_list_item_checked"/>
+
+        <LinearLayout
+            android:id="@+id/LLnewtab"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/categoryborder"
+            android:padding="10dp"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/TVcreditpaymentname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Credit Name: Miguel"
+                android:fontFamily="@font/poppinsbold"
+                android:textColor="@color/darkgray"
+                android:textSize="13sp"
+                android:layout_marginBottom="10dp"/>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/creditPayment"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Input Payment Here"
+                app:boxStrokeColor="@color/colorSecondary"
+                app:endIconMode="clear_text"
+                app:endIconTint="@color/black"
+                app:hintTextColor="@color/black"
+                >
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/ETpayment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/poppinsregular"
+                    android:inputType="numberDecimal"
+                    android:textSize="10sp"
+                    android:textCursorDrawable="@drawable/textinputblue"  />
+
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:gravity="center">
+                <Button
+                    android:id="@+id/BTNclose"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/colorSecondary"
+                    android:fontFamily="@font/poppinsmedium"
+                    android:text="Close"
+                    android:textColor="@color/white"
+                />
+
+
+                <Button
+                    android:id="@+id/BTNconfirm"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/colorPrimaryDark"
+                    android:fontFamily="@font/poppinsmedium"
+                    android:text="Confirm"
+                    android:textColor="@color/white"
+                    android:layout_marginLeft="10dp"/>
+            </LinearLayout>
+        </LinearLayout>
 
     </LinearLayout>
 

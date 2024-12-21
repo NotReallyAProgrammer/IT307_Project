@@ -34,7 +34,6 @@ public class Inventory extends AppCompatActivity {
     RecyclerView RVitem;
     Button BTNviewall;
     ImageView IVback;
-    List<ItemModel> itemModels = new ArrayList<>();
     List<AllItemModel> allItemModels = new ArrayList<>();
     ItemAdapter itemadapter;
     Context c = this;
