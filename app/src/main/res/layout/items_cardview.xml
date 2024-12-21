@@ -11,7 +11,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="15dp">
 
@@ -24,29 +24,37 @@
             android:background="@drawable/cornerradius"/>
 
 
-        <TextView
-            android:id="@+id/TVitemname"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Sample item name"
-            android:textColor="@color/darkgray"
-            android:fontFamily="@font/poppinsbold"
-            android:textSize="15sp"
-            android:layout_marginTop="20dp"/>
-        <TextView
-            android:id="@+id/TVitemcat"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Category"
-            android:textSize="10sp"
-            android:textColor="@color/colorPrimary"
-            android:fontFamily="@font/poppinsmedium"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:orientation="vertical"
+            android:layout_marginTop="20dp">
+            <TextView
+                android:id="@+id/TVitemname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sample item name"
+                android:textColor="@color/darkgray"
+                android:fontFamily="@font/poppinsbold"
+                android:textSize="12sp"
+                />
+            <TextView
+                android:id="@+id/TVitemcat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Category"
+                android:textSize="10sp"
+                android:textColor="@color/colorPrimary"
+                android:fontFamily="@font/poppinsmedium"
+                />
+        </LinearLayout>
 
-            />
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:layout_marginTop="15dp">
 
 

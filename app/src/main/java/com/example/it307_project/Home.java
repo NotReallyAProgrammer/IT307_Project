@@ -33,6 +33,7 @@ import com.example.it307_project.Model.ReceiptModel;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -50,11 +51,11 @@ public class Home extends AppCompatActivity {
     //Items Array
     String[][] itemsArray = {{"00001", "Kopiko Black Twin","Beverage","10","12.75","16.00","R.mipmap.kopiko"},
                             {"00002","Lucky Me Chicken 55g","Noodle","20","9.30","12.00","R.mipmap.luckyme"},
-                            {"00003","Argentina Corned Beef 150g","Canned","15","36.40","38.00","R.mipmap.argentina"},
+                            {"00003","Argentina Meat Loaf 150g","Canned","15","21.75","25.00","R.mipmap.argentina"},
                             {"00004","Piattos Cheese 40g","Snacks","20","17.05","20.00","R.mipmap.piatos"}};
 
     String[] categoryArray = {"Beverage", "Canned", "Noodle","Snacks"};
-    String[][] creditInfoArray = {{"Miguel","200"},{"Felix","500"},{"Mia","230"},{"Janeth","550"}};
+    String[][] creditInfoArray = {{"Miguel","0"},{"Felix","0"},{"Mia","0"},{"Janeth","0"}};
 
 
     @Override
@@ -100,7 +101,6 @@ public class Home extends AppCompatActivity {
                  }
                  if (cartModels != null) {
 
-                     Log.i("Items Found", "initialize: Found");
                      for (String[] items : itemsArray) {
                          for (CartModel cart : cartModels) {
                              if (items[0].equals(cart.getId())) {
@@ -168,7 +168,7 @@ public class Home extends AppCompatActivity {
                     Intent i = new Intent(c, Inventory.class);
                     i.putExtra("Items", itemsArray);
                     i.putExtra("Category", categoryArray);
-
+                    Log.i("Items",Arrays.deepToString(itemsArray));
                     startActivity(i);
                 }else if (position == 2) {
                     Intent i = new Intent(c, Credits.class);

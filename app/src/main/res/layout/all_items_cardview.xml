@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
+    android:layout_height="80dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_margin="10dp"
-    app:cardCornerRadius="10dp"
+    android:layout_margin="5dp"
+    app:cardCornerRadius="5dp"
     android:elevation="10dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -14,7 +14,7 @@
 
         <ImageView
             android:id="@+id/IVallitemimg"
-            android:layout_width="70dp"
+            android:layout_width="50dp"
             android:layout_height="match_parent"
             android:background="@drawable/scornerradius"
             android:clipToOutline="true"
@@ -32,7 +32,8 @@
             app:layout_constraintRight_toLeftOf="@id/IBedit"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:gravity="center_vertical">
 
             <TextView
                 android:id="@+id/TVallitemname"
@@ -40,7 +41,7 @@
                 android:layout_height="wrap_content"
                 android:text="Sample name"
                 android:fontFamily="@font/poppinsbold"
-                android:textSize="15sp"
+                android:textSize="13sp"
                 android:textColor="@color/colorSecondary"/>
 
             <TextView
@@ -49,7 +50,7 @@
                 android:layout_height="wrap_content"
                 android:text="Quantity: 10"
                 android:fontFamily="@font/poppinsmedium"
-                android:textSize="10sp"
+                android:textSize="8sp"
                 android:textColor="@color/darkgray"/>
 
             <LinearLayout
@@ -64,7 +65,7 @@
                     android:layout_height="wrap_content"
                     android:text="Srp: 90"
                     android:fontFamily="@font/poppinsbold"
-                    android:textSize="10sp"/>
+                    android:textSize="9sp"/>
 
                 <TextView
                     android:id="@+id/TVallitemprice"
@@ -73,7 +74,7 @@
                     android:layout_height="wrap_content"
                     android:text="Price: 100"
                     android:fontFamily="@font/poppinsbold"
-                    android:textSize="10sp"/>
+                    android:textSize="9sp"/>
 
                 <TextView
                     android:id="@+id/TVallitemprofit"
@@ -82,7 +83,7 @@
                     android:layout_height="wrap_content"
                     android:text="Profit: 10"
                     android:fontFamily="@font/poppinsbold"
-                    android:textSize="10sp"/>
+                    android:textSize="9sp"/>
             </LinearLayout>
         </LinearLayout>
 

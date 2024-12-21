@@ -43,16 +43,13 @@ public class Sales extends AppCompatActivity {
     TextView TVheader, TVclear, TVsubtotal;
     TextInputEditText ETsearch;
     Button BTNcart;
-
     LinearLayout LLnoitem, LLcart;
-
     List<AllItemModel> allItemModels = new ArrayList<>();
     List<CategoryModel> categoryModels = new ArrayList<>();
     List<CartModel> cartModels = new ArrayList<>();
     SalesItemAdapter salesItemAdapter;
     CategoryAdapter categoryAdapter;
     CartAdapter cartAdapter;
-
     Context c = this;
 
     @Override
@@ -145,8 +142,11 @@ public class Sales extends AppCompatActivity {
                 String result = categoryArray[position];
                 catFilter(result);
                 TVclear.setVisibility(View.VISIBLE);
-
                 TVheader.setText(result);
+                if(ETsearch.isFocused()){
+                    ETsearch.setText(null);
+                    ETsearch.clearFocus();
+                }
             }
         });
         RVsalescategory.setAdapter(categoryAdapter);
@@ -266,7 +266,6 @@ public class Sales extends AppCompatActivity {
 
         return subtotal;
     }
-
     private void updateCart() {
         float subtotal = calculateSubtotal();
         if (cartModels.isEmpty() || subtotal <= 0) {
@@ -297,12 +296,10 @@ public class Sales extends AppCompatActivity {
         // Pass the filtered list to the adapter
         salesItemAdapter.setFilterList(filterList);
     }
-
     private void clearFilter() {
         categoryAdapter.resetSelection();
         salesItemAdapter.setFilterList(allItemModels);
     }
-
     private void catFilter(String result) {
         List<AllItemModel> filterList = new ArrayList<>();
         for (AllItemModel item : allItemModels) {

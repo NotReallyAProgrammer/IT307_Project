@@ -1,11 +1,16 @@
 package com.example.it307_project;
 
+import static com.example.it307_project.Adapter.StringToByte.stringToByteArray;
+
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Looper;
 import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -42,13 +47,13 @@ public class AddItem extends AppCompatActivity {
     Button BTNconfirm;
     ImageButton IBaddimg;
     TextView TVtotalprice,TVtotalselling;
-    ImageView IVitemimg;
+    ImageView IVitemimg,backbtn;
 
-    List<CategoryModel> categoryModels = new ArrayList<>();
-    List<AllItemModel> allItemModels = new ArrayList<>();
+    DecimalFormat df = new DecimalFormat("#.##");
 
     Context c = this;
     byte[] byteArray = null;
+    boolean clicked = false;
 
     private static final int REQ_CODE_TAKE_PHOTO=1;
     @Override
@@ -79,15 +84,112 @@ public class AddItem extends AppCompatActivity {
         TVtotalprice = findViewById(R.id.TVtotalprice);
         TVtotalselling = findViewById(R.id.TVtotalselling);
         BTNconfirm = findViewById(R.id.BTNconfirm);
+        backbtn = findViewById(R.id.backbtn);
         IBaddimg = findViewById(R.id.IBaddimg);
 
         Intent intent = getIntent();
         String[][] itemsArray = (String[][]) intent.getSerializableExtra("Items");
         String[] categoryArray = intent.getStringArrayExtra("Category");
+        String mode = intent.getStringExtra("Mode");
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(c, R.layout.dropdown_menu_popup_item, categoryArray);
         category.setAdapter(adapter);
 
+        if(mode.equals("Edit")){
+            String id = intent.getStringExtra("Id");
+            //{"00004","Piattos Cheese 40g","Snacks","20","17.05","20.00","R.mipmap.piatos"}};
+            for (String[] item : itemsArray){
+                if (item[0].equals(id)){
+                    ETname.setText(item[1]);
+                    ETqty.setText(item[3]);
+                    ETprice.setText(item[4]);
+                    ETselling.setText(item[5]);
+
+                    category.setText(item[2]);
+
+                    if(item[6].contains("R")){
+                        int resId = getResources().getIdentifier(item[6].split("\\.")[2], "mipmap", getPackageName());
+                        IVitemimg.setImageResource(resId);
+                    }else{
+                        byte[] byteArrayConverted = stringToByteArray(item[6]);
+                        Bitmap bitmap = BitmapFactory.decodeByteArray(byteArrayConverted, 0, byteArrayConverted.length);
+                        IVitemimg.setImageBitmap(bitmap);
+                    }
+
+
+                    int quantity = Integer.parseInt(item[3]);
+                    float price = Float.parseFloat(item[4]);
+                    float sellingPrice = Float.parseFloat(item[5]);
+                    float profit = (quantity*sellingPrice) - (quantity*price);
+
+                    TVtotalprice.setText("₱"+ String.valueOf(quantity*price));
+                    TVtotalselling.setText("₱" + String.valueOf(profit));
+                    break;
+                }
+            }
+            BTNconfirm.setText("Edit Item");
+        }
+
+
+        //Edit Text
+        ETprice.addTextChangedListener(new TextWatcher()  {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (count > 0) {
+                    calculateTotal();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                    calculateTotal();
+                }
+
+        });
+
+        ETselling.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (count > 0) {
+                  calculateProfit();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                calculateProfit();
+            }
+        });
+
+        ETqty.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (count > 0){
+                    calculateProfit();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                    calculateProfit();
+            }
+
+        });
 
         //Click Listener
         IBaddimg.setOnClickListener(new View.OnClickListener() {
@@ -118,16 +220,87 @@ public class AddItem extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                // {"00004","Piattos Cheese 40g","Snacks","20","17.05","20.00","R.mipmap.piatos"}
+                if (mode.equals("Edit")){
+                    EditItem();
+                }else{
+                    AddItem();
+                }
 
-                String lastId = itemsArray[itemsArray.length - 1][0];
-                int newId = Integer.parseInt(lastId) + 1;
-                String newItemId = String.format("%05d", newId);
+            }
+        });
+
+        backbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                    Intent i = new Intent(c, Items.class);
+                    i.putExtra("Category",categoryArray);
+                    i.putExtra("Items",itemsArray);
+                    startActivity(i);
+                    finish();
+            }
+        });
+
+    }
+    private void calculateTotal(){
+        String price = ETprice.getText().toString().trim();
+        String qty = ETqty.getText().toString();
+        String sell = ETselling.getText().toString();
+        if (!price.isEmpty()) {
+
+            float payment = Float.parseFloat(price);
+
+            int quantity = Integer.parseInt(qty);
+
+            float total = payment * quantity;
+            TVtotalprice.setText("₱" + String.valueOf(df.format(total)));
+            if(!sell.isEmpty()){
+                float selling = Float.parseFloat(sell);
+                float profit = (quantity*selling) - (quantity*payment);
+                TVtotalselling.setText("₱" + String.valueOf(df.format(profit)));
+            }
+
+        } else {
+            TVtotalprice.setText("₱0.00");
+        }
+    }
+    private void calculateProfit(){
+        String price = ETprice.getText().toString().trim();
+        String qty = ETqty.getText().toString();
+        String sell = ETselling.getText().toString();
+
+        if (!price.isEmpty()) {
+
+            float payment = Float.parseFloat(price);
+            int quantity = Integer.parseInt(qty);
+            float total = payment * quantity;
+
+            TVtotalprice.setText("₱" + String.valueOf(df.format(total)));
+            if(!sell.isEmpty()){
+                float selling = Float.parseFloat(sell);
+                float profit = (quantity*selling) - (quantity*payment);
+                TVtotalselling.setText("₱" + String.valueOf(df.format(profit)));
+            }
+
+        } else {
+            TVtotalprice.setText("₱0.00");
+        }
+    }
+
+    private void EditItem(){
+        Intent intent = getIntent();
+        String[][] itemsArray = (String[][]) intent.getSerializableExtra("Items");
+        String[] categoryArray = intent.getStringArrayExtra("Category");
+        String id = intent.getStringExtra("Id");
+
+        for (String[] item : itemsArray){
+            if (item[0].equals(id)){
+
                 String name = ETname.getText().toString();
                 String qty = ETqty.getText().toString();
                 String selected = category.getText().toString();
                 String price = ETprice.getText().toString();
                 String selling = ETselling.getText().toString();
-                String imgByte = Arrays.toString(byteArray);
+                String imgByte = "";
 
                 if(!validateName() | !validateQty() | !validatePrice() | !validateSelling() | !validateCategory()){
 
@@ -153,19 +326,81 @@ public class AddItem extends AppCompatActivity {
                     return;
                 }
 
-                String[] addItem = {newItemId,name,selected,qty,price,selling,imgByte};
-                String[][] newItem = Arrays.copyOf(itemsArray, itemsArray.length + 1);
-                newItem[itemsArray.length] = addItem;
+                if(clicked){
+                    imgByte = Arrays.toString(byteArray);
+                }else{
+                    imgByte = item[6];
+                }
+
+                //{"00004","Piattos Cheese 40g","Snacks","20","17.05","20.00","R.mipmap.piatos"}};
+                item[1] = name;
+                item[2] = selected;
+                item[3] = qty;
+                item[4] = price;
+                item[5] = selling;
+                item[6] = imgByte;
 
                 Intent i = new Intent(c, Items.class);
-                i.putExtra("Items",newItem);
+                i.putExtra("Items",itemsArray);
                 i.putExtra("Category",categoryArray);
+                Log.i("Item", Arrays.deepToString(itemsArray));
                 startActivity(i);
                 finish();
+                break;
             }
-        });
-
+        }
     }
+    private void AddItem(){
+
+        Intent intent = getIntent();
+        String[][] itemsArray = (String[][]) intent.getSerializableExtra("Items");
+        String[] categoryArray = intent.getStringArrayExtra("Category");
+
+        String lastId = itemsArray[itemsArray.length - 1][0];
+        int newId = Integer.parseInt(lastId) + 1;
+        String newItemId = String.format("%05d", newId);
+        String name = ETname.getText().toString();
+        String qty = ETqty.getText().toString();
+        String selected = category.getText().toString();
+        String price = ETprice.getText().toString();
+        String selling = ETselling.getText().toString();
+        String imgByte = Arrays.toString(byteArray);
+
+        if(!validateName() | !validateQty() | !validatePrice() | !validateSelling() | !validateCategory()){
+
+            new android.os.Handler(Looper.getMainLooper()).postDelayed(
+                    new Runnable() {
+                        public void run() {
+
+                            itemName.setError(null);
+                            itemName.setErrorEnabled( false );
+
+                            itemQty.setError(null);
+                            itemQty.setErrorEnabled( false );
+
+                            itemPrice.setError(null);
+                            itemPrice.setErrorEnabled( false );
+
+                            itemSelling.setError(null);
+                            itemSelling.setErrorEnabled( false );
+
+                            menu.setError(null);
+                        }
+                    }, 10000);
+            return;
+        }
+
+        String[] addItem = {newItemId,name,selected,qty,price,selling,imgByte};
+        String[][] newItem = Arrays.copyOf(itemsArray, itemsArray.length + 1);
+        newItem[itemsArray.length] = addItem;
+
+        Intent i = new Intent(c, Items.class);
+        i.putExtra("Items",newItem);
+        i.putExtra("Category",categoryArray);
+        startActivity(i);
+        finish();
+    }
+
     //VALIDATION
     private boolean validateName() {
         String val = ETname.getText().toString();
@@ -226,7 +461,7 @@ public class AddItem extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == REQ_CODE_TAKE_PHOTO){
-
+            clicked = true;
             IBaddimg.setVisibility(View.GONE);
             Bundle extras = data.getExtras();
             Bitmap imgBit = (Bitmap) extras.get("data");

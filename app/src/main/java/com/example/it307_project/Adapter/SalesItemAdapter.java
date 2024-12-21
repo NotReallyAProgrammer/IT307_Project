@@ -8,6 +8,7 @@ import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -75,6 +76,7 @@ public class SalesItemAdapter extends RecyclerView.Adapter<SalesItemAdapter.View
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         TextView TVsalesname ,TVsalesprice;
+
         LinearLayout LLitem;
         ImageView IVsaleimg;
         public ViewHolder(@NonNull View itemView) {

@@ -1,11 +1,9 @@
 package com.example.it307_project.Adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Filter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -15,18 +13,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.it307_project.Model.CategoryModel;
 import com.example.it307_project.R;
 
-import java.lang.ref.WeakReference;
-import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
     Context context;
     List<CategoryModel> categoryModels;
-    List<CategoryModel> categoryFilter;
-
     private final ClickListener listener;
-    private int selectedPosition = -1;
 
+    private int selectedPosition = -1;
+    private String mode ="";
     public CategoryAdapter(Context c, List<CategoryModel> categoryModels, ClickListener listener){
         this.context = c;
         this.categoryModels = categoryModels;
@@ -34,6 +29,10 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         this.listener = listener;
     }
 
+    public void getMode(String mode){
+        this.mode = mode;
+        notifyDataSetChanged();
+    }
 
 
     @NonNull
@@ -49,11 +48,18 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
 
         holder.TVcatname.setText(categoryModels.get(position).getCategoryName());
 
-        if (selectedPosition == position) {
-            holder.itemView.setBackgroundResource(R.drawable.categoryselected);
-        } else {
-            holder.itemView.setBackgroundResource(R.drawable.categoryborder);
+        if(mode.equals("Delete")){
+            holder.itemView.setBackgroundResource(R.drawable.categorydelete);
+        }else if(mode.equals("Select")){
+            holder.itemView.setBackgroundResource(R.drawable.categoryborder);  // default background
+        }else{
+            if (selectedPosition == position) {
+                holder.itemView.setBackgroundResource(R.drawable.categoryselected);
+            } else {
+                holder.itemView.setBackgroundResource(R.drawable.categoryborder);  // default background
+            }
         }
+
     }
 
     @Override
@@ -72,7 +78,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView TVcatname;
         LinearLayout LLcategory;
-        WeakReference<NavAdapter.ClickListener> listenerRef;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             TVcatname = itemView.findViewById(R.id.TVcatname);

@@ -44,7 +44,7 @@ public class Reciept extends AppCompatActivity {
     ImageView backbtn;
     Button BTNcredit, BTNpaid;
     RecyclerView RVrecieptitem,RVcreditname;
-    LinearLayout LLrecieptcredit,LLcredit,LLcreditselected;
+    LinearLayout LLrecieptcredit,LLcredit,LLcreditselected,LLhidepayment;
     TextInputLayout TLreceipt;
     TextInputEditText ETpayment,ETsearch;
     List<ReceiptModel> receiptModels = new ArrayList<>();
@@ -91,6 +91,7 @@ public class Reciept extends AppCompatActivity {
         LLrecieptcredit = findViewById(R.id.LLrecieptcredit);
         LLcredit = findViewById(R.id.LLcredit);
         LLcreditselected = findViewById(R.id.LLcreditselected);
+        LLhidepayment = findViewById(R.id.LLhidepayment);
 
         String subtotal="";
 
@@ -260,7 +261,6 @@ public class Reciept extends AppCompatActivity {
                         return;
                     }
                     String val = ETpayment.getText().toString();
-                    Log.i("input", "onClick: "+ val);
                     String input = ETpayment.getText().toString().trim();
                     float payment = Float.parseFloat(input);
                     i.putExtra("Total",calculateSubtotal());
@@ -284,6 +284,7 @@ public class Reciept extends AppCompatActivity {
                     BTNpaid.setVisibility(View.VISIBLE);
                     LLrecieptcredit.setVisibility(View.GONE);
                     ETpayment.setEnabled(true);
+                    LLhidepayment.setVisibility(View.VISIBLE);
                 }else if(BTNcredit.getText().equals("Back")){
                     LLcreditselected.setVisibility(View.GONE);
                     LLcredit.setVisibility(View.VISIBLE);
@@ -294,6 +295,7 @@ public class Reciept extends AppCompatActivity {
                     LLrecieptcredit.setVisibility(View.VISIBLE);
                     BTNpaid.setVisibility(View.GONE);
                     BTNcredit.setText("Close");
+                    LLhidepayment.setVisibility(View.GONE);
                     ETpayment.setEnabled(false);
 
                 }
@@ -348,14 +350,16 @@ public class Reciept extends AppCompatActivity {
         Calendar calendar = Calendar.getInstance();
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM dd yyyy");
+        SimpleDateFormat setDate = new SimpleDateFormat("dd/MM/yyyy");
         SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm a");
 
         String date = dateFormat.format(calendar.getTime());
+        String TVdate = setDate.format(calendar.getTime());
         String time = timeFormat.format(calendar.getTime());
         String recieptDate = date + " " + time;
 
         TVreceiptno.setText(String.valueOf(intTimestamp));
-        TVreceiptdate.setText(date);
+        TVreceiptdate.setText(TVdate);
         TVreceipttime.setText(time);
 
         return recieptDate;

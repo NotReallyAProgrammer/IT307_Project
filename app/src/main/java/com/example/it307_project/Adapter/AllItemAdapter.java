@@ -5,10 +5,10 @@ import static com.example.it307_project.Adapter.StringToByte.stringToByteArray;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -23,10 +23,12 @@ import java.util.List;
 public class AllItemAdapter extends RecyclerView.Adapter<AllItemAdapter.ViewHolder> {
     Context context;
     List<AllItemModel> allItemModels;
+    private final ClickListener listener;
 
-    public AllItemAdapter(Context c, List<AllItemModel> allItemModels){
+    public AllItemAdapter(Context c, List<AllItemModel> allItemModels,ClickListener listener){
         this.context = c;
         this.allItemModels = allItemModels;
+        this.listener = listener;
     }
     public void setFilterList(List<AllItemModel> filterList){
         this.allItemModels = filterList;
@@ -64,9 +66,11 @@ public class AllItemAdapter extends RecyclerView.Adapter<AllItemAdapter.ViewHold
             holder.IVallitemimg.setImageResource(allItemModels.get(position).getImageResId());
         }
 
-
     }
 
+    public interface ClickListener {
+        void onIdCLick(String id);
+    }
 
     @Override
     public int getItemCount() {
@@ -74,9 +78,10 @@ public class AllItemAdapter extends RecyclerView.Adapter<AllItemAdapter.ViewHold
     }
 
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView TVallitemname, TVallitemqty, TVallitemprice, TVallitemsrp, TVallitemprofit;
         ImageView IVallitemimg;
+        ImageButton IBedit;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             TVallitemname = itemView.findViewById(R.id.TVallitemname);
@@ -85,6 +90,16 @@ public class AllItemAdapter extends RecyclerView.Adapter<AllItemAdapter.ViewHold
             TVallitemprice = itemView.findViewById(R.id.TVallitemprice);
             TVallitemprofit = itemView.findViewById(R.id.TVallitemprofit);
             IVallitemimg = itemView.findViewById(R.id.IVallitemimg);
+            IBedit = itemView.findViewById(R.id.IBedit);
+
+            IBedit.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            listener.onIdCLick(allItemModels.get(getAdapterPosition()).getItemId());
         }
     }
+
+
 }

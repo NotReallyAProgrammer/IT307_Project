@@ -82,6 +82,7 @@ public class Inventory extends AppCompatActivity {
 
             // {"00004","Piattos Cheese 40g","Snacks","20","17.05","20.00","R.mipmap.piatos"}
             String formattedValue = df.format(Float.parseFloat(item[5]) -  Float.parseFloat(item[4]));
+
             allItemModels.add(new AllItemModel(
                    item[0],//Item ID
                     item[1], // Item Name
@@ -115,10 +116,10 @@ public class Inventory extends AppCompatActivity {
 
 
         //Setting TextView
-        TVtotalval.setText("₱" + totalVal);
+        TVtotalval.setText("₱" + df.format(totalVal));
         TVtotalcat.setText(String.valueOf(categoryArray.length));
         TVtotalitems.setText(String.valueOf(itemsArray.length));
-        TVtotalprofit.setText("₱" + String.valueOf(profit - totalVal));
+        TVtotalprofit.setText("₱" + String.valueOf(df.format(profit - totalVal)));
 
 
         //Click Listener
