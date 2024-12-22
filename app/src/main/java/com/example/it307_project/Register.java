@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 
@@ -31,6 +32,7 @@ public class Register extends AppCompatActivity {
     TextInputLayout regName, regEmail, regPass, regCfrmPass,regAnswer,menu;
     TextInputEditText ETname, ETemail, ETpass, ETcfrmpass, ETanswer;
     Button BTNconfirm;
+    ImageView backbtn;
     AutoCompleteTextView question;
     String[] arraySpinner = new String[]{
             "What is your mother's maiden name?",
@@ -71,6 +73,7 @@ public class Register extends AppCompatActivity {
         question = findViewById(R.id.questions);
         menu = findViewById(R.id.menu);
         BTNconfirm = findViewById(R.id.BTNconfirm);
+        backbtn = findViewById(R.id.backbtn);
 
 
         //Setting selection in spinner;
@@ -141,6 +144,13 @@ public class Register extends AppCompatActivity {
                 startActivity(i);
                 Toast.makeText(c, "Register successfully", Toast.LENGTH_SHORT).show();
 
+            }
+        });
+
+        backbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
     }

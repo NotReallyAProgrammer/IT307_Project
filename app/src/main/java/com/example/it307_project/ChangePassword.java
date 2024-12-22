@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,12 +27,10 @@ import java.util.Arrays;
 public class ChangePassword extends AppCompatActivity {
 
     TextInputLayout  changePass, newCnfrmPass;
-
     TextInputEditText  ETpass, ETcfrmpass;
     TextView TVplaceholder;
-
     Button BTNconfirm;
-
+    ImageView backbtn;
     Context c=this;
 
     @Override
@@ -55,6 +54,7 @@ public class ChangePassword extends AppCompatActivity {
         ETcfrmpass = findViewById(R.id.ETcnfrmpass);
         TVplaceholder = findViewById(R.id.TVplaceholder);
         BTNconfirm = findViewById(R.id.BTNconfirm);
+        backbtn = findViewById(R.id.backbtn);
 
         Intent intent = getIntent();
         String[][] Users = (String[][]) intent.getSerializableExtra("Users");
@@ -93,6 +93,13 @@ public class ChangePassword extends AppCompatActivity {
 
                 startActivity(i);
                 Toast.makeText(c, "Password change successfully", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        backbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
     }
