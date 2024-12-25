@@ -1,6 +1,5 @@
 package com.example.it307_project.Adapter;
 
-
 import static com.example.it307_project.Adapter.StringToByte.stringToByteArray;
 
 import android.content.Context;
@@ -48,7 +47,9 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull CartAdapter.ViewHolder holder, int position) {
 
-        holder.TVcartname.setText(TextUtils.ellipsize(cartModels.get(holder.getAdapterPosition()).getName(), new TextPaint(), 130, TextUtils.TruncateAt.END).toString());
+        holder.TVcartname.setText(
+                TextUtils.ellipsize(cartModels.get(holder.getAdapterPosition()).getName(),
+                        new TextPaint(), 130, TextUtils.TruncateAt.END).toString());
         holder.TVcartprice.setText("PHP: ₱" +String.valueOf(cartModels.get(holder.getAdapterPosition()).getPrice()));
         holder.TVcarttotal.setText("Total: ₱" +String.valueOf(cartModels.get(holder.getAdapterPosition()).getTotal()));
         holder.TVcartqty.setText(String.valueOf(cartModels.get(holder.getAdapterPosition()).getQty()));
@@ -64,9 +65,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
             holder.IVcart.setImageResource(cartModels.get(position).getImageResid());
         }
 
-        //Add and minus quantity
         CartModel cartItem = cartModels.get(holder.getAdapterPosition());
-
 
         holder.IBadd.setOnClickListener(new View.OnClickListener() {
             @Override

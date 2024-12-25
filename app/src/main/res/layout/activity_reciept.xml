@@ -146,7 +146,6 @@
                 android:textSize="20sp"/>
         </LinearLayout>
 
-
         <LinearLayout
             android:id="@+id/LLhidepayment"
             android:layout_width="match_parent"
@@ -177,9 +176,8 @@
                     android:hint="Payment Here"
                     app:boxStrokeColor="@color/colorSecondary"
                     app:hintTextColor="@color/black"
-                    app:startIconTint="@color/black"
+                    app:startIconTint="@color/black">
 
-                    >
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/ETpayment"
                         android:layout_width="match_parent"
@@ -189,7 +187,6 @@
                         android:textSize="10sp"
                         android:maxLength="5"
                         android:textCursorDrawable="@drawable/textinputblue"  />
-
 
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
@@ -227,7 +224,6 @@
             </LinearLayout>
         </LinearLayout>
 
-
         <LinearLayout
             android:id="@+id/LLrecieptcredit"
             android:layout_width="match_parent"
@@ -262,8 +258,8 @@
                     android:hint="Search name here"
                     app:boxStrokeColor="@color/colorSecondary"
                     app:hintTextColor="@color/black"
-                    app:startIconTint="@color/black"
-                    >
+                    app:startIconTint="@color/black">
+
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/ETsearch"
                         android:layout_width="match_parent"
@@ -300,8 +296,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:padding="5dp"
-                   >
+                    android:padding="5dp">
                     <TextView
                         android:layout_width="0dp"
                         android:layout_weight="1"
@@ -327,8 +322,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:padding="5dp"
-                    >
+                    android:padding="5dp">
                     <TextView
                         android:layout_width="0dp"
                         android:layout_weight="1"
@@ -354,8 +348,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:padding="5dp"
-                    >
+                    android:padding="5dp">
                     <TextView
                         android:layout_width="0dp"
                         android:layout_weight="1"
@@ -381,8 +374,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:padding="5dp"
-                    >
+                    android:padding="5dp">
                     <TextView
                         android:layout_width="0dp"
                         android:layout_weight="1"
@@ -404,11 +396,8 @@
                         android:textAlignment="textEnd"/>
 
                 </LinearLayout>
-
             </LinearLayout>
-
         </LinearLayout>
-
     </LinearLayout>
 
     <LinearLayout
@@ -428,7 +417,6 @@
             android:textColor="@color/white"
             android:padding="10dp"/>
 
-
         <Button
             android:id="@+id/BTNpaid"
             android:layout_width="0dp"
@@ -441,6 +429,5 @@
             android:padding="10dp"
             android:layout_marginLeft="10dp"/>
     </LinearLayout>
-
 
 </LinearLayout>

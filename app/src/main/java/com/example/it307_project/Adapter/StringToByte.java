@@ -6,7 +6,6 @@ public class StringToByte {
         if (str == null || str.isEmpty()) {
             return new byte[0];
         }
-
         // Remove unwanted characters (brackets, spaces, etc.)
         str = str.replace("[", "").replace("]", "").replace(" ", "");
 

@@ -43,8 +43,7 @@
                     android:text="100"
                     android:textSize="30dp"
                     android:fontFamily="@font/poppinsbold"
-                    android:textColor="@color/gray"
-                    />
+                    android:textColor="@color/gray" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -58,13 +57,13 @@
             android:layout_width="10dp"
             android:layout_height="match_parent" />
              <LinearLayout
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:background="@drawable/cornerradius"
-            android:backgroundTint="@color/colorSecondary">
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:background="@drawable/cornerradius"
+                android:backgroundTint="@color/colorSecondary">
             <TextView
                 android:id="@+id/TVtotalcredit"
                 android:layout_width="wrap_content"
@@ -72,8 +71,7 @@
                 android:text="₱0"
                 android:textSize="30dp"
                 android:fontFamily="@font/poppinsbold"
-                android:textColor="@color/gray"
-                />
+                android:textColor="@color/gray" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -102,8 +100,8 @@
             app:endIconTint="@color/black"
             app:hintTextColor="@color/black"
             app:startIconTint="@color/black"
-            android:layout_marginBottom="10dp"
-           >
+            android:layout_marginBottom="10dp">
+
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/ETsearch"
                 android:layout_width="match_parent"
@@ -112,7 +110,6 @@
                 android:inputType="text"
                 android:textSize="10sp"
                 android:textCursorDrawable="@drawable/textinputblue"  />
-
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -127,8 +124,7 @@
                 android:textSize="15sp"
                 android:fontFamily="@font/poppinsbold"
                 android:textColor="@color/colorPrimaryDark"
-                android:layout_centerVertical="true"
-               />
+                android:layout_centerVertical="true" />
 
             <Button
                 android:id="@+id/BTNaddname"
@@ -166,7 +162,6 @@
             android:background="@drawable/categoryborder"
             android:padding="10dp"
             android:visibility="gone">
-
             <TextView
                 android:id="@+id/TVcreditpaymentname"
                 android:layout_width="wrap_content"
@@ -186,8 +181,8 @@
                 app:boxStrokeColor="@color/colorSecondary"
                 app:endIconMode="clear_text"
                 app:endIconTint="@color/black"
-                app:hintTextColor="@color/black"
-                >
+                app:hintTextColor="@color/black">
+
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/ETpayment"
                     android:layout_width="match_parent"
@@ -196,7 +191,6 @@
                     android:inputType="numberDecimal"
                     android:textSize="10sp"
                     android:textCursorDrawable="@drawable/textinputblue"  />
-
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -214,9 +208,7 @@
                     android:backgroundTint="@color/colorSecondary"
                     android:fontFamily="@font/poppinsmedium"
                     android:text="Close"
-                    android:textColor="@color/white"
-                />
-
+                    android:textColor="@color/white" />
 
                 <Button
                     android:id="@+id/BTNconfirm"

@@ -7,15 +7,12 @@
     android:layout_margin="10dp"
     app:cardCornerRadius="10dp"
     android:elevation="5dp">
-
     <LinearLayout
         android:id="@+id/LLitem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="10dp"
-        >
-
+        android:padding="10dp">
         <ImageView
             android:id="@+id/IVsalesimg"
             android:layout_width="match_parent"
@@ -23,20 +20,17 @@
             android:clipToOutline="true"
             android:scaleType="centerCrop"
             android:src="@mipmap/no_image"/>
-
         <TextView
             android:id="@+id/TVsalesname"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="2"
-
             android:text="Argentina Corned Beef 150g"
             android:textSize="10sp"
             android:fontFamily="@font/poppinsmedium"
             android:textColor="@color/darkgray"
             android:gravity="center"
             android:layout_marginTop="10dp"/>
-
         <TextView
             android:id="@+id/TVsalesprice"
             android:layout_width="match_parent"
@@ -49,7 +43,4 @@
             android:gravity="center"
            />
     </LinearLayout>
-
-
-
 </androidx.cardview.widget.CardView>

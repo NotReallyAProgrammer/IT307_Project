@@ -19,13 +19,11 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     Context context;
     List<CategoryModel> categoryModels;
     private final ClickListener listener;
-
     private int selectedPosition = -1;
     private String mode ="";
     public CategoryAdapter(Context c, List<CategoryModel> categoryModels, ClickListener listener){
         this.context = c;
         this.categoryModels = categoryModels;
-
         this.listener = listener;
     }
 
@@ -33,7 +31,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         this.mode = mode;
         notifyDataSetChanged();
     }
-
 
     @NonNull
     @Override
@@ -51,7 +48,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         if(mode.equals("Delete")){
             holder.itemView.setBackgroundResource(R.drawable.categorydelete);
         }else if(mode.equals("Select")){
-            holder.itemView.setBackgroundResource(R.drawable.categoryborder);  // default background
+            holder.itemView.setBackgroundResource(R.drawable.categoryborder);
         }else{
             if (selectedPosition == position) {
                 holder.itemView.setBackgroundResource(R.drawable.categoryselected);
@@ -69,7 +66,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
 
     public interface ClickListener {
         void onPositionClicked(int position);
-
     }
     public void resetSelection() {
         selectedPosition = -1;
@@ -83,7 +79,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
             TVcatname = itemView.findViewById(R.id.TVcatname);
             LLcategory = itemView.findViewById(R.id.LLcategory);
             LLcategory.setOnClickListener(this);
-
         }
 
         @Override
@@ -91,9 +86,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
 
             int position = getAdapterPosition();
             selectedPosition = position;
-
             notifyDataSetChanged();
-
 
             if (listener != null) {
                 listener.onPositionClicked(position);

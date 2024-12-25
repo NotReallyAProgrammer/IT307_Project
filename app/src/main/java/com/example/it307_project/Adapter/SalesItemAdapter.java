@@ -1,6 +1,5 @@
 package com.example.it307_project.Adapter;
 
-
 import static com.example.it307_project.Adapter.StringToByte.stringToByteArray;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -33,7 +32,6 @@ public class SalesItemAdapter extends RecyclerView.Adapter<SalesItemAdapter.View
         notifyDataSetChanged();
     }
 
-
     @NonNull
     @Override
     public SalesItemAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -44,7 +42,6 @@ public class SalesItemAdapter extends RecyclerView.Adapter<SalesItemAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull SalesItemAdapter.ViewHolder holder, int position) {
-
         AllItemModel item = allItemModels.get(position);
         holder.TVsalesname.setText(item.getItemName());
         holder.TVsalesprice.setText("₱ " + String.valueOf(item.getItemPrice()));
@@ -63,20 +60,15 @@ public class SalesItemAdapter extends RecyclerView.Adapter<SalesItemAdapter.View
             holder.IVsaleimg.setImageResource(item.getImageResId());
         }
     }
-
     @Override
     public int getItemCount() {
         return allItemModels.size();
     }
-
     public interface ClickListener {
         void onIdCLick(String id);
     }
-
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-
         TextView TVsalesname ,TVsalesprice;
-
         LinearLayout LLitem;
         ImageView IVsaleimg;
         public ViewHolder(@NonNull View itemView) {

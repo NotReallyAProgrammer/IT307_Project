@@ -1,11 +1,8 @@
 package com.example.it307_project;
 
-import static android.content.ContentValues.TAG;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -21,7 +18,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.it307_project.Adapter.ItemAdapter;
 import com.example.it307_project.Model.AllItemModel;
-import com.example.it307_project.Model.ItemModel;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -29,7 +25,6 @@ import java.util.Collections;
 import java.util.List;
 
 public class Inventory extends AppCompatActivity {
-
     TextView TVtotalval,TVtotalprofit,TVtotalitems,TVtotalcat;
     RecyclerView RVitem;
     Button BTNviewall;
@@ -50,7 +45,6 @@ public class Inventory extends AppCompatActivity {
             return insets;
         });
     }
-
     private void initialize() {
         TVtotalval = findViewById(R.id.TVtotalval);
         TVtotalprofit = findViewById(R.id.TVtotalprofit);
@@ -79,7 +73,6 @@ public class Inventory extends AppCompatActivity {
                 itemImgByte = item[6];
             }
 
-            // {"00004","Piattos Cheese 40g","Snacks","20","17.05","20.00","R.mipmap.piatos"}
             String formattedValue = df.format(Float.parseFloat(item[5]) -  Float.parseFloat(item[4]));
 
             allItemModels.add(new AllItemModel(
@@ -98,7 +91,6 @@ public class Inventory extends AppCompatActivity {
             int quantity = Integer.parseInt(item[3]);
             float pricePerItem = Float.parseFloat(item[4]);
             float itemTotal = quantity * pricePerItem;
-
             float sellperitem = Float.parseFloat(item[5]);
             float sellingTotal = quantity * sellperitem;
 
@@ -119,7 +111,6 @@ public class Inventory extends AppCompatActivity {
         TVtotalcat.setText(String.valueOf(categoryArray.length));
         TVtotalitems.setText(String.valueOf(itemsArray.length));
         TVtotalprofit.setText("₱" + String.valueOf(df.format(profit - totalVal)));
-
 
         //Click Listener
         IVback.setOnClickListener(new View.OnClickListener() {

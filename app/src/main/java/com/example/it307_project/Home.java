@@ -1,13 +1,10 @@
 package com.example.it307_project;
 
-import static android.content.ContentValues.TAG;
-
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -26,14 +23,10 @@ import com.example.it307_project.Adapter.ItemAdapter;
 import com.example.it307_project.Adapter.NavAdapter;
 import com.example.it307_project.Model.AllItemModel;
 import com.example.it307_project.Model.CartModel;
-import com.example.it307_project.Model.CreditModel;
-import com.example.it307_project.Model.ItemModel;
 import com.example.it307_project.Model.NavModel;
-import com.example.it307_project.Model.ReceiptModel;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -47,18 +40,13 @@ public class Home extends AppCompatActivity {
     ItemAdapter itemadapter;
     NavAdapter navAdapter;
     Context c = this;
-
     //Array
     String[][] itemsArray = {{"00001", "Kopiko Black Twin","Beverage","10","12.75","16.00","R.mipmap.kopiko"},
                             {"00002","Lucky Me Chicken 55g","Noodle","20","9.30","12.00","R.mipmap.luckyme"},
                             {"00003","Argentina Meat Loaf 150g","Canned","15","21.75","25.00","R.mipmap.argentina"},
                             {"00004","Piattos Cheese 40g","Snacks","20","17.05","20.00","R.mipmap.piatos"}};
-
     String[] categoryArray = {"Beverage", "Canned", "Noodle","Snacks"};
-    String[][] creditInfoArray = {{"Miguel","1"},{"Felix","1"},{"Mia","1"},{"Janeth","1"}};
-
-
-
+    String[][] creditInfoArray = {{"Miguel","0"},{"Felix","0"},{"Mia","20"},{"Janeth","0"}};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,7 +95,6 @@ public class Home extends AppCompatActivity {
                      for (String[] items : itemsArray) {
                          for (CartModel cart : cartModels) {
                              if (items[0].equals(cart.getId())) {
-
                                      int currentQuantity = Integer.parseInt(items[3]);
                                      int newQuantity = currentQuantity - cart.getQty();
 
@@ -120,7 +107,6 @@ public class Home extends AppCompatActivity {
                      }
               }
         }
-
 
         TVname.setText("Welcome " + userName);
 
@@ -148,6 +134,8 @@ public class Home extends AppCompatActivity {
                     finish();
                 }else if (position == 2) {
                     Intent i = new Intent(c, Credits.class);
+                    i.putExtra("Items", itemsArray);
+                    i.putExtra("Category", categoryArray);
                     i.putExtra("Credit", creditInfoArray);
                     startActivity(i);
                     finish();
@@ -159,7 +147,6 @@ public class Home extends AppCompatActivity {
         RVname.setAdapter(navAdapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(c, LinearLayoutManager.HORIZONTAL, false);
         RVname.setLayoutManager(layoutManager);
-
 
         // |Items
         DecimalFormat df = new DecimalFormat("#.##");
@@ -206,7 +193,6 @@ public class Home extends AppCompatActivity {
                         SharedPreferences.Editor editor = sharedPref.edit();
                         editor.clear();
                         editor.apply();
-
                         Intent intent = new Intent(c, Login.class);
                         startActivity(intent);
                         finish();
@@ -215,9 +201,7 @@ public class Home extends AppCompatActivity {
 
                 AlertDialog alert = logout.create();
                 alert.show();
-
             }
         });
-
     }
 }

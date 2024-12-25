@@ -83,11 +83,11 @@ public class Sales extends AppCompatActivity {
         String[][] itemsArray = (String[][]) intent.getSerializableExtra("Items");
         String[][] creditArray =  (String[][]) intent.getSerializableExtra("Credit");
         DecimalFormat df = new DecimalFormat("#.##");
+
         // Setting Adapters
         // Items
         for (String[] item : itemsArray) {
             int resId = 0;
-
             String itemImgByte = "";
 
             if (item[6].contains("R")) {
@@ -125,7 +125,6 @@ public class Sales extends AppCompatActivity {
                     }
                     break;
                 }
-
             }
         });
         RVsalesitem.setAdapter(salesItemAdapter);
@@ -164,9 +163,7 @@ public class Sales extends AppCompatActivity {
         ETsearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
-
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (count == 0){
@@ -179,15 +176,11 @@ public class Sales extends AppCompatActivity {
                     TVclear.setVisibility(View.VISIBLE);
                     categoryAdapter.resetSelection();
                 }
-
             }
-
             @Override
             public void afterTextChanged(Editable s) {
-
             }
         });
-
 
         // Click Listeners
         backbtn.setOnClickListener(new View.OnClickListener() {
@@ -227,7 +220,6 @@ public class Sales extends AppCompatActivity {
                 }
             }
         });
-
     }
 
     private void setCartAdapter(String id) {
@@ -268,14 +260,10 @@ public class Sales extends AppCompatActivity {
             }
         }
 
-
-
         if (!itemExists) {
             float total = cartPrice * quantity;
             cartModels.add(new CartModel(cartID, cartName, cartPrice, total, quantity, resId, itemImgByte,availableQuantity));
         }
-
-
         cartAdapter.notifyDataSetChanged();
         updateCart();
     }
@@ -315,7 +303,6 @@ public class Sales extends AppCompatActivity {
             }
         }
 
-        // Pass the filtered list to the adapter
         salesItemAdapter.setFilterList(filterList);
     }
     private void clearFilter() {

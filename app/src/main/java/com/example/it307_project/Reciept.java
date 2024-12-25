@@ -23,8 +23,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.it307_project.Adapter.CreditAdapter;
 import com.example.it307_project.Adapter.ReceiptAdapter;
-import com.example.it307_project.Adapter.SalesItemAdapter;
-import com.example.it307_project.Model.AllItemModel;
 import com.example.it307_project.Model.CartModel;
 import com.example.it307_project.Model.CreditModel;
 import com.example.it307_project.Model.ReceiptModel;
@@ -53,7 +51,6 @@ public class Reciept extends AppCompatActivity {
     ReceiptAdapter receiptAdapter;
     CreditAdapter creditAdapter;
     Context c = this;
-
     float totalChange = 0.0f,newTotal;
     int tempCount = 0, userPos = -1;
     @Override
@@ -155,7 +152,6 @@ public class Reciept extends AppCompatActivity {
         LinearLayoutManager creditLayoutManager = new LinearLayoutManager(c, LinearLayoutManager.VERTICAL, false);
         RVcreditname.setLayoutManager(creditLayoutManager);
 
-
         //Payment Input
         ETpayment.addTextChangedListener(new TextWatcher() {
             @Override
@@ -181,7 +177,6 @@ public class Reciept extends AppCompatActivity {
                             TVreceiptchange.setText("₱0.00");
                         }
                     } else {
-
                         TVreceiptchange.setText("₱0.00");
                     }
                 }
@@ -369,7 +364,5 @@ public class Reciept extends AppCompatActivity {
         TVreceipttime.setText(time);
 
         return recieptDate;
-
     }
-
 }

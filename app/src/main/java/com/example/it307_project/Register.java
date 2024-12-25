@@ -1,7 +1,5 @@
 package com.example.it307_project;
 
-
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -201,7 +199,6 @@ public class Register extends AppCompatActivity {
                 "(?=S+$)" +           //no white spaces
                 ".{6,}" +               //at least 4 characters
                 "$";*/
-
 
         if (val.isEmpty()) {
             regPass.setError( "Field can not be empty" );

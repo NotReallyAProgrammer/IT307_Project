@@ -69,17 +69,13 @@ public class ChangePassword extends AppCompatActivity {
 
                 String pass = ETpass.getText().toString();
 
-
                 if( !validatePassword() | !validateReEnter() )
                 {
                     new android.os.Handler(Looper.getMainLooper()).postDelayed(
                             new Runnable() {
                                 public void run() {
-
-
                                     changePass.setError(null);
                                     changePass.setErrorEnabled( false );
-
                                     newCnfrmPass.setError(null);
                                     newCnfrmPass.setErrorEnabled( false );
                                 }
@@ -90,7 +86,6 @@ public class ChangePassword extends AppCompatActivity {
                 Users[Userpos][4] = pass;
                 Intent i = new Intent(c, Login.class);
                 i.putExtra("Users",Users);
-
                 startActivity(i);
                 Toast.makeText(c, "Password change successfully", Toast.LENGTH_SHORT).show();
             }
@@ -107,7 +102,6 @@ public class ChangePassword extends AppCompatActivity {
     private boolean validatePassword() {
         String val = ETpass.getText().toString().trim();
         final String checkPassword = "^(?=.*[0-9])(?=.*[A-Z])(?=\\S+$).{6,}$";
-
 
         if (val.isEmpty()) {
             changePass.setError( "Field can not be empty" );
@@ -134,7 +128,6 @@ public class ChangePassword extends AppCompatActivity {
     private boolean validateReEnter() {
         String val = ETpass.getText().toString();
         String val2 = ETcfrmpass.getText().toString();
-
 
         if(!val.equals(val2))
         {

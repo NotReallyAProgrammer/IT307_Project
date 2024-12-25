@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.os.Looper;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
+
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -29,17 +29,13 @@ import com.example.it307_project.Adapter.AllItemAdapter;
 import com.example.it307_project.Adapter.CategoryAdapter;
 import com.example.it307_project.Model.AllItemModel;
 import com.example.it307_project.Model.CategoryModel;
-import com.example.it307_project.Model.ItemModel;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
-
-import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Items extends AppCompatActivity {
-
     RecyclerView RVcategory, RVallitem;
     Button BTNconfirm;
     ImageView backbtn;
@@ -52,10 +48,8 @@ public class Items extends AppCompatActivity {
     List<AllItemModel> allItemModels = new ArrayList<>();
     AllItemAdapter allItemAdapter;
     CategoryAdapter categoryAdapter;
-
     String[] category;
     Context c = this;
-
     DecimalFormat df = new DecimalFormat("#.##");
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,14 +57,12 @@ public class Items extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_items);
         initialize();
-
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
     }
-
     private void initialize() {
         LLaddcategory = findViewById(R.id.LLaddcategory);
         RVcategory = findViewById(R.id.RVcategory);
@@ -92,7 +84,6 @@ public class Items extends AppCompatActivity {
         String[][] itemsArray = (String[][]) intent.getSerializableExtra("Items");
         category = intent.getStringArrayExtra("Category");
 
-
         //Setting Item Adapter
         // |Items
         for (String item[] : itemsArray){
@@ -104,7 +95,6 @@ public class Items extends AppCompatActivity {
             } else {
                 itemImgByte = item[6];
             }
-
 
             String formattedValue = df.format(Float.parseFloat(item[5]) -  Float.parseFloat(item[4]));
             allItemModels.add(new AllItemModel(
@@ -181,15 +171,12 @@ public class Items extends AppCompatActivity {
                     TVclear.setVisibility(View.VISIBLE);
                     categoryAdapter.resetSelection();
                 }
-
             }
-
             @Override
             public void afterTextChanged(Editable s) {
 
             }
         });
-
 
         //Click Listener
         IBaddbutton.setOnClickListener(new View.OnClickListener() {
@@ -197,8 +184,6 @@ public class Items extends AppCompatActivity {
             public void onClick(View v) {
                 BTNconfirm.setText("Add Category");
                 LLaddcategory.setVisibility(View.VISIBLE);
-
-
             }
         });
 
@@ -212,7 +197,6 @@ public class Items extends AppCompatActivity {
                     categoryAdapter.getMode("Select");
                     TVcategorymode.setText("Categories");
                 }
-
             }
         });
 
@@ -285,11 +269,8 @@ public class Items extends AppCompatActivity {
                 finish();
             }
         });
-
     }
-
     private void deleteCat(int position){
-
         AlertDialog.Builder remove = new AlertDialog.Builder(c);
         remove.setTitle("Delete Category")
                 .setMessage("Are you sure you want to delete: " + categoryModels.get(position).getCategoryName()).setCancelable(true)
@@ -297,7 +278,6 @@ public class Items extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         if (position != -1) {
-
                             categoryModels.remove(position);
                             category = new String[categoryModels.size()];
                             for (int i = 0; i < categoryModels.size(); i++) {
@@ -316,11 +296,7 @@ public class Items extends AppCompatActivity {
 
         AlertDialog dialog = remove.create();
         dialog.show();
-
-
-
     }
-
     private void searchFilter(String result) {
         List<AllItemModel> filterList = new ArrayList<>();
         for (AllItemModel item : allItemModels) {
@@ -328,7 +304,6 @@ public class Items extends AppCompatActivity {
                 filterList.add(item);
             }
         }
-
         allItemAdapter.setFilterList(filterList);
     }
     private void catFilter(String result) {
@@ -346,7 +321,6 @@ public class Items extends AppCompatActivity {
     }
     private boolean validateCat() {
         String val = ETaddcat.getText().toString();
-
         if (val.isEmpty()) {
             itemcat.setError( "Field can not be empty" );
             return false;
@@ -356,5 +330,4 @@ public class Items extends AppCompatActivity {
             return true;
         }
     }
-
 }

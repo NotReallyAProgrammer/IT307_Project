@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.it307_project.Model.AllItemModel;
@@ -76,7 +75,6 @@ public class AllItemAdapter extends RecyclerView.Adapter<AllItemAdapter.ViewHold
     public int getItemCount() {
         return allItemModels.size();
     }
-
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView TVallitemname, TVallitemqty, TVallitemprice, TVallitemsrp, TVallitemprofit;

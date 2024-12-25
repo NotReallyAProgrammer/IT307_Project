@@ -50,6 +50,8 @@ public class Credits extends AppCompatActivity {
 
     List<CreditModel> creditModels = new ArrayList<>();
     String[][] creditArray;
+    String[][] categoryArray;
+    String[][] itemsArray;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +82,8 @@ public class Credits extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
         creditArray = (String[][]) extras.getSerializable("Credit");
+        itemsArray = (String[][]) extras.getSerializable("Items");
+        categoryArray = (String[][]) extras.getSerializable("Category");
 
         float grandTotal = 0;
 
@@ -105,6 +109,7 @@ public class Credits extends AppCompatActivity {
                         } else {
                             LLnewtab.setVisibility(View.VISIBLE);
                             ETpayment.setInputType(InputType.TYPE_CLASS_NUMBER);
+
                             payCredit(name);
                         }
                         break;
@@ -164,6 +169,8 @@ public class Credits extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i = new Intent(c, Home.class);
                 i.putExtra("Credit", creditArray);
+                i.putExtra("Items", itemsArray);
+                i.putExtra("Category", categoryArray);
                 startActivity(i);
                 finish();
             }
@@ -175,6 +182,7 @@ public class Credits extends AppCompatActivity {
         for (String[] credit : creditArray) {
             if (name.equals(credit[0])) {
                 TVcreditpaymentname.setText("Tab Name: " + name);
+                creditPayment.setHint("Enter payment here");
             }
         }
 
@@ -282,7 +290,6 @@ public class Credits extends AppCompatActivity {
                     }
                 }
             });
-
         }
     }
 
@@ -293,8 +300,6 @@ public class Credits extends AppCompatActivity {
                 filterList.add(name);
             }
         }
-
-        // Pass the filtered list to the adapter
         creditAdapter.setFilterList(filterList);
     }
 

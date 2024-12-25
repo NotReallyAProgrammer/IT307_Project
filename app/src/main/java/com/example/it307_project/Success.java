@@ -66,7 +66,6 @@ public class Success extends AppCompatActivity {
         float total = extras.getFloat("Total");
         String method = extras.getString("Method");
 
-
         if (method.equals("Cash")){
             LLpaidcash.setVisibility(View.VISIBLE);
             LLpaidchange.setVisibility(View.VISIBLE);
@@ -77,7 +76,6 @@ public class Success extends AppCompatActivity {
             TVpaymentcash.setText("₱"+String.valueOf(cash));
             TVpaymentchange.setText("₱"+String.valueOf(change));
         }else{
-
             String[][] creditArray = (String[][])extras.getSerializable("Credit");
             if(creditArray!=null){
                 LLpaidcash.setVisibility(View.GONE);
@@ -90,7 +88,6 @@ public class Success extends AppCompatActivity {
             }
 
         }
-
 
         TVsuccesstotal.setText("₱"+String.valueOf(total));
         TVpaymentmethod.setText(method);

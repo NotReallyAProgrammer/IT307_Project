@@ -23,7 +23,6 @@
             android:src="@mipmap/no_image"
             android:background="@drawable/cornerradius"/>
 
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -37,8 +36,7 @@
                 android:text="Sample item name"
                 android:textColor="@color/darkgray"
                 android:fontFamily="@font/poppinsbold"
-                android:textSize="12sp"
-                />
+                android:textSize="12sp" />
             <TextView
                 android:id="@+id/TVitemcat"
                 android:layout_width="wrap_content"
@@ -46,10 +44,8 @@
                 android:text="Category"
                 android:textSize="10sp"
                 android:textColor="@color/colorPrimary"
-                android:fontFamily="@font/poppinsmedium"
-                />
+                android:fontFamily="@font/poppinsmedium" />
         </LinearLayout>
-
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -57,13 +53,11 @@
             android:layout_weight="1"
             android:layout_marginTop="15dp">
 
-
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_alignParentLeft="true"
-                >
+                android:layout_alignParentLeft="true">
 
                 <TextView android:id="@+id/TVqtytext"
                     android:layout_width="wrap_content"
@@ -72,8 +66,7 @@
                     android:fontFamily="@font/poppinsbold"
                     android:textSize="10sp"
                     android:gravity="center_vertical"
-                    android:textColor="@color/darkgray"
-                    />
+                    android:textColor="@color/darkgray" />
                 <TextView
                   android:id="@+id/TVqty"
                     android:layout_width="wrap_content"
@@ -99,9 +92,6 @@
 
         </RelativeLayout>
 
-
     </LinearLayout>
-
-
 
 </androidx.cardview.widget.CardView>

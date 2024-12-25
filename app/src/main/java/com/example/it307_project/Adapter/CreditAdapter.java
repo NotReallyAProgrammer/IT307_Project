@@ -22,16 +22,16 @@ public class CreditAdapter extends RecyclerView.Adapter<CreditAdapter.ViewHolder
     List<CreditModel> creditModels;
     private final ClickListener listener;
     public CreditAdapter(Context c, List<CreditModel> creditModels,ClickListener listener){
+
         this.context = c;
         this.creditModels = creditModels;
         this.listener = listener;
-    }
 
+    }
     public void setFilterList(List<CreditModel> filteredList) {
         this.creditModels = filteredList;
         notifyDataSetChanged();
     }
-
     @NonNull
     @Override
     public CreditAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -39,19 +39,15 @@ public class CreditAdapter extends RecyclerView.Adapter<CreditAdapter.ViewHolder
         View view = inflater.inflate(R.layout.credits_cardview,parent,false);
         return new ViewHolder(view);
     }
-
     @Override
     public void onBindViewHolder(@NonNull CreditAdapter.ViewHolder holder, int position) {
         holder.TVname.setText(creditModels.get(position).getName());
         holder.TVindividualcredit.setText("₱"+String.valueOf(creditModels.get(position).getTotalCredit()));
-
     }
-
     @Override
     public int getItemCount() {
         return creditModels.size();
     }
-
     public interface ClickListener {
         void onNameClicked(String name);
     }

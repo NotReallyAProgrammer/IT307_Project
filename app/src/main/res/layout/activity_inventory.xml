@@ -36,8 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:orientation="horizontal"
-            >
+            android:orientation="horizontal">
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -99,14 +98,12 @@
 
             </LinearLayout>
 
-            
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            >
+            android:orientation="horizontal">
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -135,11 +132,9 @@
                     android:textSize="25sp"/>
 
             </LinearLayout>
-
             <Space
                 android:layout_width="10dp"
                 android:layout_height="match_parent" />
-
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -168,9 +163,7 @@
 
             </LinearLayout>
 
-
         </LinearLayout>
-
 
     </LinearLayout>
 

@@ -67,8 +67,7 @@
                     android:padding="5dp"
                     app:tint="@color/gray"
                     android:layout_marginLeft="5dp"
-                    android:backgroundTint="@color/errorBgColor"
-                    />
+                    android:backgroundTint="@color/errorBgColor" />
 
             </LinearLayout>
         </RelativeLayout>
@@ -97,9 +96,7 @@
                 android:text="All Items"
                 android:textSize="15sp"
                 android:fontFamily="@font/poppinsbold"
-                android:textColor="@color/darkgray"
-
-                />
+                android:textColor="@color/darkgray" />
 
             <TextView
                 android:id="@+id/TVclear"
@@ -111,8 +108,7 @@
                 android:fontFamily="@font/poppinsregular"
                 android:textColor="@color/colorPrimaryDark"
                 android:textAlignment="textEnd"
-                android:visibility="gone"
-                />
+                android:visibility="gone" />
         </LinearLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -123,8 +119,7 @@
             app:boxStrokeColor="@color/colorSecondary"
             app:hintTextColor="@color/black"
             android:layout_marginBottom="10dp"
-            app:endIconMode="clear_text"
-            >
+            app:endIconMode="clear_text">
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/ETsearch"
                 android:layout_width="match_parent"
@@ -135,7 +130,6 @@
                 android:textCursorDrawable="@drawable/textinputblue"  />
 
         </com.google.android.material.textfield.TextInputLayout>
-
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/RVallitem"
@@ -166,6 +160,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginVertical="20dp">
+
             <TextView
                 android:id="@+id/TVcategory"
                 android:layout_width="0dp"
@@ -185,7 +180,6 @@
                 android:rotation="46"
                 android:background="#00000000"
                 android:padding="5dp"/>
-
         </LinearLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -199,8 +193,7 @@
             app:hintTextColor="@color/black"
             android:layout_marginBottom="10dp"
             app:endIconMode="clear_text"
-            android:gravity="center_vertical"
-            >
+            android:gravity="center_vertical">
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/ETaddcat"
                 android:layout_width="match_parent"
@@ -209,7 +202,6 @@
                 android:inputType="text"
                 android:textSize="10sp"
                 android:textCursorDrawable="@drawable/textinputblue"  />
-
         </com.google.android.material.textfield.TextInputLayout>
 
     </LinearLayout>

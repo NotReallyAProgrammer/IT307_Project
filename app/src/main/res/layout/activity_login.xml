@@ -7,8 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".Login"
-android:layout_marginHorizontal="30dp">
-
+    android:layout_marginHorizontal="30dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -33,13 +32,11 @@ android:layout_marginHorizontal="30dp">
             android:textColor="@color/textDescColor"/>
     </LinearLayout>
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="5"
-        android:orientation="vertical"
-        >
+        android:orientation="vertical">
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/loginUser"
@@ -55,14 +52,13 @@ android:layout_marginHorizontal="30dp">
             app:startIconTint="@color/black"
             android:layout_marginBottom="10dp">
 
-
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/ETemail"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:fontFamily="@font/poppinsregular"
                 android:inputType="textEmailAddress"
-                android:textCursorDrawable="@drawable/textinputblue"  />
+                android:textCursorDrawable="@drawable/textinputblue" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -99,7 +95,6 @@ android:layout_marginHorizontal="30dp">
             android:layout_marginTop="5dp"
             android:textColor="@color/errorFontColor"
             android:visibility="gone"
-
             />
 
         <LinearLayout
@@ -115,13 +110,8 @@ android:layout_marginHorizontal="30dp">
                 android:layout_centerVertical="true"
                 android:buttonTint="@color/colorPrimaryDark"
                 android:buttonTintMode="multiply"
-
-            android:text="Remember me"
-            android:checked="true"
-            android:textColorHighlight="@color/colorPrimary" />
-
-
-
+                android:text="Remember me"
+                android:textColorHighlight="@color/colorPrimary" />
 
             <TextView
                 android:id="@+id/TVforgotpass"
@@ -146,7 +136,6 @@ android:layout_marginHorizontal="30dp">
             android:textColor="@color/white"
             android:padding="10dp"
             />
-
 
         <LinearLayout
             android:layout_width="match_parent"

@@ -1,6 +1,5 @@
 package com.example.it307_project.Adapter;
 
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,14 +16,11 @@ import com.example.it307_project.R;
 import java.lang.ref.WeakReference;
 import java.util.List;
 
-
 public class NavAdapter extends RecyclerView.Adapter<NavAdapter.ViewHolder>{
 
     Context context;
     List<NavModel> navModel;
     private final ClickListener listener;
-
-
 
     public NavAdapter(Context c, List<NavModel> navModels, ClickListener listener){
         this.context = c;

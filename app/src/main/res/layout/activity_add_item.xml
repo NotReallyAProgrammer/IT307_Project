@@ -14,14 +14,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:src="@drawable/backarrow"
-        />
+        android:src="@drawable/backarrow" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/CLimage"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="3"
-        >
+        android:layout_weight="3">
         <ImageView
             android:id="@+id/IVitemimg"
             android:layout_width="match_parent"
@@ -32,7 +31,6 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
-
 
         <ImageButton
             android:id="@+id/IBaddimg"
@@ -49,7 +47,6 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
 
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ScrollView
@@ -60,8 +57,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            >
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -69,8 +65,8 @@
                 android:text="Item Name"
                 android:fontFamily="@font/poppinsbold"
                 android:textSize="15sp"
-                android:textColor="@color/darkgray"
-                />
+                android:textColor="@color/darkgray" />
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/itemName"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -99,8 +95,8 @@
                 android:text="Quantity"
                 android:fontFamily="@font/poppinsbold"
                 android:textSize="15sp"
-                android:textColor="@color/darkgray"
-                />
+                android:textColor="@color/darkgray" />
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/itemQty"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -128,8 +124,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:orientation="horizontal"
-                >
+                android:orientation="horizontal">
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -145,6 +140,7 @@
                         android:textSize="15sp"
                         android:textColor="@color/darkgray"
                         android:layout_marginBottom="5dp"/>
+
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/itemPrice"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -154,16 +150,14 @@
                         app:boxStrokeColor="@color/colorPrimary"
                         app:endIconMode="clear_text"
                         app:endIconTint="@color/black"
-                        app:hintTextColor="@color/black"
-                        >
+                        app:hintTextColor="@color/black">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/ETPrice"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:fontFamily="@font/poppinsregular"
-                            android:inputType="numberDecimal"
-                            />
+                            android:inputType="numberDecimal" />
 
                     </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
@@ -174,8 +168,7 @@
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    >
+                    android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -193,9 +186,7 @@
                         android:fontFamily="@font/poppinsbold"
                         android:textSize="35sp"
                         android:textColor="@color/darkgray"
-                        android:textAlignment="center"
-
-                        />
+                        android:textAlignment="center" />
 
                 </LinearLayout>
             </LinearLayout>
@@ -204,8 +195,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="15sp"
-                android:orientation="horizontal"
-                >
+                android:orientation="horizontal">
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -219,8 +209,7 @@
                         android:text="Selling Price (PHP)"
                         android:fontFamily="@font/poppinsbold"
                         android:textSize="15sp"
-                        android:textColor="@color/darkgray"
-                        />
+                        android:textColor="@color/darkgray" />
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/itemSelling"
@@ -231,16 +220,14 @@
                         app:boxStrokeColor="@color/colorPrimary"
                         app:endIconMode="clear_text"
                         app:endIconTint="@color/black"
-                        app:hintTextColor="@color/black"
-                        >
+                        app:hintTextColor="@color/black">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/ETSelling"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:fontFamily="@font/poppinsregular"
-                            android:inputType="numberDecimal"
-                            />
+                            android:inputType="numberDecimal" />
 
                     </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
@@ -251,8 +238,7 @@
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    >
+                    android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -270,8 +256,7 @@
                         android:fontFamily="@font/poppinsbold"
                         android:textSize="35sp"
                         android:textColor="@color/darkgray"
-                        android:textAlignment="center"
-                        />
+                        android:textAlignment="center" />
 
                 </LinearLayout>
             </LinearLayout>
@@ -282,8 +267,7 @@
                 android:text="Category"
                 android:fontFamily="@font/poppinsbold"
                 android:textSize="15sp"
-                android:textColor="@color/darkgray"
-                />
+                android:textColor="@color/darkgray" />
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/menu"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
@@ -292,16 +276,14 @@
                 android:hint="Select A Category"
                 app:hintTextColor="@color/black"
                 app:endIconTint="@color/colorPrimary"
-                app:boxStrokeColor="@color/colorPrimary"
-                >
+                app:boxStrokeColor="@color/colorPrimary">
 
                 <AutoCompleteTextView
                     android:id="@+id/category"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="none"
-                    android:fontFamily="@font/poppinsregular"
-                    />
+                    android:fontFamily="@font/poppinsregular" />
 
             </com.google.android.material.textfield.TextInputLayout>
 

@@ -2,6 +2,7 @@ package com.example.it307_project;
 
 import static com.example.it307_project.Adapter.StringToByte.stringToByteArray;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -49,14 +50,12 @@ public class AddItem extends AppCompatActivity {
     ImageButton IBaddimg;
     TextView TVtotalprice,TVtotalselling;
     ImageView IVitemimg,backbtn;
-
-    DecimalFormat df = new DecimalFormat("#.##");
-
     Context c = this;
     byte[] byteArray = null;
     boolean clicked = false;
-
+    DecimalFormat df = new DecimalFormat("#.##");
     private static final int REQ_CODE_TAKE_PHOTO=1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,7 +97,6 @@ public class AddItem extends AppCompatActivity {
 
         if(mode.equals("Edit")){
             String id = intent.getStringExtra("Id");
-            //{"00004","Piattos Cheese 40g","Snacks","20","17.05","20.00","R.mipmap.piatos"}};
             for (String[] item : itemsArray){
                 if (item[0].equals(id)){
                     ETname.setText(item[1]);
@@ -119,7 +117,6 @@ public class AddItem extends AppCompatActivity {
                         IVitemimg.setImageBitmap(bitmap);
                     }
 
-
                     int quantity = Integer.parseInt(item[3]);
                     float price = Float.parseFloat(item[4]);
                     float sellingPrice = Float.parseFloat(item[5]);
@@ -132,7 +129,6 @@ public class AddItem extends AppCompatActivity {
             }
             BTNconfirm.setText("Edit Item");
         }
-
 
         //Edit Text
         ETprice.addTextChangedListener(new TextWatcher()  {
@@ -152,22 +148,17 @@ public class AddItem extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
                     calculateTotal();
                 }
-
         });
-
         ETselling.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
-
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (count > 0) {
                   calculateProfit();
                 }
             }
-
             @Override
             public void afterTextChanged(Editable s) {
                 calculateProfit();
@@ -177,30 +168,25 @@ public class AddItem extends AppCompatActivity {
         ETqty.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
-
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (count > 0){
                     calculateProfit();
                 }
             }
-
             @Override
             public void afterTextChanged(Editable s) {
                     calculateProfit();
             }
 
         });
-
         //Click Listener
         IBaddimg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent camera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 startActivityForResult(camera, REQ_CODE_TAKE_PHOTO);
-
             }
         });
 
@@ -215,20 +201,17 @@ public class AddItem extends AppCompatActivity {
                         IBaddimg.setVisibility(View.VISIBLE);
                     }
                 }
-
             }
         });
 
         BTNconfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // {"00004","Piattos Cheese 40g","Snacks","20","17.05","20.00","R.mipmap.piatos"}
                 if (mode.equals("Edit")){
                     EditItem();
                 }else{
                     AddItem();
                 }
-
             }
         });
 
@@ -242,7 +225,6 @@ public class AddItem extends AppCompatActivity {
                     finish();
             }
         });
-
     }
     private void calculateTotal(){
         String price = ETprice.getText().toString().trim();
@@ -259,7 +241,6 @@ public class AddItem extends AppCompatActivity {
                 float profit = (quantity*selling) - (quantity*payment);
                 TVtotalselling.setText("₱" + String.valueOf(df.format(profit)));
             }
-
         } else {
             TVtotalprice.setText("₱0.00");
         }
@@ -349,6 +330,8 @@ public class AddItem extends AppCompatActivity {
             }
         }
     }
+
+    @SuppressLint("NotConstructor")
     private void AddItem(){
 
         Intent intent = getIntent();

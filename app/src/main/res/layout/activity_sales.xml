@@ -14,16 +14,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
        android:layout_marginBottom="10dp"
-        android:src="@drawable/backarrow"
-        />
+        android:src="@drawable/backarrow" />
+
     <LinearLayout
         android:id="@+id/Llnoitem"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="2"
         android:orientation="vertical"
-        android:visibility="visible"
-        >
+        android:visibility="visible">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -39,7 +38,6 @@
             android:fontFamily="@font/poppinsmedium"
             android:textColor="@color/textDescColor"/>
 
-
     </LinearLayout>
 
     <LinearLayout
@@ -52,8 +50,7 @@
         android:background="@drawable/cornerradius"
         android:elevation="10dp"
         android:padding="10dp"
-        android:visibility="gone"
-      >
+        android:visibility="gone">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/RVsalescart"
@@ -97,7 +94,6 @@
                     android:textSize="15sp"
                     android:layout_alignParentRight="true"/>
 
-
             </RelativeLayout>
             <Button
                 android:id="@+id/BTNcart"
@@ -127,8 +123,7 @@
             app:boxStrokeColor="@color/colorSecondary"
             app:hintTextColor="@color/black"
             android:layout_marginTop="20dp"
-            app:endIconMode="clear_text"
-            >
+            app:endIconMode="clear_text">
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/ETsearch"
                 android:layout_width="match_parent"
@@ -147,8 +142,7 @@
             android:textSize="15sp"
             android:fontFamily="@font/poppinsbold"
             android:textColor="@color/darkgray"
-            android:layout_marginVertical="10dp"
-            />
+            android:layout_marginVertical="10dp" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/RVsalescategory"
@@ -174,9 +168,7 @@
                 android:text="All Items"
                 android:textSize="15sp"
                 android:fontFamily="@font/poppinsbold"
-                android:textColor="@color/darkgray"
-
-                />
+                android:textColor="@color/darkgray" />
 
             <TextView
                 android:id="@+id/TVclear"
@@ -188,8 +180,8 @@
                 android:fontFamily="@font/poppinsregular"
                 android:textColor="@color/colorPrimaryDark"
                 android:textAlignment="textEnd"
-                android:visibility="gone"
-                />
+                android:visibility="gone" />
+
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView

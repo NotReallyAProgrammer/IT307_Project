@@ -11,7 +11,6 @@ public class ReceiptModel implements Serializable {
     public ReceiptModel(String id,String name,  int qty, float price) {
         this.id = id;
         this.name = name;
-
         this.qty = qty;
         this.price = price;
     }
@@ -19,7 +18,6 @@ public class ReceiptModel implements Serializable {
     public String getName() {
         return name;
     }
-
     public int getQty() {
         return qty;
     }
