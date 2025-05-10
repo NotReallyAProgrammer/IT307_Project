@@ -13,13 +13,28 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.example.it307_project.Connection.Constant;
+import com.example.it307_project.Connection.RequestHandler;
+import com.example.it307_project.Connection.SharedPreference;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Login extends AppCompatActivity {
 
@@ -29,7 +44,7 @@ public class Login extends AppCompatActivity {
     TextView TVinvalid, TVforgotpass,TVsignup;
     CheckBox rememberMe;
     Context c = this;
-    String[][] userPass = {{ "Jeff@email.com","Jeff","1","sample", "12345" },{ "Joan@email.com","Joan","1","sample", "567890" }, { "Dani@email.com","Dani","1","sample", "ASDFGH" }};
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,15 +71,13 @@ public class Login extends AppCompatActivity {
         rememberMe = findViewById(R.id.rememberMe);
 
 
-        Intent intent = getIntent();
-        String[][] Users = (String[][]) intent.getSerializableExtra("Users");
-        if (Users != null) {
-            userPass = Users;
-        }
 
         SharedPreferences sharedPref = getSharedPreferences("user_session", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         boolean isLoggedIn = sharedPref.getBoolean("isLoggedIn", false);
+
+
+
 
         if (isLoggedIn) {
             String email = sharedPref.getString("email", "");
@@ -76,8 +89,7 @@ public class Login extends AppCompatActivity {
         BTNconfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String user = ETemail.getText().toString();
-                String pass = ETpass.getText().toString();
+
                 boolean userOK = false;
                 int tempCount = 0, userPos = -1;
 
@@ -91,37 +103,59 @@ public class Login extends AppCompatActivity {
                             }, 5000);
                     return;
                 }
-                for (String[] up : userPass){
-                    if (user.equals(up[0]) && pass.equals(up[4])){
-                        userOK = true;
-                        userPos = tempCount;
 
-                    }else {
-                        tempCount++;
-                    }
 
-                    if(userOK){
-                        if (rememberMe.isChecked()) {
-                            editor.putBoolean("isLoggedIn", true);
-                            editor.putString("email", ETemail.getText().toString());
-                            editor.putString("pass", ETpass.getText().toString());
-                        } else {
-                            editor.putBoolean("isLoggedIn", false);
+                StringRequest stringRequest = new StringRequest(
+                        Request.Method.POST,
+                        Constant.URL_LOGIN,
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                try {
+
+                                    JSONObject obj = new JSONObject(response);
+                                    if (!obj.getBoolean("error")) {
+                                        JSONObject userJson = obj.getJSONObject("user");
+
+                                        int id = userJson.getInt("id");
+                                        String username = userJson.getString("username");
+                                        String email = userJson.getString("email");
+
+                                        SharedPreference.getInstance(getApplicationContext()).userLogin(id, username, email);
+                                        Toast.makeText(c, "Logged in Successfully", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        String errorMsg = obj.getString("message");
+                                        TVinvalid.setText(errorMsg);
+                                        TVinvalid.setVisibility(View.VISIBLE);
+                                        Intent intent = new Intent(c, Home.class);
+                                        startActivity(intent);
+                                    }
+
+                                } catch (JSONException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            }
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+
+                            }
                         }
-
-                        Toast.makeText(c, "Logged in Successfully", Toast.LENGTH_SHORT).show();
-                        editor.putString("userName", userPass[userPos][1]);
-                        editor.apply();
-
-                        Intent i = new Intent(c, Home.class);
-                        startActivity(i);
-                        break;
-
-                    }else if(tempCount == userPass.length){
-                        TVinvalid.setVisibility(View.VISIBLE);
-                        break;
+                ){
+                    @Nullable
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        String user = ETemail.getText().toString();
+                        String pass = ETpass.getText().toString();
+                        Map<String,String> params = new HashMap<>();
+                        params.put("email",user);
+                        params.put("password",pass);
+                        return params;
                     }
-                }
+                };
+
+                RequestHandler.getInstance(c).addToRequestQueue(stringRequest);
 
                 new android.os.Handler(Looper.getMainLooper()).postDelayed(
                         new Runnable() {
@@ -138,14 +172,7 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(c, ForgotPassword.class);
-                if(Users != null){
-                    i.putExtra("Users", Users);
                     startActivity(i);
-                }else{
-                    i.putExtra("Users", userPass);
-                    startActivity(i);
-                }
-
             }
         });
 
@@ -153,13 +180,7 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(c, Register.class);
-                if(Users != null ){
-                    intent.putExtra("Users", Users);
                     startActivity(intent);
-                }else{
-                    intent.putExtra("Users", userPass);
-                    startActivity(intent);
-                }
             }
         });
     }

@@ -1,5 +1,6 @@
 package com.example.it307_project;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,10 +21,23 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.it307_project.Connection.Constant;
+import com.example.it307_project.Connection.RequestHandler;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
-import java.util.Arrays;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Register extends AppCompatActivity {
 
@@ -32,13 +46,14 @@ public class Register extends AppCompatActivity {
     Button BTNconfirm;
     ImageView backbtn;
     AutoCompleteTextView question;
+    ProgressDialog progressDialog;
     String[] arraySpinner = new String[]{
             "What is your mother's maiden name?",
             "What was the name of your first pet?",
             "What was the name of your elementary school?",
             "In what city were you born?",
             "What is your favorite color?"};
-
+    int selection = 0;
     Context c=this;
 
     @Override
@@ -73,6 +88,8 @@ public class Register extends AppCompatActivity {
         BTNconfirm = findViewById(R.id.BTNconfirm);
         backbtn = findViewById(R.id.backbtn);
 
+        progressDialog = new ProgressDialog(c);
+
 
         //Setting selection in spinner;
         ArrayAdapter<String> adapter = new ArrayAdapter<>(c, R.layout.dropdown_menu_popup_item, arraySpinner);
@@ -89,7 +106,7 @@ public class Register extends AppCompatActivity {
                 String ans = ETanswer.getText().toString();
 
                 String selectedQuestion = question.getText().toString();
-                int selection = 0;
+
 
                 if (selectedQuestion.equals("What is your mother's maiden name?")){
                     selection = 1;
@@ -131,17 +148,49 @@ public class Register extends AppCompatActivity {
                     return;
                 }
 
+                //SAVE TO SQL
+                progressDialog.setMessage("Registering User...");
+                progressDialog.show();
+                StringRequest stringRequest = new StringRequest(Request.Method.POST, Constant.URL_REGISTER,
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                progressDialog.dismiss();
+                                try {
+                                    JSONObject jsonObject = new JSONObject(response);
+                                    Toast.makeText(c, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
 
-                String[] newUser = {email,name,String.valueOf(selection),ans,pass};
-                String[][] newUserPass = Arrays.copyOf(Users, Users.length + 1);
-                newUserPass[Users.length] = newUser;
+                                    Intent i = new Intent(c, Login.class);
+                                    c.startActivity(i);
 
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                    Toast.makeText(c, "JSON error", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                progressDialog.dismiss();
+                                Toast.makeText(c, "Volley error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                                Log.e("VOLLEY_ERROR", error.toString());
+                            }
+                        }) {
 
-                Intent i = new Intent(c,Login.class);
-                i.putExtra("Users",newUserPass);
-                startActivity(i);
-                Toast.makeText(c, "Register successfully", Toast.LENGTH_SHORT).show();
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        Map<String, String> params = new HashMap<>();
+                        params.put("username", name);
+                        params.put("email", email);
+                        params.put("password", pass);
+                        params.put("secretquestion", Integer.toString(selection));
+                        params.put("answer", ans);
+                        return params;
+                    }
+                };
 
+                RequestHandler.getInstance(c).addToRequestQueue(stringRequest);
             }
         });
 
