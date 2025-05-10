@@ -123,12 +123,13 @@ public class Login extends AppCompatActivity {
 
                                         SharedPreference.getInstance(getApplicationContext()).userLogin(id, username, email);
                                         Toast.makeText(c, "Logged in Successfully", Toast.LENGTH_SHORT).show();
+                                        Intent intent = new Intent(c, Home.class);
+                                        startActivity(intent);
                                     } else {
                                         String errorMsg = obj.getString("message");
                                         TVinvalid.setText(errorMsg);
                                         TVinvalid.setVisibility(View.VISIBLE);
-                                        Intent intent = new Intent(c, Home.class);
-                                        startActivity(intent);
+
                                     }
 
                                 } catch (JSONException e) {
